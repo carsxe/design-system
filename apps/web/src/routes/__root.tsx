@@ -4,10 +4,15 @@ import {
   Scripts,
   createRootRoute,
 } from "@tanstack/react-router"
+import { ThemeProvider } from "next-themes"
+
+import { Toaster } from "@carsxe/design-system/components/sonner"
+import { TooltipProvider } from "@carsxe/design-system/components/tooltip"
 
 import { SiteHeader } from "@/components/site-header"
 
 import appCss from "@carsxe/design-system/globals.css?url"
+import docsCss from "@/styles/docs.css?url"
 
 export const Route = createRootRoute({
   head: () => ({
@@ -28,6 +33,10 @@ export const Route = createRootRoute({
         rel: "stylesheet",
         href: appCss,
       },
+      {
+        rel: "stylesheet",
+        href: docsCss,
+      },
     ],
   }),
   notFoundComponent: () => (
@@ -44,16 +53,24 @@ export const Route = createRootRoute({
 
 function RootComponent() {
   return (
-    <>
-      <SiteHeader />
-      <Outlet />
-    </>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
+      <TooltipProvider>
+        <SiteHeader />
+        <Outlet />
+        <Toaster />
+      </TooltipProvider>
+    </ThemeProvider>
   )
 }
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <head>
         <HeadContent />
       </head>

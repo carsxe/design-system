@@ -8,9 +8,9 @@ export const Route = createFileRoute("/docs")({
 
 function DocsLayout() {
   return (
-    <div className="mx-auto flex w-full max-w-6xl">
+    <div className="mx-auto flex w-full max-w-7xl">
       <DocsSidebar />
-      <div className="min-w-0 flex-1 px-6 py-10">
+      <div className="min-w-0 flex-1 px-6 py-10 md:px-10">
         <Outlet />
       </div>
     </div>

@@ -9,7 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@carsxe/design-system/components/card"
-import { Input } from "@carsxe/design-system/components/input"
 import {
   Tabs,
   TabsContent,
@@ -17,7 +16,8 @@ import {
   TabsTrigger,
 } from "@carsxe/design-system/components/tabs"
 
-import { CopyButton } from "@/components/copy-button"
+import { CodeBlock } from "@/components/code-block"
+import { Logo } from "@/components/logo"
 import { AGENT_PROMPT } from "@/lib/agent-prompt"
 
 export const Route = createFileRoute("/")({ component: Home })
@@ -32,6 +32,7 @@ function Home() {
   return (
     <main className="mx-auto flex max-w-6xl flex-col gap-16 px-6 py-16">
       <section className="flex max-w-2xl flex-col gap-4">
+        <Logo className="h-10" />
         <Badge className="w-fit">Design system</Badge>
         <h1 className="font-heading text-5xl font-semibold tracking-tight">
           Carsxe UI, as a package
@@ -46,13 +47,6 @@ function Home() {
         <div className="flex flex-wrap gap-3">
           <Button nativeButton={false} render={<Link to="/docs" />}>
             Get started
-          </Button>
-          <Button
-            variant="outline"
-            nativeButton={false}
-            render={<Link to="/docs" />}
-          >
-            View docs
           </Button>
         </div>
       </section>
@@ -73,17 +67,8 @@ function Home() {
                 <TabsTrigger value="pnpm">pnpm</TabsTrigger>
               </TabsList>
               {Object.entries(installCommands).map(([manager, command]) => (
-                <TabsContent
-                  key={manager}
-                  value={manager}
-                  className="relative mt-3 border border-border bg-muted"
-                >
-                  <div className="absolute top-2 right-2">
-                    <CopyButton text={command} />
-                  </div>
-                  <pre className="overflow-x-auto p-4 font-mono text-sm">
-                    {command}
-                  </pre>
+                <TabsContent key={manager} value={manager} className="mt-3">
+                  <CodeBlock code={command} lang="bash" />
                 </TabsContent>
               ))}
             </Tabs>
@@ -98,14 +83,7 @@ function Home() {
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-3">
-            <div className="relative border border-border bg-muted">
-              <div className="absolute top-2 right-2">
-                <CopyButton text={AGENT_PROMPT} />
-              </div>
-              <pre className="overflow-x-auto p-4 pr-24 font-mono text-xs whitespace-pre-wrap">
-                {AGENT_PROMPT}
-              </pre>
-            </div>
+            <CodeBlock code={AGENT_PROMPT} lang="plaintext" />
             <Link
               to="/docs/skills"
               className="text-sm text-primary hover:underline"
@@ -116,11 +94,38 @@ function Home() {
         </Card>
       </section>
 
-      <section className="flex flex-wrap items-center gap-3 border border-border bg-card p-4">
-        <Button>Get started</Button>
-        <Button variant="outline">Outline</Button>
-        <Badge>Live</Badge>
-        <Input className="max-w-xs" placeholder="Email address" />
+      <section className="flex flex-col gap-4">
+        <h2 className="font-heading text-2xl font-medium">Components</h2>
+        <ul className="grid gap-px border border-border sm:grid-cols-2 lg:grid-cols-4">
+          {(
+            [
+              ["button", "Button"],
+              ["input", "Input"],
+              ["dialog", "Dialog"],
+              ["select", "Select"],
+              ["tabs", "Tabs"],
+              ["card", "Card"],
+              ["badge", "Badge"],
+              ["alert", "Alert"],
+            ] as const
+          ).map(([slug, title]) => (
+            <li key={slug} className="border-b border-border sm:border-r">
+              <Link
+                to="/docs/components/$slug"
+                params={{ slug }}
+                className="block p-4 text-sm font-medium hover:bg-muted"
+              >
+                {title}
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <Link
+          to="/docs/components"
+          className="text-sm text-primary hover:underline"
+        >
+          Browse all components
+        </Link>
       </section>
     </main>
   )

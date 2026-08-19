@@ -1,10 +1,11 @@
 import { useState } from "react"
+import { CheckIcon, CopyIcon } from "lucide-react"
 
 import { Button } from "@carsxe/design-system/components/button"
 
 export function CopyButton({
   text,
-  label = "Copy",
+  label,
   copiedLabel = "Copied",
 }: {
   text: string
@@ -12,19 +13,31 @@ export function CopyButton({
   copiedLabel?: string
 }) {
   const [copied, setCopied] = useState(false)
+  const iconOnly = label === undefined
 
   return (
     <Button
-      size="sm"
-      variant="outline"
+      size={iconOnly ? "icon-xs" : "sm"}
+      variant={iconOnly ? "ghost" : "outline"}
       type="button"
+      aria-label={iconOnly ? (copied ? copiedLabel : "Copy") : undefined}
       onClick={async () => {
         await navigator.clipboard.writeText(text)
         setCopied(true)
         window.setTimeout(() => setCopied(false), 2000)
       }}
     >
-      {copied ? copiedLabel : label}
+      {iconOnly ? (
+        copied ? (
+          <CheckIcon />
+        ) : (
+          <CopyIcon />
+        )
+      ) : copied ? (
+        copiedLabel
+      ) : (
+        label
+      )}
     </Button>
   )
 }

@@ -1,0 +1,24 @@
+html.dark .shiki,
+html.dark .shiki span {
+  color: var(--shiki-dark) !important;
+  background-color: transparent !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
+.shiki {
+  background: transparent !important;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+}
+
+.shiki code {
+  font-family: inherit;
+  font-size: inherit;
+  display: block;
+  min-width: max-content;
+}

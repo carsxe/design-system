@@ -15,6 +15,8 @@ import { Route as DocsIndexRouteImport } from './routes/docs/index'
 import { Route as DocsComponentsRouteImport } from './routes/docs/components'
 import { Route as DocsSkillsRouteImport } from './routes/docs/skills'
 import { Route as DocsThemingRouteImport } from './routes/docs/theming'
+import { Route as DocsComponentsIndexRouteImport } from './routes/docs/components/index'
+import { Route as DocsComponentsSlugRouteImport } from './routes/docs/components/$slug'
 import { Route as DocsSkillsIndexRouteImport } from './routes/docs/skills/index'
 import { Route as DocsSkillsSlugRouteImport } from './routes/docs/skills/$slug'
 
@@ -48,6 +50,16 @@ const DocsThemingRoute = DocsThemingRouteImport.update({
   path: '/theming',
   getParentRoute: () => DocsRoute,
 } as any)
+const DocsComponentsIndexRoute = DocsComponentsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DocsComponentsRoute,
+} as any)
+const DocsComponentsSlugRoute = DocsComponentsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => DocsComponentsRoute,
+} as any)
 const DocsSkillsIndexRoute = DocsSkillsIndexRouteImport.update({
   id: '/',
   path: '/',
@@ -62,30 +74,35 @@ const DocsSkillsSlugRoute = DocsSkillsSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/docs': typeof DocsRouteWithChildren
-  '/docs/components': typeof DocsComponentsRoute
+  '/docs/components': typeof DocsComponentsRouteWithChildren
   '/docs/skills': typeof DocsSkillsRouteWithChildren
   '/docs/theming': typeof DocsThemingRoute
   '/docs/': typeof DocsIndexRoute
+  '/docs/components/$slug': typeof DocsComponentsSlugRoute
   '/docs/skills/$slug': typeof DocsSkillsSlugRoute
+  '/docs/components/': typeof DocsComponentsIndexRoute
   '/docs/skills/': typeof DocsSkillsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/docs/components': typeof DocsComponentsRoute
   '/docs/theming': typeof DocsThemingRoute
   '/docs': typeof DocsIndexRoute
+  '/docs/components/$slug': typeof DocsComponentsSlugRoute
   '/docs/skills/$slug': typeof DocsSkillsSlugRoute
+  '/docs/components': typeof DocsComponentsIndexRoute
   '/docs/skills': typeof DocsSkillsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/docs': typeof DocsRouteWithChildren
-  '/docs/components': typeof DocsComponentsRoute
+  '/docs/components': typeof DocsComponentsRouteWithChildren
   '/docs/skills': typeof DocsSkillsRouteWithChildren
   '/docs/theming': typeof DocsThemingRoute
   '/docs/': typeof DocsIndexRoute
+  '/docs/components/$slug': typeof DocsComponentsSlugRoute
   '/docs/skills/$slug': typeof DocsSkillsSlugRoute
+  '/docs/components/': typeof DocsComponentsIndexRoute
   '/docs/skills/': typeof DocsSkillsIndexRoute
 }
 export interface FileRouteTypes {
@@ -97,15 +114,18 @@ export interface FileRouteTypes {
     | '/docs/skills'
     | '/docs/theming'
     | '/docs/'
+    | '/docs/components/$slug'
     | '/docs/skills/$slug'
+    | '/docs/components/'
     | '/docs/skills/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/docs/components'
     | '/docs/theming'
     | '/docs'
+    | '/docs/components/$slug'
     | '/docs/skills/$slug'
+    | '/docs/components'
     | '/docs/skills'
   id:
     | '__root__'
@@ -115,7 +135,9 @@ export interface FileRouteTypes {
     | '/docs/skills'
     | '/docs/theming'
     | '/docs/'
+    | '/docs/components/$slug'
     | '/docs/skills/$slug'
+    | '/docs/components/'
     | '/docs/skills/'
   fileRoutesById: FileRoutesById
 }
@@ -168,6 +190,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DocsThemingRouteImport
       parentRoute: typeof DocsRoute
     }
+    '/docs/components/': {
+      id: '/docs/components/'
+      path: '/'
+      fullPath: '/docs/components/'
+      preLoaderRoute: typeof DocsComponentsIndexRouteImport
+      parentRoute: typeof DocsComponentsRoute
+    }
+    '/docs/components/$slug': {
+      id: '/docs/components/$slug'
+      path: '/$slug'
+      fullPath: '/docs/components/$slug'
+      preLoaderRoute: typeof DocsComponentsSlugRouteImport
+      parentRoute: typeof DocsComponentsRoute
+    }
     '/docs/skills/': {
       id: '/docs/skills/'
       path: '/'
@@ -185,6 +221,20 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface DocsComponentsRouteChildren {
+  DocsComponentsSlugRoute: typeof DocsComponentsSlugRoute
+  DocsComponentsIndexRoute: typeof DocsComponentsIndexRoute
+}
+
+const DocsComponentsRouteChildren: DocsComponentsRouteChildren = {
+  DocsComponentsSlugRoute: DocsComponentsSlugRoute,
+  DocsComponentsIndexRoute: DocsComponentsIndexRoute,
+}
+
+const DocsComponentsRouteWithChildren = DocsComponentsRoute._addFileChildren(
+  DocsComponentsRouteChildren,
+)
+
 interface DocsSkillsRouteChildren {
   DocsSkillsSlugRoute: typeof DocsSkillsSlugRoute
   DocsSkillsIndexRoute: typeof DocsSkillsIndexRoute
@@ -200,14 +250,14 @@ const DocsSkillsRouteWithChildren = DocsSkillsRoute._addFileChildren(
 )
 
 interface DocsRouteChildren {
-  DocsComponentsRoute: typeof DocsComponentsRoute
+  DocsComponentsRoute: typeof DocsComponentsRouteWithChildren
   DocsSkillsRoute: typeof DocsSkillsRouteWithChildren
   DocsThemingRoute: typeof DocsThemingRoute
   DocsIndexRoute: typeof DocsIndexRoute
 }
 
 const DocsRouteChildren: DocsRouteChildren = {
-  DocsComponentsRoute: DocsComponentsRoute,
+  DocsComponentsRoute: DocsComponentsRouteWithChildren,
   DocsSkillsRoute: DocsSkillsRouteWithChildren,
   DocsThemingRoute: DocsThemingRoute,
   DocsIndexRoute: DocsIndexRoute,

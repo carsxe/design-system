@@ -2,10 +2,12 @@ import { Link, useRouterState } from "@tanstack/react-router"
 
 import { cn } from "@carsxe/design-system/lib/utils"
 
-const items = [
+import { componentDocs } from "@/docs/components"
+
+const gettingStarted = [
   {
     to: "/docs",
-    label: "Getting started",
+    label: "Installation",
     match: (path: string) => path === "/docs" || path === "/docs/",
   },
   {
@@ -14,16 +16,35 @@ const items = [
     match: (path: string) => path === "/docs/theming",
   },
   {
-    to: "/docs/components",
-    label: "Components",
-    match: (path: string) => path === "/docs/components",
-  },
-  {
     to: "/docs/skills",
     label: "Skills",
     match: (path: string) => path.startsWith("/docs/skills"),
   },
 ] as const
+
+function NavLink({
+  to,
+  active,
+  children,
+}: {
+  to: string
+  active: boolean
+  children: string
+}) {
+  return (
+    <Link
+      to={to}
+      className={cn(
+        "block px-2 py-1 text-sm",
+        active
+          ? "font-medium text-foreground"
+          : "text-muted-foreground hover:text-foreground"
+      )}
+    >
+      {children}
+    </Link>
+  )
+}
 
 export function DocsSidebar() {
   const pathname = useRouterState({
@@ -31,28 +52,45 @@ export function DocsSidebar() {
   })
 
   return (
-    <aside className="sticky top-14 hidden h-[calc(100vh-3.5rem)] w-56 shrink-0 overflow-y-auto border-r border-border py-8 md:block">
-      <p className="px-3 pb-3 text-xs font-medium tracking-wide text-muted-foreground uppercase">
-        Docs
-      </p>
-      <nav className="flex flex-col">
-        {items.map((item) => {
-          const active = item.match(pathname)
-          return (
-            <Link
-              key={item.to}
-              to={item.to}
-              className={cn(
-                "border-l-2 px-3 py-1.5 text-sm",
-                active
-                  ? "border-primary font-medium text-foreground"
-                  : "border-transparent text-muted-foreground hover:text-foreground"
-              )}
-            >
-              {item.label}
-            </Link>
-          )
-        })}
+    <aside className="sticky top-14 hidden h-[calc(100vh-3.5rem)] w-56 shrink-0 overflow-y-auto border-r border-border py-6 md:block">
+      <nav className="flex flex-col gap-6">
+        <div>
+          <p className="px-2 pb-2 text-xs font-medium text-muted-foreground">
+            Get started
+          </p>
+          <div className="flex flex-col">
+            {gettingStarted.map((item) => (
+              <NavLink key={item.to} to={item.to} active={item.match(pathname)}>
+                {item.label}
+              </NavLink>
+            ))}
+          </div>
+        </div>
+        <div>
+          <p className="px-2 pb-2 text-xs font-medium text-muted-foreground">
+            Components
+          </p>
+          <div className="flex flex-col">
+            {componentDocs.map((doc) => {
+              const href = `/docs/components/${doc.slug}`
+              return (
+                <Link
+                  key={doc.slug}
+                  to="/docs/components/$slug"
+                  params={{ slug: doc.slug }}
+                  className={cn(
+                    "block px-2 py-1 text-sm",
+                    pathname === href
+                      ? "font-medium text-foreground"
+                      : "text-muted-foreground hover:text-foreground"
+                  )}
+                >
+                  {doc.title}
+                </Link>
+              )
+            })}
+          </div>
+        </div>
       </nav>
     </aside>
   )
