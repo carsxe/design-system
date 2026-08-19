@@ -1,6 +1,6 @@
 {
   "name": "@carsxe/design-system",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Carsxe design system — shadcn/ui components themed to the Carsxe brand.",
   "license": "MIT",
   "type": "module",
