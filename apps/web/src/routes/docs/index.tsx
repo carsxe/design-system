@@ -4,8 +4,17 @@ import { Button } from "@carsxe/design-system/components/button"
 
 import { CodeBlock } from "@/components/code-block"
 import { DocsPageHeader } from "@/components/docs-page-header"
+import { seo } from "@/lib/seo"
 
 export const Route = createFileRoute("/docs/")({
+  head: () =>
+    seo({
+      title: "Installation",
+      description:
+        "Install @carsxe/design-system, load the CSS, and import a component. Do not run shadcn add in your app.",
+      path: "/docs",
+      eyebrow: "Docs",
+    }),
   component: GettingStarted,
 })
 

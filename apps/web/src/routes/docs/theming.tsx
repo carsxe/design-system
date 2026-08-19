@@ -2,8 +2,17 @@ import { createFileRoute } from "@tanstack/react-router"
 
 import { CodeBlock } from "@/components/code-block"
 import { DocsPageHeader } from "@/components/docs-page-header"
+import { seo } from "@/lib/seo"
 
 export const Route = createFileRoute("/docs/theming")({
+  head: () =>
+    seo({
+      title: "Theming",
+      description:
+        "Tokens, fonts, and dark mode live in the package CSS. Customize with CSS variables, not by forking components.",
+      path: "/docs/theming",
+      eyebrow: "Docs",
+    }),
   component: Theming,
 })
 

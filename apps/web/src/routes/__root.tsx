@@ -10,9 +10,18 @@ import { Toaster } from "@carsxe/design-system/components/sonner"
 import { TooltipProvider } from "@carsxe/design-system/components/tooltip"
 
 import { SiteHeader } from "@/components/site-header"
+import { SITE_DESCRIPTION, SITE_NAME, seo } from "@/lib/seo"
 
 import appCss from "@carsxe/design-system/globals.css?url"
 import docsCss from "@/styles/docs.css?url"
+
+const defaults = seo({
+  title: SITE_NAME,
+  description: SITE_DESCRIPTION,
+  path: "/",
+  suffix: false,
+  eyebrow: "Design system",
+})
 
 export const Route = createRootRoute({
   head: () => ({
@@ -25,8 +34,10 @@ export const Route = createRootRoute({
         content: "width=device-width, initial-scale=1",
       },
       {
-        title: "Carsxe Design System",
+        name: "theme-color",
+        content: "#065774",
       },
+      ...defaults.meta,
     ],
     links: [
       {

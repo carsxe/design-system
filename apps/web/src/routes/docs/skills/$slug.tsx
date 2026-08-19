@@ -1,13 +1,34 @@
 import { Link, createFileRoute, notFound } from "@tanstack/react-router"
+import { getSkill } from "@carsxe/skills"
 
 import { Separator } from "@carsxe/design-system/components/separator"
 
 import { CodeBlock } from "@/components/code-block"
 import { CopyButton } from "@/components/copy-button"
 import { DocsPageHeader } from "@/components/docs-page-header"
+import { seo } from "@/lib/seo"
 import { loadSkill, skillMarkdownBody } from "@/lib/skills"
 
 export const Route = createFileRoute("/docs/skills/$slug")({
+  head: ({ params }) => {
+    const skill = getSkill(params.slug)
+
+    if (!skill) {
+      return seo({
+        title: "Skill",
+        description: "Copy-pastable agent skills for @carsxe/design-system.",
+        path: `/docs/skills/${params.slug}`,
+        eyebrow: "Skill",
+      })
+    }
+
+    return seo({
+      title: skill.title,
+      description: skill.description,
+      path: `/docs/skills/${skill.slug}`,
+      eyebrow: "Skill",
+    })
+  },
   component: SkillDetail,
 })
 

@@ -2,8 +2,17 @@ import { Link, createFileRoute } from "@tanstack/react-router"
 
 import { DocsPageHeader } from "@/components/docs-page-header"
 import { componentDocs } from "@/docs/components"
+import { seo } from "@/lib/seo"
 
 export const Route = createFileRoute("/docs/components/")({
+  head: () =>
+    seo({
+      title: "Components",
+      description:
+        "Import primitives from @carsxe/design-system. Each page has a live preview, usage, and API.",
+      path: "/docs/components",
+      eyebrow: "Components",
+    }),
   component: ComponentsIndex,
 })
 

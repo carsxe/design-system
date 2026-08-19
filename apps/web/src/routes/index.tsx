@@ -19,8 +19,19 @@ import {
 import { CodeBlock } from "@/components/code-block"
 import { Logo } from "@/components/logo"
 import { AGENT_PROMPT } from "@/lib/agent-prompt"
+import { SITE_DESCRIPTION, seo } from "@/lib/seo"
 
-export const Route = createFileRoute("/")({ component: Home })
+export const Route = createFileRoute("/")({
+  head: () =>
+    seo({
+      title: "Carsxe UI, as a package",
+      description: SITE_DESCRIPTION,
+      path: "/",
+      suffix: false,
+      eyebrow: "Design system",
+    }),
+  component: Home,
+})
 
 const installCommands = {
   bun: "bun add @carsxe/design-system",

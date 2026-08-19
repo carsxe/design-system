@@ -3,9 +3,18 @@ import { Link, createFileRoute } from "@tanstack/react-router"
 import { CodeBlock } from "@/components/code-block"
 import { DocsPageHeader } from "@/components/docs-page-header"
 import { AGENT_PROMPT } from "@/lib/agent-prompt"
+import { seo } from "@/lib/seo"
 import { listSkills } from "@/lib/skills"
 
 export const Route = createFileRoute("/docs/skills/")({
+  head: () =>
+    seo({
+      title: "Skills",
+      description:
+        "Copy-pastable agent skills from packages/skills. Save a skill as .cursor/skills/<slug>/SKILL.md or the equivalent folder for your agent.",
+      path: "/docs/skills",
+      eyebrow: "Skills",
+    }),
   component: SkillsCatalog,
 })
 
