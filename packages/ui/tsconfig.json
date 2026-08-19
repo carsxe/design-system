@@ -8,8 +8,9 @@
     "skipLibCheck": true,
     "strict": true,
     "noEmit": true,
+    "ignoreDeprecations": "6.0",
     "paths": {
-      "@workspace/ui/*": ["./src/*"]
+      "@carsxe/design-system/*": ["./src/*"]
     }
   },
   "include": ["."],

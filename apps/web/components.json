@@ -14,8 +14,8 @@
     "components": "@/components",
     "hooks": "@/hooks",
     "lib": "@/lib",
-    "utils": "@workspace/ui/lib/utils",
-    "ui": "@workspace/ui/components"
+    "utils": "@carsxe/design-system/lib/utils",
+    "ui": "@carsxe/design-system/components"
   },
   "rtl": false,
   "menuColor": "default",

@@ -14,5 +14,4 @@ todos.json
 # turbo
 .turbo
 
-# typescript
-*.tsbuildinfo
+storybook-static

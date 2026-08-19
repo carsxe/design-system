@@ -10,13 +10,13 @@
     "cssVariables": true
   },
   "iconLibrary": "lucide",
-  "aliases": {
-    "components": "@workspace/ui/components",
-    "utils": "@workspace/ui/lib/utils",
-    "hooks": "@workspace/ui/hooks",
-    "lib": "@workspace/ui/lib",
-    "ui": "@workspace/ui/components"
-  },
+    "aliases": {
+        "components": "@carsxe/design-system/components",
+        "utils": "@carsxe/design-system/lib/utils",
+        "hooks": "@carsxe/design-system/hooks",
+        "lib": "@carsxe/design-system/lib",
+        "ui": "@carsxe/design-system/components"
+    },
   "rtl": false,
   "menuColor": "default",
   "menuAccent": "subtle"

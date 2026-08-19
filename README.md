@@ -1,21 +1,44 @@
-# shadcn/ui monorepo template
+# Carsxe Design System
 
-This is a TanStack Start monorepo template with shadcn/ui.
+Publishable shadcn/ui package (`@carsxe/design-system`) themed to the [Carsxe Rebrand Figma file](https://www.figma.com/design/fT1rCw7OXQishsxdcpGrMd/Carsxe-Rebrand?node-id=1-4). Components are installed from the shadcn `base-rhea` registry and restyled through CSS variables.
+
+## Packages
+
+- `packages/ui` — `@carsxe/design-system` component library
+- `apps/storybook` — Storybook 10 for every component
+- `apps/web` — TanStack Start playground
+
+## Using the package
+
+```tsx
+import { Button } from "@carsxe/design-system/components/button"
+```
+
+Load the theme:
+
+```css
+@import "@carsxe/design-system/globals.css";
+```
+
+Consumers who do not compile Tailwind can import the prebuilt stylesheet instead:
+
+```ts
+import "@carsxe/design-system/styles.css"
+```
 
 ## Adding components
 
-To add components to your app, run the following command at the root of your `web` app:
+```bash
+bunx shadcn@latest add dialog -c packages/ui
+```
+
+## Scripts
 
 ```bash
-pnpm dlx shadcn@latest add button -c apps/web
+bun install
+bun run dev          # web + storybook
+bun run build        # ui dist + apps
+bun run typecheck
 ```
 
-This will place the ui components in the `packages/ui/src/components` directory.
-
-## Using components
-
-To use the components in your app, import them from the `ui` package.
-
-```tsx
-import { Button } from "@workspace/ui/components/button";
-```
+Storybook runs at `http://localhost:6006`.
