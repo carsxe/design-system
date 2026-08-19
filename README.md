@@ -5,8 +5,9 @@ Publishable shadcn/ui package (`@carsxe/design-system`) themed to the [Carsxe Re
 ## Packages
 
 - `packages/ui` — `@carsxe/design-system` component library
+- `packages/skills` — copy-pastable agent skills (see `AGENTS.md`)
 - `apps/storybook` — Storybook 10 for every component
-- `apps/web` — TanStack Start playground
+- `apps/web` — docs site (TanStack Start)
 
 ## Using the package
 

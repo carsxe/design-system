@@ -40,6 +40,7 @@
       "version": "0.0.1",
       "dependencies": {
         "@carsxe/design-system": "workspace:*",
+        "@carsxe/skills": "workspace:*",
         "@tailwindcss/vite": "^4",
         "@tanstack/react-devtools": "latest",
         "@tanstack/react-router": "latest",
@@ -61,6 +62,13 @@
         "eslint": "^9",
         "typescript": "^6",
         "vite": "^8",
+      },
+    },
+    "packages/skills": {
+      "name": "@carsxe/skills",
+      "version": "0.0.1",
+      "devDependencies": {
+        "typescript": "^6",
       },
     },
     "packages/ui": {
@@ -168,6 +176,8 @@
     "@base-ui/utils": ["@base-ui/utils@0.3.2", "", { "dependencies": { "@babel/runtime": "^7.29.2", "@floating-ui/utils": "^0.2.12", "reselect": "^5.2.0", "use-sync-external-store": "^1.6.0" }, "peerDependencies": { "@types/react": "^17 || ^18 || ^19", "react": "^17 || ^18 || ^19", "react-dom": "^17 || ^18 || ^19" }, "optionalPeers": ["@types/react"] }, "sha512-oWy1aq/I2GmYjpl4PhEAhzflF8VPGKgZeq0xAWTbfD5KBWyxcN0ZP2+WHSUm/5Z6lVMBDLReLcoXwSYoRc/zNQ=="],
 
     "@carsxe/design-system": ["@carsxe/design-system@workspace:packages/ui"],
+
+    "@carsxe/skills": ["@carsxe/skills@workspace:packages/skills"],
 
     "@dotenvx/dotenvx": ["@dotenvx/dotenvx@1.75.1", "", { "dependencies": { "@dotenvx/primitives": "^0.8.0", "commander": "^11.1.0", "conf": "^10.2.0", "dotenv": "^17.2.1", "enquirer": "^2.4.1", "env-paths": "^2.2.1", "execa": "^5.1.1", "fdir": "^6.2.0", "ignore": "^5.3.0", "object-treeify": "1.1.33", "open": "^8.4.2", "picomatch": "^4.0.4", "systeminformation": "^5.22.11", "undici": "^7.11.0", "which": "^4.0.0", "yocto-spinner": "^1.1.0" }, "bin": { "dotenvx": "src/cli/dotenvx.js" } }, "sha512-/BITOC9dmS/edY2zQwZNicQ059O6RKabtQfyEafV0nGtfYRNHYy1DIPiYVcov40+tob9hfmBnbR963dS+EQ1DQ=="],
 

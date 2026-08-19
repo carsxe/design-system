@@ -10,33 +10,118 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DocsRouteImport } from './routes/docs'
+import { Route as DocsIndexRouteImport } from './routes/docs/index'
+import { Route as DocsComponentsRouteImport } from './routes/docs/components'
+import { Route as DocsSkillsRouteImport } from './routes/docs/skills'
+import { Route as DocsThemingRouteImport } from './routes/docs/theming'
+import { Route as DocsSkillsIndexRouteImport } from './routes/docs/skills/index'
+import { Route as DocsSkillsSlugRouteImport } from './routes/docs/skills/$slug'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DocsRoute = DocsRouteImport.update({
+  id: '/docs',
+  path: '/docs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DocsIndexRoute = DocsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsComponentsRoute = DocsComponentsRouteImport.update({
+  id: '/components',
+  path: '/components',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsSkillsRoute = DocsSkillsRouteImport.update({
+  id: '/skills',
+  path: '/skills',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsThemingRoute = DocsThemingRouteImport.update({
+  id: '/theming',
+  path: '/theming',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsSkillsIndexRoute = DocsSkillsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => DocsSkillsRoute,
+} as any)
+const DocsSkillsSlugRoute = DocsSkillsSlugRouteImport.update({
+  id: '/$slug',
+  path: '/$slug',
+  getParentRoute: () => DocsSkillsRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/docs': typeof DocsRouteWithChildren
+  '/docs/components': typeof DocsComponentsRoute
+  '/docs/skills': typeof DocsSkillsRouteWithChildren
+  '/docs/theming': typeof DocsThemingRoute
+  '/docs/': typeof DocsIndexRoute
+  '/docs/skills/$slug': typeof DocsSkillsSlugRoute
+  '/docs/skills/': typeof DocsSkillsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/docs/components': typeof DocsComponentsRoute
+  '/docs/theming': typeof DocsThemingRoute
+  '/docs': typeof DocsIndexRoute
+  '/docs/skills/$slug': typeof DocsSkillsSlugRoute
+  '/docs/skills': typeof DocsSkillsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/docs': typeof DocsRouteWithChildren
+  '/docs/components': typeof DocsComponentsRoute
+  '/docs/skills': typeof DocsSkillsRouteWithChildren
+  '/docs/theming': typeof DocsThemingRoute
+  '/docs/': typeof DocsIndexRoute
+  '/docs/skills/$slug': typeof DocsSkillsSlugRoute
+  '/docs/skills/': typeof DocsSkillsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/docs'
+    | '/docs/components'
+    | '/docs/skills'
+    | '/docs/theming'
+    | '/docs/'
+    | '/docs/skills/$slug'
+    | '/docs/skills/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/docs/components'
+    | '/docs/theming'
+    | '/docs'
+    | '/docs/skills/$slug'
+    | '/docs/skills'
+  id:
+    | '__root__'
+    | '/'
+    | '/docs'
+    | '/docs/components'
+    | '/docs/skills'
+    | '/docs/theming'
+    | '/docs/'
+    | '/docs/skills/$slug'
+    | '/docs/skills/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DocsRoute: typeof DocsRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +133,91 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/docs': {
+      id: '/docs'
+      path: '/docs'
+      fullPath: '/docs'
+      preLoaderRoute: typeof DocsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/docs/': {
+      id: '/docs/'
+      path: '/'
+      fullPath: '/docs/'
+      preLoaderRoute: typeof DocsIndexRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/components': {
+      id: '/docs/components'
+      path: '/components'
+      fullPath: '/docs/components'
+      preLoaderRoute: typeof DocsComponentsRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/skills': {
+      id: '/docs/skills'
+      path: '/skills'
+      fullPath: '/docs/skills'
+      preLoaderRoute: typeof DocsSkillsRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/theming': {
+      id: '/docs/theming'
+      path: '/theming'
+      fullPath: '/docs/theming'
+      preLoaderRoute: typeof DocsThemingRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/skills/': {
+      id: '/docs/skills/'
+      path: '/'
+      fullPath: '/docs/skills/'
+      preLoaderRoute: typeof DocsSkillsIndexRouteImport
+      parentRoute: typeof DocsSkillsRoute
+    }
+    '/docs/skills/$slug': {
+      id: '/docs/skills/$slug'
+      path: '/$slug'
+      fullPath: '/docs/skills/$slug'
+      preLoaderRoute: typeof DocsSkillsSlugRouteImport
+      parentRoute: typeof DocsSkillsRoute
+    }
   }
 }
 
+interface DocsSkillsRouteChildren {
+  DocsSkillsSlugRoute: typeof DocsSkillsSlugRoute
+  DocsSkillsIndexRoute: typeof DocsSkillsIndexRoute
+}
+
+const DocsSkillsRouteChildren: DocsSkillsRouteChildren = {
+  DocsSkillsSlugRoute: DocsSkillsSlugRoute,
+  DocsSkillsIndexRoute: DocsSkillsIndexRoute,
+}
+
+const DocsSkillsRouteWithChildren = DocsSkillsRoute._addFileChildren(
+  DocsSkillsRouteChildren,
+)
+
+interface DocsRouteChildren {
+  DocsComponentsRoute: typeof DocsComponentsRoute
+  DocsSkillsRoute: typeof DocsSkillsRouteWithChildren
+  DocsThemingRoute: typeof DocsThemingRoute
+  DocsIndexRoute: typeof DocsIndexRoute
+}
+
+const DocsRouteChildren: DocsRouteChildren = {
+  DocsComponentsRoute: DocsComponentsRoute,
+  DocsSkillsRoute: DocsSkillsRouteWithChildren,
+  DocsThemingRoute: DocsThemingRoute,
+  DocsIndexRoute: DocsIndexRoute,
+}
+
+const DocsRouteWithChildren = DocsRoute._addFileChildren(DocsRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DocsRoute: DocsRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

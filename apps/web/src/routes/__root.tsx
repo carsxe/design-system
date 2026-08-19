@@ -1,4 +1,11 @@
-import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router"
+import {
+  HeadContent,
+  Outlet,
+  Scripts,
+  createRootRoute,
+} from "@tanstack/react-router"
+
+import { SiteHeader } from "@/components/site-header"
 
 import appCss from "@carsxe/design-system/globals.css?url"
 
@@ -24,13 +31,25 @@ export const Route = createRootRoute({
     ],
   }),
   notFoundComponent: () => (
-    <main className="container mx-auto p-4 pt-16">
-      <h1>404</h1>
-      <p>The requested page could not be found.</p>
+    <main className="mx-auto max-w-6xl px-6 py-16">
+      <h1 className="font-heading text-3xl font-medium">404</h1>
+      <p className="mt-2 text-muted-foreground">
+        The requested page could not be found.
+      </p>
     </main>
   ),
+  component: RootComponent,
   shellComponent: RootDocument,
 })
+
+function RootComponent() {
+  return (
+    <>
+      <SiteHeader />
+      <Outlet />
+    </>
+  )
+}
 
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
@@ -38,7 +57,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       <head>
         <HeadContent />
       </head>
-      <body>
+      <body className="min-h-screen bg-background text-foreground antialiased">
         {children}
         <Scripts />
       </body>
