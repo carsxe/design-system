@@ -42,4 +42,20 @@ bun run build        # ui dist + apps
 bun run typecheck
 ```
 
-Storybook runs at `http://localhost:6006`.
+Storybook runs at `http://localhost:6006`. Docs at `http://localhost:3000`.
+
+## Deploy (Cloudflare)
+
+Both apps deploy with Wrangler. Log in once:
+
+```bash
+bunx wrangler login
+```
+
+Then:
+
+```bash
+bun run deploy:web        # docs → carsxe-design-system.workers.dev
+bun run deploy:storybook  # storybook → carsxe-design-system-storybook.workers.dev
+bun run deploy            # both
+```

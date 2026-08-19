@@ -7,6 +7,8 @@
     "dev": "vite dev --port 3000",
     "build": "vite build",
     "preview": "vite preview",
+    "deploy": "bun run build && wrangler deploy",
+    "cf-typegen": "wrangler types",
     "lint": "eslint",
     "format": "prettier --write \"**/*.{ts,tsx}\"",
     "typecheck": "tsc --noEmit"
@@ -18,8 +20,8 @@
     "@tanstack/react-router-devtools": "latest",
     "@tanstack/react-start": "latest",
     "@tanstack/router-plugin": "latest",
-    "@carsxe/design-system": "workspace:*",
-    "@carsxe/skills": "workspace:*",
+    "@carsxe/design-system": "*",
+    "@carsxe/skills": "*",
     "lucide-react": "^1.32.0",
     "next-themes": "^0.4.6",
     "react": "^19.2.6",
@@ -29,6 +31,7 @@
     "tailwindcss": "^4"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.53.0",
     "@tanstack/devtools-vite": "latest",
     "@tanstack/eslint-config": "latest",
     "@types/node": "^22",
@@ -37,6 +40,7 @@
     "@vitejs/plugin-react": "^6",
     "eslint": "^9",
     "typescript": "^6",
-    "vite": "^8"
+    "vite": "^8",
+    "wrangler": "^4.124.0"
   }
 }

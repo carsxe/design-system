@@ -8,11 +8,12 @@
     "build": "storybook build",
     "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build",
+    "deploy": "bun run build && wrangler deploy",
     "lint": "eslint",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@carsxe/design-system": "workspace:*",
+    "@carsxe/design-system": "*",
     "lucide-react": "^1.32.0",
     "next-themes": "^0.4.6",
     "react": "^19.2.6",
@@ -29,6 +30,7 @@
     "storybook": "^10.2.0",
     "tailwindcss": "^4",
     "typescript": "^6",
-    "vite": "^8"
+    "vite": "^8",
+    "wrangler": "^4.124.0"
   }
 }

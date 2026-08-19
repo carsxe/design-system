@@ -6,15 +6,22 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "storybook": "turbo dev --filter=storybook",
+    "deploy:web": "bun run --cwd apps/web deploy",
+    "deploy:storybook": "bun run --cwd apps/storybook deploy",
+    "deploy": "bun run deploy:web && bun run deploy:storybook",
     "lint": "turbo lint",
     "format": "turbo format",
     "typecheck": "turbo typecheck"
   },
   "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.53.0",
     "prettier": "^3.8.3",
     "prettier-plugin-tailwindcss": "^0.8.0",
+    "storybook": "workspace:*",
     "turbo": "^2.9.18",
-    "typescript": "^6"
+    "typescript": "^6",
+    "web": "workspace:*",
+    "wrangler": "^4.124.0"
   },
   "packageManager": "bun@1.3.14",
   "engines": {
