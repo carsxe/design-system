@@ -42,7 +42,13 @@ bun run build        # ui dist + apps
 bun run typecheck
 ```
 
-Storybook runs at `http://localhost:6006`. Docs at `http://localhost:3000`.
+Locally, Storybook runs at `http://localhost:6006` and the docs at `http://localhost:3000`.
+
+Production:
+
+- Docs — <https://ui.carsxe.com>
+- Storybook — <https://storybook.carsxe.com>
+- Package — <https://www.npmjs.com/package/@carsxe/design-system>
 
 ## Deploy (Cloudflare)
 

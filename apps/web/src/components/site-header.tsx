@@ -2,8 +2,7 @@ import { Link } from "@tanstack/react-router"
 
 import { Logo } from "@/components/logo"
 import { ThemeToggle } from "@/components/theme-toggle"
-
-const STORYBOOK_URL = "http://localhost:6006"
+import { NPM_URL, STORYBOOK_URL } from "@/lib/site"
 
 export function SiteHeader() {
   return (
@@ -23,9 +22,18 @@ export function SiteHeader() {
           <a
             href={STORYBOOK_URL}
             className="text-muted-foreground hover:text-foreground"
+            target="_blank"
             rel="noreferrer"
           >
             Storybook
+          </a>
+          <a
+            href={NPM_URL}
+            className="text-muted-foreground hover:text-foreground"
+            target="_blank"
+            rel="noreferrer"
+          >
+            npm
           </a>
           <ThemeToggle />
         </nav>
