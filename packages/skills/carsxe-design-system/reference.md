@@ -14,8 +14,8 @@ Dark mode is activated with a `.dark` class on an ancestor (typically `<html>`).
 Loaded by the CSS import:
 
 - Sans / UI: Manrope (`--font-sans`)
-- Headings: Darker Grotesque (`--font-heading`)
-- Body / inputs: Inter (`--font-body`)
+- Headings: DM Sans (`--font-heading`)
+- Body / inputs: Manrope (`--font-body`)
 
 ## Radius
 

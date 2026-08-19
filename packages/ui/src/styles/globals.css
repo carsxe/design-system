@@ -2,8 +2,7 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 @import "@fontsource-variable/manrope";
-@import "@fontsource-variable/darker-grotesque";
-@import "@fontsource-variable/inter";
+@import "@fontsource-variable/dm-sans";
 
 @custom-variant dark (&:is(.dark *));
 @source "../../../apps/**/*.{ts,tsx}";
@@ -163,8 +162,8 @@
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-ring: var(--sidebar-ring);
     --font-sans: "Manrope Variable", "Manrope", sans-serif;
-    --font-heading: "Darker Grotesque Variable", "Darker Grotesque", sans-serif;
-    --font-body: "Inter Variable", "Inter", sans-serif;
+    --font-heading: "DM Sans Variable", "DM Sans", sans-serif;
+    --font-body: "Manrope Variable", "Manrope", sans-serif;
 }
 
 @layer base {

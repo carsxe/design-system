@@ -34,7 +34,7 @@ Otherwise import the prebuilt stylesheet:
 import "@carsxe/design-system/styles.css"
 ```
 
-The CSS import also loads the fonts (Manrope, Darker Grotesque, Inter).
+The CSS import also loads the fonts (Manrope, DM Sans).
 
 ## Usage
 
