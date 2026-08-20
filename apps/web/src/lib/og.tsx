@@ -54,7 +54,7 @@ function OgCard({ title, eyebrow }: { title: string; eyebrow?: string }) {
         justifyContent: "space-between",
         width: "100%",
         height: "100%",
-        background: "#065774",
+        background: "#00aed5",
         color: "#ffffff",
         padding: 72,
         fontFamily: "DM Sans",
