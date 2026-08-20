@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as DocsRouteImport } from './routes/docs'
 import { Route as ApiOgRouteImport } from './routes/api/og'
 import { Route as DocsIndexRouteImport } from './routes/docs/index'
+import { Route as DocsBrandRouteImport } from './routes/docs/brand'
 import { Route as DocsComponentsRouteImport } from './routes/docs/components'
 import { Route as DocsSkillsRouteImport } from './routes/docs/skills'
 import { Route as DocsThemingRouteImport } from './routes/docs/theming'
@@ -39,6 +40,11 @@ const ApiOgRoute = ApiOgRouteImport.update({
 const DocsIndexRoute = DocsIndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsBrandRoute = DocsBrandRouteImport.update({
+  id: '/brand',
+  path: '/brand',
   getParentRoute: () => DocsRoute,
 } as any)
 const DocsComponentsRoute = DocsComponentsRouteImport.update({
@@ -81,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/docs': typeof DocsRouteWithChildren
   '/api/og': typeof ApiOgRoute
+  '/docs/brand': typeof DocsBrandRoute
   '/docs/components': typeof DocsComponentsRouteWithChildren
   '/docs/skills': typeof DocsSkillsRouteWithChildren
   '/docs/theming': typeof DocsThemingRoute
@@ -93,6 +100,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api/og': typeof ApiOgRoute
+  '/docs/brand': typeof DocsBrandRoute
   '/docs/theming': typeof DocsThemingRoute
   '/docs': typeof DocsIndexRoute
   '/docs/components/$slug': typeof DocsComponentsSlugRoute
@@ -105,6 +113,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/docs': typeof DocsRouteWithChildren
   '/api/og': typeof ApiOgRoute
+  '/docs/brand': typeof DocsBrandRoute
   '/docs/components': typeof DocsComponentsRouteWithChildren
   '/docs/skills': typeof DocsSkillsRouteWithChildren
   '/docs/theming': typeof DocsThemingRoute
@@ -120,6 +129,7 @@ export interface FileRouteTypes {
     | '/'
     | '/docs'
     | '/api/og'
+    | '/docs/brand'
     | '/docs/components'
     | '/docs/skills'
     | '/docs/theming'
@@ -132,6 +142,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/api/og'
+    | '/docs/brand'
     | '/docs/theming'
     | '/docs'
     | '/docs/components/$slug'
@@ -143,6 +154,7 @@ export interface FileRouteTypes {
     | '/'
     | '/docs'
     | '/api/og'
+    | '/docs/brand'
     | '/docs/components'
     | '/docs/skills'
     | '/docs/theming'
@@ -187,6 +199,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/docs/'
       preLoaderRoute: typeof DocsIndexRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/brand': {
+      id: '/docs/brand'
+      path: '/brand'
+      fullPath: '/docs/brand'
+      preLoaderRoute: typeof DocsBrandRouteImport
       parentRoute: typeof DocsRoute
     }
     '/docs/components': {
@@ -270,6 +289,7 @@ const DocsSkillsRouteWithChildren = DocsSkillsRoute._addFileChildren(
 )
 
 interface DocsRouteChildren {
+  DocsBrandRoute: typeof DocsBrandRoute
   DocsComponentsRoute: typeof DocsComponentsRouteWithChildren
   DocsSkillsRoute: typeof DocsSkillsRouteWithChildren
   DocsThemingRoute: typeof DocsThemingRoute
@@ -277,6 +297,7 @@ interface DocsRouteChildren {
 }
 
 const DocsRouteChildren: DocsRouteChildren = {
+  DocsBrandRoute: DocsBrandRoute,
   DocsComponentsRoute: DocsComponentsRouteWithChildren,
   DocsSkillsRoute: DocsSkillsRouteWithChildren,
   DocsThemingRoute: DocsThemingRoute,

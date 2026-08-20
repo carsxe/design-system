@@ -16,6 +16,11 @@ const gettingStarted = [
     match: (path: string) => path === "/docs/theming",
   },
   {
+    to: "/docs/brand",
+    label: "Brand assets",
+    match: (path: string) => path === "/docs/brand",
+  },
+  {
     to: "/docs/skills",
     label: "Skills",
     match: (path: string) => path.startsWith("/docs/skills"),

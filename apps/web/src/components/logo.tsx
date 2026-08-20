@@ -5,7 +5,7 @@ export function Logo({ className }: { className?: string }) {
     <span className="inline-flex items-center">
       <img
         src="/logo-light.png"
-        alt=""
+        alt="CarsXE"
         className={cn("h-7 w-auto dark:hidden", className)}
       />
       <img
