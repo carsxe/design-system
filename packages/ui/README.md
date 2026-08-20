@@ -26,15 +26,23 @@ If your app already compiles Tailwind v4:
 
 ```ts
 import "@carsxe/design-system/globals.css"
+
+// This stylesheet does not bundle the fonts — import them so your bundler
+// resolves and fingerprints the woff2 files itself.
+import "@fontsource-variable/manrope"
+import "@fontsource-variable/dm-sans"
 ```
 
-Otherwise import the prebuilt stylesheet:
+Otherwise import the prebuilt stylesheet, which is self-contained (fonts
+included):
 
 ```ts
 import "@carsxe/design-system/styles.css"
 ```
 
-The CSS import also loads the fonts (Manrope, DM Sans).
+Fonts are Manrope (UI, body, inputs) and DM Sans (headings). If you load them
+another way — `next/font`, for example — point `--font-sans`, `--font-body` and
+`--font-heading` at your own families instead of importing the packages above.
 
 ## Usage
 
