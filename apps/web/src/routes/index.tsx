@@ -24,7 +24,7 @@ import { SITE_DESCRIPTION, seo } from "@/lib/seo"
 export const Route = createFileRoute("/")({
   head: () =>
     seo({
-      title: "Carsxe UI, as a package",
+      title: "CarsXE UI, as a package",
       description: SITE_DESCRIPTION,
       path: "/",
       suffix: false,
@@ -46,7 +46,7 @@ function Home() {
         <Logo className="h-10" />
         <Badge className="w-fit">Design system</Badge>
         <h1 className="font-heading text-5xl font-semibold tracking-tight">
-          Carsxe UI, as a package
+          CarsXE UI, as a package
         </h1>
         <p className="text-lg text-muted-foreground">
           Import themed shadcn components from{" "}

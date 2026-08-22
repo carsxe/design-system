@@ -11,7 +11,7 @@ export const Route = createFileRoute("/docs/components/$slug")({
     if (!doc) {
       return seo({
         title: "Component",
-        description: "Carsxe design system component docs.",
+        description: "CarsXE design system component docs.",
         path: `/docs/components/${params.slug}`,
         eyebrow: "Component",
       })

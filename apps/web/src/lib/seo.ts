@@ -1,6 +1,6 @@
 import { SITE_URL } from "@/lib/site"
 
-export const SITE_NAME = "Carsxe Design System"
+export const SITE_NAME = "CarsXE Design System"
 export const SITE_DESCRIPTION =
   "Import themed shadcn components from @carsxe/design-system. Do not copy them into your app."
 

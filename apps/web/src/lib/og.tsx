@@ -1,10 +1,15 @@
 import { CustomFont, ImageResponse } from "cf-workers-og"
 
 import logoDark from "../../public/logo-dark.png?inline"
+import logoLight from "../../public/logo-light.png?inline"
 
 const OG_WIDTH = 1200
 const OG_HEIGHT = 630
-const TITLE_MAX = 80
+const TITLE_MAX = 48
+const DEFAULT_BACKGROUND = "#f9f9f9"
+const INK_ON_LIGHT = "#0b1a22"
+const INK_ON_DARK = "#ffffff"
+const LIGHT_BACKGROUND_LUMINANCE = 0.6
 const DM_SANS_CSS =
   "https://fonts.googleapis.com/css2?family=DM+Sans:wght@600&display=swap"
 const SAFARI_UA =
@@ -18,6 +23,15 @@ function clampTitle(title: string) {
   }
 
   return `${title.slice(0, TITLE_MAX - 1).trimEnd()}…`
+}
+
+function isLightBackground(hex: string) {
+  const value = hex.replace("#", "")
+  const r = Number.parseInt(value.slice(0, 2), 16) / 255
+  const g = Number.parseInt(value.slice(2, 4), 16) / 255
+  const b = Number.parseInt(value.slice(4, 6), 16) / 255
+
+  return 0.299 * r + 0.587 * g + 0.114 * b > LIGHT_BACKGROUND_LUMINANCE
 }
 
 async function fetchDmSans() {
@@ -45,7 +59,17 @@ async function loadDmSans() {
   }
 }
 
-function OgCard({ title, eyebrow }: { title: string; eyebrow?: string }) {
+function OgCard({
+  title,
+  eyebrow,
+  background = DEFAULT_BACKGROUND,
+}: {
+  title: string
+  eyebrow?: string
+  background?: string
+}) {
+  const onLight = isLightBackground(background)
+
   return (
     <div
       style={{
@@ -54,13 +78,13 @@ function OgCard({ title, eyebrow }: { title: string; eyebrow?: string }) {
         justifyContent: "space-between",
         width: "100%",
         height: "100%",
-        background: "#00aed5",
-        color: "#ffffff",
+        background,
+        color: onLight ? INK_ON_LIGHT : INK_ON_DARK,
         padding: 72,
         fontFamily: "DM Sans",
       }}
     >
-      <img src={logoDark} height={48} alt="" />
+      <img src={onLight ? logoLight : logoDark} height={48} alt="" />
       <div style={{ display: "flex", flexDirection: "column", gap: 16 }}>
         {eyebrow ? (
           <div
@@ -90,14 +114,22 @@ function OgCard({ title, eyebrow }: { title: string; eyebrow?: string }) {
   )
 }
 
-export async function createOgImage(title: string, eyebrow?: string) {
+export async function createOgImage(
+  title: string,
+  eyebrow?: string,
+  background?: string
+) {
   const data = await loadDmSans()
   const fonts = data
     ? [new CustomFont("DM Sans", data, { weight: 600 })]
     : undefined
 
   return ImageResponse.create(
-    <OgCard title={clampTitle(title)} eyebrow={eyebrow} />,
+    <OgCard
+      title={clampTitle(title)}
+      eyebrow={eyebrow}
+      background={background}
+    />,
     {
       width: OG_WIDTH,
       height: OG_HEIGHT,

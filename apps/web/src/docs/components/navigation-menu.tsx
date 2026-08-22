@@ -31,7 +31,7 @@ export const navigationMenu: ComponentDoc = {
 </NavigationMenu>`,
   preview: (
     <div className="flex w-full max-w-3xl items-center justify-between border border-border bg-card px-6 py-3">
-      <span className="text-sm font-medium">Carsxe</span>
+      <span className="text-sm font-medium">CarsXE</span>
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
