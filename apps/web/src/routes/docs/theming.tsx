@@ -40,7 +40,7 @@ Semantic colors are defined on \`:root\` and \`.dark\`.
 
 ## Fonts
 
-Manrope for UI, body, and inputs. DM Sans for headings. The CSS import loads the font files.
+Manrope for UI, body, and inputs. DM Sans for headings. DM Mono for code. The CSS import loads the font files.
 
 ## Radius
 
@@ -109,8 +109,8 @@ function Theming() {
       <section className="flex flex-col gap-3">
         <h2 className="font-heading text-2xl font-medium">Fonts</h2>
         <p className="text-sm text-muted-foreground">
-          Manrope for UI, body, and inputs. DM Sans for headings. The CSS
-          import loads the font files.
+          Manrope for UI, body, and inputs. DM Sans for headings. DM Mono for
+          code. The CSS import loads the font files.
         </p>
       </section>
 

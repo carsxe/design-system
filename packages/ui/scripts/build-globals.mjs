@@ -44,7 +44,7 @@ let withoutShadcn = src.replace(shadcnImportRe, "")
 // resolves and fingerprints them properly. (dist/styles.css, built from src,
 // keeps the fonts inlined and ships dist/files alongside, so the standalone
 // path stays self-contained.)
-const fontImportRe = /^@import\s+["']@fontsource-variable\/[^"']+["'];[ \t]*\r?\n/gm
+const fontImportRe = /^@import\s+["']@fontsource(?:-variable)?\/[^"']+["'];[ \t]*\r?\n/gm
 const fontImports = withoutShadcn.match(fontImportRe)
 if (!fontImports) {
   throw new Error("build-globals: expected @fontsource imports to strip.")
@@ -69,7 +69,7 @@ const fontNote =
   `\n/*\n * Fonts are NOT imported here on purpose — see build-globals.mjs.\n` +
   ` * Install them in your app entry so your bundler resolves the woff2 files:\n` +
   fontImports.map((i) => ` *   import ${i.trim().replace(/^@import\s+/, "").replace(/;$/, "")}\n`).join("") +
-  ` * Or map --font-sans / --font-heading to your own loader (e.g. next/font).\n */\n`
+  ` * Or map --font-sans / --font-heading / --font-mono to your own loader (e.g. next/font).\n */\n`
 
 let out = withoutShadcn.slice(0, cut) + fontNote + inlined + withoutShadcn.slice(cut)
 

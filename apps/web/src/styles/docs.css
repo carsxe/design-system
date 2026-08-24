@@ -16,9 +16,13 @@ html.dark .shiki span {
   line-height: 1.6;
 }
 
+.shiki,
 .shiki code {
-  font-family: inherit;
+  font-family: var(--font-mono);
   font-size: inherit;
+}
+
+.shiki code {
   display: block;
   min-width: max-content;
 }

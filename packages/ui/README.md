@@ -31,6 +31,9 @@ import "@carsxe/design-system/globals.css"
 // resolves and fingerprints the woff2 files itself.
 import "@fontsource-variable/manrope"
 import "@fontsource-variable/dm-sans"
+import "@fontsource/dm-mono/300.css"
+import "@fontsource/dm-mono/400.css"
+import "@fontsource/dm-mono/500.css"
 ```
 
 Otherwise import the prebuilt stylesheet, which is self-contained (fonts
@@ -40,9 +43,10 @@ included):
 import "@carsxe/design-system/styles.css"
 ```
 
-Fonts are Manrope (UI, body, inputs) and DM Sans (headings). If you load them
-another way — `next/font`, for example — point `--font-sans`, `--font-body` and
-`--font-heading` at your own families instead of importing the packages above.
+Fonts are Manrope (UI, body, inputs), DM Sans (headings), and DM Mono (code).
+If you load them another way — `next/font`, for example — point `--font-sans`,
+`--font-body`, `--font-heading`, and `--font-mono` at your own families instead
+of importing the packages above.
 
 ## Usage
 

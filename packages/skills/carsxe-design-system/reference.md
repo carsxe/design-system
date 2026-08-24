@@ -16,6 +16,7 @@ Loaded by the CSS import:
 - Sans / UI: Manrope (`--font-sans`)
 - Headings: DM Sans (`--font-heading`)
 - Body / inputs: Manrope (`--font-body`)
+- Mono / code: DM Mono (`--font-mono`)
 
 ## Radius
 

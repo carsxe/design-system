@@ -55,7 +55,7 @@ Name artifacts:
 
 - Controls use rounded corners. `--radius` is `0`; corners are sharp. Circular controls (`Switch`, radio, slider thumbs, progress, avatars) may stay `rounded-full`.
 - Brand tokens look wrong. Primary should read as `#065774` (teal), not the default shadcn zinc/slate palette.
-- Fonts are not the design-system stack: Manrope (UI, body, inputs), DM Sans (headings).
+- Fonts are not the design-system stack: Manrope (UI, body, inputs), DM Sans (headings), DM Mono (code).
 - Layout overflow, clipped overlays, or controls that do not open/close.
 - Default control height looks compact vs 40px (`h-10`) unless the slice intentionally passed `className` (for example `h-8` on Input).
 
