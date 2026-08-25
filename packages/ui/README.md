@@ -68,13 +68,43 @@ import { Button, Card, Input } from "@carsxe/design-system"
 
 ## Components
 
-Accordion, Alert, Avatar, Badge, Breadcrumb, Button, Card, Checkbox, Dialog,
-Dropdown menu, Input, Label, Navigation menu, Pagination, Progress, Radio group,
-Select, Separator, Skeleton, Slider, Sonner, Switch, Table, Tabs, Textarea, Tooltip.
+Accordion, Alert, Angle Slider, Avatar, Badge, Breadcrumb, Button, Card,
+Checkbox, Clipboard, Color Picker, Date Input, Dialog, Dropdown menu, Editable,
+Floating Panel, Format, Highlight, Image Cropper, Input, JSON Tree View, Label,
+Listbox, Marquee, Navigation menu, Number Input, Pagination, Password Input,
+Progress, QR Code, Radio group, Rating Group, Select, Separator, Signature Pad,
+Skeleton, Slider, Sonner, Steps, Swap, Switch, Table, Table of Contents, Tabs,
+Tags Input, Textarea, Timer, Tour, Tree View, Tooltip.
 
 Each is available from `@carsxe/design-system/components/<name>`. Alert and Badge
 add `success` and `warning` variants on top of the usual shadcn set. `Input` has
 no `size` variant — use `className` (e.g. `h-8`) for compact heights.
+
+The advanced components are Carsxe-owned implementations and do not depend on
+Ark UI or Zag. Interactive transitions use Motion and respect reduced-motion
+preferences. Components support controlled and uncontrolled state through
+`value`/`defaultValue` and `onValueChange`, or `open`/`defaultOpen` and
+`onOpenChange` where applicable.
+
+### Tour
+
+```tsx
+const tour = useTour({
+  steps: [
+    { id: "welcome", type: "dialog", title: "Welcome" },
+    { id: "search", target: "#search", title: "Search by VIN" },
+  ],
+})
+
+return (
+  <>
+    <button onClick={(event) => tour.start(undefined, event.currentTarget)}>
+      Start tour
+    </button>
+    <Tour tour={tour} />
+  </>
+)
+```
 
 ## Theming
 
