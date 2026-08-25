@@ -15,6 +15,14 @@ const gettingStarted = [
     label: "Theming",
     match: (path: string) => path === "/docs/theming",
   },
+] as const
+
+const resources = [
+  {
+    to: "/docs/changelog",
+    label: "Changelog",
+    match: (path: string) => path === "/docs/changelog",
+  },
   {
     to: "/docs/brand",
     label: "Brand assets",
@@ -65,6 +73,18 @@ export function DocsSidebar() {
           </p>
           <div className="flex flex-col">
             {gettingStarted.map((item) => (
+              <NavLink key={item.to} to={item.to} active={item.match(pathname)}>
+                {item.label}
+              </NavLink>
+            ))}
+          </div>
+        </div>
+        <div>
+          <p className="px-2 pb-2 text-xs font-medium text-muted-foreground">
+            Resources
+          </p>
+          <div className="flex flex-col">
+            {resources.map((item) => (
               <NavLink key={item.to} to={item.to} active={item.match(pathname)}>
                 {item.label}
               </NavLink>

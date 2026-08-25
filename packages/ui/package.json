@@ -18,8 +18,14 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.js"
     },
-    "./globals.css": "./dist/globals.css",
-    "./styles.css": "./dist/styles.css",
+    "./globals.css": {
+      "style": "./dist/globals.css",
+      "default": "./dist/globals.css"
+    },
+    "./styles.css": {
+      "style": "./dist/styles.css",
+      "default": "./dist/styles.css"
+    },
     "./lib/*": {
       "types": "./dist/lib/*.d.ts",
       "import": "./dist/lib/*.js"

@@ -14,6 +14,7 @@ import { Route as DocsRouteImport } from './routes/docs'
 import { Route as ApiOgRouteImport } from './routes/api/og'
 import { Route as DocsIndexRouteImport } from './routes/docs/index'
 import { Route as DocsBrandRouteImport } from './routes/docs/brand'
+import { Route as DocsChangelogRouteImport } from './routes/docs/changelog'
 import { Route as DocsComponentsRouteImport } from './routes/docs/components'
 import { Route as DocsSkillsRouteImport } from './routes/docs/skills'
 import { Route as DocsThemingRouteImport } from './routes/docs/theming'
@@ -45,6 +46,11 @@ const DocsIndexRoute = DocsIndexRouteImport.update({
 const DocsBrandRoute = DocsBrandRouteImport.update({
   id: '/brand',
   path: '/brand',
+  getParentRoute: () => DocsRoute,
+} as any)
+const DocsChangelogRoute = DocsChangelogRouteImport.update({
+  id: '/changelog',
+  path: '/changelog',
   getParentRoute: () => DocsRoute,
 } as any)
 const DocsComponentsRoute = DocsComponentsRouteImport.update({
@@ -88,6 +94,7 @@ export interface FileRoutesByFullPath {
   '/docs': typeof DocsRouteWithChildren
   '/api/og': typeof ApiOgRoute
   '/docs/brand': typeof DocsBrandRoute
+  '/docs/changelog': typeof DocsChangelogRoute
   '/docs/components': typeof DocsComponentsRouteWithChildren
   '/docs/skills': typeof DocsSkillsRouteWithChildren
   '/docs/theming': typeof DocsThemingRoute
@@ -101,6 +108,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/api/og': typeof ApiOgRoute
   '/docs/brand': typeof DocsBrandRoute
+  '/docs/changelog': typeof DocsChangelogRoute
   '/docs/theming': typeof DocsThemingRoute
   '/docs': typeof DocsIndexRoute
   '/docs/components/$slug': typeof DocsComponentsSlugRoute
@@ -114,6 +122,7 @@ export interface FileRoutesById {
   '/docs': typeof DocsRouteWithChildren
   '/api/og': typeof ApiOgRoute
   '/docs/brand': typeof DocsBrandRoute
+  '/docs/changelog': typeof DocsChangelogRoute
   '/docs/components': typeof DocsComponentsRouteWithChildren
   '/docs/skills': typeof DocsSkillsRouteWithChildren
   '/docs/theming': typeof DocsThemingRoute
@@ -130,6 +139,7 @@ export interface FileRouteTypes {
     | '/docs'
     | '/api/og'
     | '/docs/brand'
+    | '/docs/changelog'
     | '/docs/components'
     | '/docs/skills'
     | '/docs/theming'
@@ -143,6 +153,7 @@ export interface FileRouteTypes {
     | '/'
     | '/api/og'
     | '/docs/brand'
+    | '/docs/changelog'
     | '/docs/theming'
     | '/docs'
     | '/docs/components/$slug'
@@ -155,6 +166,7 @@ export interface FileRouteTypes {
     | '/docs'
     | '/api/og'
     | '/docs/brand'
+    | '/docs/changelog'
     | '/docs/components'
     | '/docs/skills'
     | '/docs/theming'
@@ -206,6 +218,13 @@ declare module '@tanstack/react-router' {
       path: '/brand'
       fullPath: '/docs/brand'
       preLoaderRoute: typeof DocsBrandRouteImport
+      parentRoute: typeof DocsRoute
+    }
+    '/docs/changelog': {
+      id: '/docs/changelog'
+      path: '/changelog'
+      fullPath: '/docs/changelog'
+      preLoaderRoute: typeof DocsChangelogRouteImport
       parentRoute: typeof DocsRoute
     }
     '/docs/components': {
@@ -290,6 +309,7 @@ const DocsSkillsRouteWithChildren = DocsSkillsRoute._addFileChildren(
 
 interface DocsRouteChildren {
   DocsBrandRoute: typeof DocsBrandRoute
+  DocsChangelogRoute: typeof DocsChangelogRoute
   DocsComponentsRoute: typeof DocsComponentsRouteWithChildren
   DocsSkillsRoute: typeof DocsSkillsRouteWithChildren
   DocsThemingRoute: typeof DocsThemingRoute
@@ -298,6 +318,7 @@ interface DocsRouteChildren {
 
 const DocsRouteChildren: DocsRouteChildren = {
   DocsBrandRoute: DocsBrandRoute,
+  DocsChangelogRoute: DocsChangelogRoute,
   DocsComponentsRoute: DocsComponentsRouteWithChildren,
   DocsSkillsRoute: DocsSkillsRouteWithChildren,
   DocsThemingRoute: DocsThemingRoute,

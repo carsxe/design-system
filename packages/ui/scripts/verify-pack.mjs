@@ -43,6 +43,17 @@ try {
   ]
 
   const failures = []
+  for (const entry of ["./globals.css", "./styles.css"]) {
+    const spec = manifest.exports[entry]
+    if (
+      typeof spec !== "object" ||
+      typeof spec.style !== "string" ||
+      typeof spec.default !== "string"
+    ) {
+      failures.push(`${entry} — expected style and default export conditions`)
+    }
+  }
+
   for (const entry of entries) {
     const spec =
       manifest.exports[entry] ?? matchWildcard(manifest.exports, entry)
