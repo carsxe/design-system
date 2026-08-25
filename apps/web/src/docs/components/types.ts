@@ -16,8 +16,8 @@ export type ComponentDoc = {
   slug: string
   title: string
   description: string
-  importName: string
-  importPath: string
+  importName?: string
+  importPath?: string
   usage: string
   preview: ReactNode
   previewCode: string

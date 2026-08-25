@@ -4,7 +4,7 @@ import { toast } from "sonner"
 import { Button } from "@carsxe/design-system/components/button"
 
 const meta = {
-  title: "Components/Toast",
+  title: "Components/Sonner",
   component: Button,
 } satisfies Meta<typeof Button>
 
@@ -13,7 +13,10 @@ type Story = StoryObj<typeof meta>
 
 export const Info: Story = {
   render: () => (
-    <Button variant="outline" onClick={() => toast.info("System update scheduled")}>
+    <Button
+      variant="outline"
+      onClick={() => toast.info("System update scheduled")}
+    >
       Show info
     </Button>
   ),
@@ -29,7 +32,10 @@ export const Success: Story = {
 
 export const Warning: Story = {
   render: () => (
-    <Button variant="outline" onClick={() => toast.warning("Rotate exposed API keys")}>
+    <Button
+      variant="outline"
+      onClick={() => toast.warning("Rotate exposed API keys")}
+    >
       Show warning
     </Button>
   ),
@@ -38,7 +44,10 @@ export const Warning: Story = {
 export const ErrorToast: Story = {
   name: "Error",
   render: () => (
-    <Button variant="destructive" onClick={() => toast.error("API endpoint connection failed")}>
+    <Button
+      variant="destructive"
+      onClick={() => toast.error("API endpoint connection failed")}
+    >
       Show error
     </Button>
   ),

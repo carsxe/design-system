@@ -55,6 +55,12 @@ const preview: Preview = {
     layout: "fullscreen",
     backgrounds: { disable: true },
     controls: { matchers: { color: /(background|color)$/i } },
+    options: {
+      storySort: {
+        method: "alphabetical",
+        order: ["Components"],
+      },
+    },
   },
 }
 

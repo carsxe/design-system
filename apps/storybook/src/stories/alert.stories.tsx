@@ -1,5 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { CircleAlertIcon, CircleCheckIcon, InfoIcon, TriangleAlertIcon } from "lucide-react"
+import {
+  CircleAlertIcon,
+  CircleCheckIcon,
+  InfoIcon,
+  TriangleAlertIcon,
+} from "lucide-react"
 
 import {
   Alert,
@@ -76,8 +81,8 @@ export const AllVariants: Story = {
         <AlertTitle>System Update Scheduled</AlertTitle>
         <AlertDescription>
           We will be performing scheduled server infrastructure maintenance on
-          Saturday morning between 02:00 and 04:00 UTC. Expect minor intermittent
-          latency.
+          Saturday morning between 02:00 and 04:00 UTC. Expect minor
+          intermittent latency.
         </AlertDescription>
       </Alert>
       <Alert variant="success">

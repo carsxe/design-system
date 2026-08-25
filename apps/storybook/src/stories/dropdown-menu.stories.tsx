@@ -1,5 +1,11 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
-import { ArchiveIcon, CopyIcon, MoreVerticalIcon, PencilIcon, Trash2Icon } from "lucide-react"
+import {
+  ArchiveIcon,
+  CopyIcon,
+  MoreVerticalIcon,
+  PencilIcon,
+  Trash2Icon,
+} from "lucide-react"
 
 import { Button } from "@carsxe/design-system/components/button"
 import {
@@ -12,7 +18,7 @@ import {
 } from "@carsxe/design-system/components/dropdown-menu"
 
 const meta = {
-  title: "Components/DropdownMenu",
+  title: "Components/Dropdown Menu",
   component: DropdownMenu,
 } satisfies Meta<typeof DropdownMenu>
 

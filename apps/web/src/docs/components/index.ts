@@ -8,6 +8,7 @@ import { card } from "./card"
 import { checkbox } from "./checkbox"
 import { dialog } from "./dialog"
 import { dropdownMenu } from "./dropdown-menu"
+import { extendedComponentDocs } from "./extended"
 import { input } from "./input"
 import { label } from "./label"
 import { navigationMenu } from "./navigation-menu"
@@ -24,6 +25,7 @@ import { table } from "./table"
 import { tabs } from "./tabs"
 import { textarea } from "./textarea"
 import { tooltip } from "./tooltip"
+import { recipeDocs } from "./recipes"
 import type { ComponentDoc } from "./types"
 
 export type { ComponentDoc } from "./types"
@@ -55,7 +57,9 @@ export const componentDocs: ComponentDoc[] = [
   tabs,
   textarea,
   tooltip,
-]
+  ...extendedComponentDocs,
+  ...recipeDocs,
+].sort((left, right) => left.title.localeCompare(right.title))
 
 export function getComponentDoc(slug: string) {
   return componentDocs.find((doc) => doc.slug === slug)

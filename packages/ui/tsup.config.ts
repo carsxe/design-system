@@ -1,7 +1,12 @@
 import { defineConfig } from "tsup"
 
 export default defineConfig((options) => ({
-  entry: ["src/index.ts", "src/lib/utils.ts", "src/components/*.tsx"],
+  entry: [
+    "src/index.ts",
+    "src/lib/utils.ts",
+    "src/hooks/*.ts",
+    "src/components/*.tsx",
+  ],
   format: ["esm"],
   dts: true,
   splitting: false,
@@ -19,6 +24,14 @@ export default defineConfig((options) => ({
     "class-variance-authority",
     "clsx",
     "tailwind-merge",
+    "input-otp",
+    "react-day-picker",
+    "date-fns",
+    "embla-carousel-react",
+    "react-resizable-panels",
+    "recharts",
+    "cmdk",
+    "@shadcn/react",
     "sonner",
     "next-themes",
     /^@base-ui\//,

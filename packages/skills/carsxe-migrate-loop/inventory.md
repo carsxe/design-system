@@ -32,7 +32,7 @@ rg -n --glob '!node_modules/**' --glob '!dist/**' --glob '!.next/**' \
 
 These names match `carsxe-design-system/reference.md`:
 
-accordion, alert, avatar, badge, breadcrumb, button, card, checkbox, dialog, dropdown-menu, input, label, navigation-menu, pagination, progress, radio-group, select, separator, skeleton, slider, sonner, switch, table, tabs, textarea, tooltip
+accordion, alert, alert-dialog, aspect-ratio, attachment, avatar, badge, breadcrumb, bubble, button, button-group, calendar, card, carousel, chart, checkbox, collapsible, combobox, command, context-menu, dialog, direction, drawer, dropdown-menu, empty, field, hover-card, input, input-group, input-otp, item, kbd, label, marker, menubar, message, message-scroller, native-select, navigation-menu, pagination, popover, progress, questionnaire, radio-group, resizable, scroll-area, select, separator, sheet, sidebar, skeleton, slider, sonner, spinner, switch, table, tabs, textarea, toast, toggle, toggle-group, tooltip
 
 `sonner` also appears as `toast` in some shadcn apps. Treat local `sonner.tsx` / `toaster.tsx` that wrap Sonner as covered.
 
@@ -50,7 +50,7 @@ from ["']~/components/ui["']
 Also count relative imports into a `components/ui/` (or `src/ui/`) folder when the file is a covered primitive, for example:
 
 ```
-from ["'].*/components/ui/(accordion|alert|avatar|badge|breadcrumb|button|card|checkbox|dialog|dropdown-menu|input|label|navigation-menu|pagination|progress|radio-group|select|separator|skeleton|slider|sonner|switch|table|tabs|textarea|tooltip|toaster)["']
+from ["'].*/components/ui/(accordion|alert|alert-dialog|aspect-ratio|attachment|avatar|badge|breadcrumb|bubble|button|button-group|calendar|card|carousel|chart|checkbox|collapsible|combobox|command|context-menu|dialog|direction|drawer|dropdown-menu|empty|field|hover-card|input|input-group|input-otp|item|kbd|label|marker|menubar|message|message-scroller|native-select|navigation-menu|pagination|popover|progress|questionnaire|radio-group|resizable|scroll-area|select|separator|sheet|sidebar|skeleton|slider|sonner|spinner|switch|table|tabs|textarea|toast|toggle|toggle-group|tooltip|toaster)["']
 ```
 
 ### Local source copies
@@ -75,15 +75,15 @@ A root `components.json` that still aliases `@/components/ui` is a **flag**, not
 
 ### Direct headless imports when a DS component exists
 
-Count consumer-app imports of `@radix-ui/*` or `@base-ui/react` that implement a covered primitive (dialog, select, dropdown-menu, tabs, checkbox, switch, slider, tooltip, accordion, radio-group, navigation-menu, progress, separator, avatar).
+Count consumer-app imports of `@radix-ui/*`, `@base-ui/react`, or the direct dependencies used by covered primitives when they duplicate a shipped component.
 
-Do **not** count those imports inside `node_modules`. Do **not** count `@base-ui/react` usage that is clearly a custom control with no design-system equivalent (for example a date picker or combobox the package does not ship).
+Do **not** count those imports inside `node_modules`. Do not count app-specific controls whose behavior is materially different from a design-system primitive.
 
 ## Do not count (uncovered)
 
 List these in the report under **Uncovered (not blocking)**:
 
-- Charts, maps, editors, calendars, data grids the design system does not ship
+- Maps, editors, and app-specific data grids
 - `@carsxe/ui` widgets and edit-mode
 - App-specific composites (page shells, feature cards) that compose primitives but are not themselves primitives
 - Icon packages (`lucide-react`, and so on)

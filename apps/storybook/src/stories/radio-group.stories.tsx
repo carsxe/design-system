@@ -1,10 +1,13 @@
 import type { Meta, StoryObj } from "@storybook/react-vite"
 
-import { RadioGroup, RadioGroupItem } from "@carsxe/design-system/components/radio-group"
+import {
+  RadioGroup,
+  RadioGroupItem,
+} from "@carsxe/design-system/components/radio-group"
 import { Label } from "@carsxe/design-system/components/label"
 
 const meta = {
-  title: "Components/RadioGroup",
+  title: "Components/Radio Group",
   component: RadioGroup,
 } satisfies Meta<typeof RadioGroup>
 

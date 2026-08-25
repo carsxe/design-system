@@ -5,13 +5,13 @@ function fence(lang: string, code: string) {
 }
 
 export function componentDocToMarkdown(doc: ComponentDoc) {
-  const install = `import { ${doc.importName} } from "${doc.importPath}"`
+  const install =
+    doc.importName && doc.importPath
+      ? `import { ${doc.importName} } from "${doc.importPath}"`
+      : null
 
   const examples = doc.examples
-    .map(
-      (example) =>
-        `## ${example.title}\n\n${fence("tsx", example.code)}`
-    )
+    .map((example) => `## ${example.title}\n\n${fence("tsx", example.code)}`)
     .join("\n\n")
 
   const propsTable =
@@ -31,12 +31,14 @@ export function componentDocToMarkdown(doc: ComponentDoc) {
     "",
     doc.description,
     "",
-    "## Installation",
-    "",
-    "Import from the package. Do not run `shadcn add` in your app.",
-    "",
-    fence("tsx", install),
-    "",
+    install ? "## Installation" : "",
+    install ? "" : "",
+    install
+      ? "Import from the package. Do not run `shadcn add` in your app."
+      : "",
+    install ? "" : "",
+    install ? fence("tsx", install) : "",
+    install ? "" : "",
     "## Usage",
     "",
     fence("tsx", doc.usage),
