@@ -9,6 +9,10 @@ Use this skill whenever you build UI with `@carsxe/design-system` — buttons, i
 
 The package name is `@carsxe/design-system`. `@carsxe/ui` is a separate widget package. Do not confuse them.
 
+Ark-inspired advanced controls such as Tour, Tree View, Image Cropper, Color
+Picker, and Signature Pad are native Carsxe components. Import them from this
+package; do not add Ark UI or Zag to a consumer.
+
 ## Install
 
 ```bash

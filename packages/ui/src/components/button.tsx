@@ -11,11 +11,11 @@ const buttonVariants = cva(
         default:
           "bg-primary text-primary-foreground hover:bg-primary-hover disabled:bg-primary-disabled disabled:text-primary-foreground disabled:opacity-100",
         outline:
-          "border-primary bg-transparent text-secondary-foreground hover:border-primary-hover hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground disabled:border-primary-disabled disabled:text-muted-foreground disabled:opacity-100 dark:bg-transparent",
+          "border-primary bg-transparent text-secondary-foreground hover:border-primary-hover hover:text-foreground disabled:border-primary-disabled disabled:text-muted-foreground disabled:opacity-100 aria-expanded:bg-muted aria-expanded:text-foreground dark:bg-transparent",
         secondary:
-          "bg-secondary text-secondary-foreground hover:bg-muted aria-expanded:bg-secondary aria-expanded:text-secondary-foreground disabled:opacity-50",
+          "bg-secondary text-secondary-foreground hover:bg-muted disabled:opacity-50 aria-expanded:bg-secondary aria-expanded:text-secondary-foreground",
         ghost:
-          "text-secondary-foreground hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground disabled:text-muted-foreground disabled:opacity-100 dark:hover:bg-muted/50",
+          "text-secondary-foreground hover:bg-muted hover:text-foreground disabled:text-muted-foreground disabled:opacity-100 aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50",
         destructive:
           "bg-destructive text-white hover:bg-destructive/90 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 disabled:opacity-50",
         link: "text-primary underline-offset-4 hover:underline disabled:opacity-50",

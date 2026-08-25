@@ -12,6 +12,7 @@
     "skipLibCheck": true,
     "strict": true,
     "paths": {
+      "@carsxe/design-system": ["../../packages/ui/src/index.ts"],
       "@carsxe/design-system/*": ["../../packages/ui/src/*"]
     }
   }
