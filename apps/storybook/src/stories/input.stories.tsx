@@ -24,7 +24,11 @@ export const Filled: Story = {
   render: () => (
     <div className="flex w-[220px] flex-col gap-1.5">
       <Label htmlFor="email-filled">Email Address</Label>
-      <Input id="email-filled" defaultValue="developer@figma.com" className="bg-card" />
+      <Input
+        id="email-filled"
+        defaultValue="developer@figma.com"
+        className="bg-card"
+      />
     </div>
   ),
 }
@@ -70,7 +74,11 @@ export const Small: Story = {
       <Label htmlFor="search-sm" className="text-xs">
         Search Query
       </Label>
-      <Input id="search-sm" placeholder="Search..." className="h-8 px-2.5 py-1.5 text-xs" />
+      <Input
+        id="search-sm"
+        placeholder="Search..."
+        className="h-8 px-2.5 py-1.5 text-xs"
+      />
     </div>
   ),
 }

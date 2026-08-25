@@ -35,9 +35,9 @@ export const Default: Story = {
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-      <DialogClose render={<Button variant="ghost" />} nativeButton={false}>
-        Cancel
-      </DialogClose>
+          <DialogClose render={<Button variant="ghost" />} nativeButton={false}>
+            Cancel
+          </DialogClose>
           <Button variant="destructive">Delete</Button>
         </DialogFooter>
       </DialogContent>

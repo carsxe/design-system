@@ -9,7 +9,7 @@ import {
 import { Button } from "@carsxe/design-system/components/button"
 
 const meta = {
-  title: "Components/NavigationMenu",
+  title: "Components/Navigation Menu",
   component: NavigationMenu,
 } satisfies Meta<typeof NavigationMenu>
 
@@ -28,7 +28,10 @@ export const Default: Story = {
       <NavigationMenu>
         <NavigationMenuList>
           <NavigationMenuItem>
-            <NavigationMenuLink href="#" className="border-b-2 border-primary font-semibold text-primary">
+            <NavigationMenuLink
+              href="#"
+              className="border-b-2 border-primary font-semibold text-primary"
+            >
               Dashboard
             </NavigationMenuLink>
           </NavigationMenuItem>

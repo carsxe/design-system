@@ -16,18 +16,20 @@ export function ComponentDocPage({ doc }: { doc: ComponentDoc }) {
 
       <ComponentPreview preview={doc.preview} code={doc.previewCode} />
 
-      <section className="flex flex-col gap-3">
-        <h2 className="font-heading text-2xl font-medium">Installation</h2>
-        <p className="text-sm text-muted-foreground">
-          Import from the package. Do not run{" "}
-          <code className="font-mono text-foreground">shadcn add</code> in your
-          app.
-        </p>
-        <CodeBlock
-          lang="tsx"
-          code={`import { ${doc.importName} } from "${doc.importPath}"`}
-        />
-      </section>
+      {doc.importName && doc.importPath ? (
+        <section className="flex flex-col gap-3">
+          <h2 className="font-heading text-2xl font-medium">Installation</h2>
+          <p className="text-sm text-muted-foreground">
+            Import from the package. Do not run{" "}
+            <code className="font-mono text-foreground">shadcn add</code> in
+            your app.
+          </p>
+          <CodeBlock
+            lang="tsx"
+            code={`import { ${doc.importName} } from "${doc.importPath}"`}
+          />
+        </section>
+      ) : null}
 
       <section className="flex flex-col gap-3">
         <h2 className="font-heading text-2xl font-medium">Usage</h2>

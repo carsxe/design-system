@@ -19,10 +19,30 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 const rows = [
-  { name: "Alex Rivera", email: "alex@clarity.dev", role: "Owner", status: "Active" },
-  { name: "Jordan Lee", email: "jordan@clarity.dev", role: "Admin", status: "Active" },
-  { name: "Sam Patel", email: "sam@clarity.dev", role: "Editor", status: "Pending" },
-  { name: "Riley Chen", email: "riley@clarity.dev", role: "Viewer", status: "Inactive" },
+  {
+    name: "Alex Rivera",
+    email: "alex@clarity.dev",
+    role: "Owner",
+    status: "Active",
+  },
+  {
+    name: "Jordan Lee",
+    email: "jordan@clarity.dev",
+    role: "Admin",
+    status: "Active",
+  },
+  {
+    name: "Sam Patel",
+    email: "sam@clarity.dev",
+    role: "Editor",
+    status: "Pending",
+  },
+  {
+    name: "Riley Chen",
+    email: "riley@clarity.dev",
+    role: "Viewer",
+    status: "Inactive",
+  },
 ]
 
 export const Default: Story = {

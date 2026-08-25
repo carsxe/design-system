@@ -2,10 +2,10 @@
 
 ## CSS
 
-| Import | When to use |
-| --- | --- |
-| `@carsxe/design-system/globals.css` | The app already compiles Tailwind v4 |
-| `@carsxe/design-system/styles.css` | The app does not compile Tailwind; use the prebuilt sheet |
+| Import                              | When to use                                               |
+| ----------------------------------- | --------------------------------------------------------- |
+| `@carsxe/design-system/globals.css` | The app already compiles Tailwind v4                      |
+| `@carsxe/design-system/styles.css`  | The app does not compile Tailwind; use the prebuilt sheet |
 
 Dark mode is activated with a `.dark` class on an ancestor (typically `<html>`).
 
@@ -28,22 +28,22 @@ Default control height is `40px` (`h-10`).
 
 Light (`:root`) values:
 
-| Token | Value |
-| --- | --- |
-| `--primary` | `#065774` |
-| `--primary-hover` | `#00B6E5` |
-| `--primary-disabled` | `#83BACC` |
-| `--foreground` | `#3A3A3A` |
-| `--muted-foreground` | `#A8A8A8` |
-| `--border` | `#EBEBEB` |
-| `--background` | `#F9F9F9` |
-| `--success` | `#00A63E` |
-| `--destructive` | `#DA373E` |
-| `--warning` | `#F79008` |
-| `--success-muted` | `#E6F6EC` |
+| Token                 | Value     |
+| --------------------- | --------- |
+| `--primary`           | `#065774` |
+| `--primary-hover`     | `#00B6E5` |
+| `--primary-disabled`  | `#83BACC` |
+| `--foreground`        | `#3A3A3A` |
+| `--muted-foreground`  | `#A8A8A8` |
+| `--border`            | `#EBEBEB` |
+| `--background`        | `#F9F9F9` |
+| `--success`           | `#00A63E` |
+| `--destructive`       | `#DA373E` |
+| `--warning`           | `#F79008` |
+| `--success-muted`     | `#E6F6EC` |
 | `--destructive-muted` | `#FDF0F1` |
-| `--warning-muted` | `#FEF7E6` |
-| `--radius` | `0` |
+| `--warning-muted`     | `#FEF7E6` |
+| `--radius`            | `0`       |
 
 Also: `--primary-foreground`, `--card`, `--accent`, `--ring`, `--sidebar-*`.
 
@@ -51,34 +51,74 @@ Also: `--primary-foreground`, `--card`, `--accent`, `--ring`, `--sidebar-*`.
 
 Import from `@carsxe/design-system/components/<name>` or the package root.
 
-| Component | Path |
-| --- | --- |
-| Accordion | `@carsxe/design-system/components/accordion` |
-| Alert | `@carsxe/design-system/components/alert` |
-| Avatar | `@carsxe/design-system/components/avatar` |
-| Badge | `@carsxe/design-system/components/badge` |
-| Breadcrumb | `@carsxe/design-system/components/breadcrumb` |
-| Button | `@carsxe/design-system/components/button` |
-| Card | `@carsxe/design-system/components/card` |
-| Checkbox | `@carsxe/design-system/components/checkbox` |
-| Dialog | `@carsxe/design-system/components/dialog` |
-| Dropdown menu | `@carsxe/design-system/components/dropdown-menu` |
-| Input | `@carsxe/design-system/components/input` |
-| Label | `@carsxe/design-system/components/label` |
-| Navigation menu | `@carsxe/design-system/components/navigation-menu` |
-| Pagination | `@carsxe/design-system/components/pagination` |
-| Progress | `@carsxe/design-system/components/progress` |
-| Radio group | `@carsxe/design-system/components/radio-group` |
-| Select | `@carsxe/design-system/components/select` |
-| Separator | `@carsxe/design-system/components/separator` |
-| Skeleton | `@carsxe/design-system/components/skeleton` |
-| Slider | `@carsxe/design-system/components/slider` |
-| Sonner | `@carsxe/design-system/components/sonner` |
-| Switch | `@carsxe/design-system/components/switch` |
-| Table | `@carsxe/design-system/components/table` |
-| Tabs | `@carsxe/design-system/components/tabs` |
-| Textarea | `@carsxe/design-system/components/textarea` |
-| Tooltip | `@carsxe/design-system/components/tooltip` |
+| Component        | Path                                                |
+| ---------------- | --------------------------------------------------- |
+| Accordion        | `@carsxe/design-system/components/accordion`        |
+| Alert            | `@carsxe/design-system/components/alert`            |
+| Alert dialog     | `@carsxe/design-system/components/alert-dialog`     |
+| Aspect ratio     | `@carsxe/design-system/components/aspect-ratio`     |
+| Attachment       | `@carsxe/design-system/components/attachment`       |
+| Avatar           | `@carsxe/design-system/components/avatar`           |
+| Badge            | `@carsxe/design-system/components/badge`            |
+| Breadcrumb       | `@carsxe/design-system/components/breadcrumb`       |
+| Bubble           | `@carsxe/design-system/components/bubble`           |
+| Button           | `@carsxe/design-system/components/button`           |
+| Button group     | `@carsxe/design-system/components/button-group`     |
+| Calendar         | `@carsxe/design-system/components/calendar`         |
+| Card             | `@carsxe/design-system/components/card`             |
+| Carousel         | `@carsxe/design-system/components/carousel`         |
+| Chart            | `@carsxe/design-system/components/chart`            |
+| Checkbox         | `@carsxe/design-system/components/checkbox`         |
+| Collapsible      | `@carsxe/design-system/components/collapsible`      |
+| Combobox         | `@carsxe/design-system/components/combobox`         |
+| Command          | `@carsxe/design-system/components/command`          |
+| Context menu     | `@carsxe/design-system/components/context-menu`     |
+| Dialog           | `@carsxe/design-system/components/dialog`           |
+| Direction        | `@carsxe/design-system/components/direction`        |
+| Drawer           | `@carsxe/design-system/components/drawer`           |
+| Dropdown menu    | `@carsxe/design-system/components/dropdown-menu`    |
+| Empty            | `@carsxe/design-system/components/empty`            |
+| Field            | `@carsxe/design-system/components/field`            |
+| Hover card       | `@carsxe/design-system/components/hover-card`       |
+| Input            | `@carsxe/design-system/components/input`            |
+| Input group      | `@carsxe/design-system/components/input-group`      |
+| Input OTP        | `@carsxe/design-system/components/input-otp`        |
+| Item             | `@carsxe/design-system/components/item`             |
+| Kbd              | `@carsxe/design-system/components/kbd`              |
+| Label            | `@carsxe/design-system/components/label`            |
+| Marker           | `@carsxe/design-system/components/marker`           |
+| Menubar          | `@carsxe/design-system/components/menubar`          |
+| Message          | `@carsxe/design-system/components/message`          |
+| Message scroller | `@carsxe/design-system/components/message-scroller` |
+| Native select    | `@carsxe/design-system/components/native-select`    |
+| Navigation menu  | `@carsxe/design-system/components/navigation-menu`  |
+| Pagination       | `@carsxe/design-system/components/pagination`       |
+| Popover          | `@carsxe/design-system/components/popover`          |
+| Progress         | `@carsxe/design-system/components/progress`         |
+| Questionnaire    | `@carsxe/design-system/components/questionnaire`    |
+| Radio group      | `@carsxe/design-system/components/radio-group`      |
+| Resizable        | `@carsxe/design-system/components/resizable`        |
+| Scroll area      | `@carsxe/design-system/components/scroll-area`      |
+| Select           | `@carsxe/design-system/components/select`           |
+| Separator        | `@carsxe/design-system/components/separator`        |
+| Sheet            | `@carsxe/design-system/components/sheet`            |
+| Sidebar          | `@carsxe/design-system/components/sidebar`          |
+| Skeleton         | `@carsxe/design-system/components/skeleton`         |
+| Slider           | `@carsxe/design-system/components/slider`           |
+| Sonner           | `@carsxe/design-system/components/sonner`           |
+| Spinner          | `@carsxe/design-system/components/spinner`          |
+| Switch           | `@carsxe/design-system/components/switch`           |
+| Table            | `@carsxe/design-system/components/table`            |
+| Tabs             | `@carsxe/design-system/components/tabs`             |
+| Textarea         | `@carsxe/design-system/components/textarea`         |
+| Toast            | `@carsxe/design-system/components/toast`            |
+| Toggle           | `@carsxe/design-system/components/toggle`           |
+| Toggle group     | `@carsxe/design-system/components/toggle-group`     |
+| Tooltip          | `@carsxe/design-system/components/tooltip`          |
+
+Sidebar also exposes `useIsMobile` from `@carsxe/design-system/hooks/use-mobile`.
+
+Data Table, Date Picker, Forms, and Typography are composition recipes in the docs, not component import paths.
 
 `Input` has no `size` variant prop — native `<input size>` is a number. Use `className` for compact heights (for example `h-8`).
 
