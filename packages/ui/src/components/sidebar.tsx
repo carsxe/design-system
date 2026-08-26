@@ -166,6 +166,15 @@ function Sidebar({
 }) {
   const { isMobile, state, openMobile, setOpenMobile } = useSidebar()
 
+  React.useEffect(() => {
+    if (!isMobile || !openMobile) return
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpenMobile(false)
+    }
+    window.addEventListener("keydown", closeOnEscape, true)
+    return () => window.removeEventListener("keydown", closeOnEscape, true)
+  }, [isMobile, openMobile, setOpenMobile])
+
   if (collapsible === "none") {
     return (
       <div

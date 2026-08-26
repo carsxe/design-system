@@ -190,7 +190,6 @@ export const extendedComponents = [
   ["button-group", "Button Group", "Groups related buttons and controls."],
   ["calendar", "Calendar", "A date selection calendar."],
   ["carousel", "Carousel", "A keyboard-accessible content carousel."],
-  ["chart", "Chart", "Token-aware wrappers for Recharts."],
   ["collapsible", "Collapsible", "An expandable content region."],
   ["combobox", "Combobox", "A searchable option picker."],
   ["command", "Command", "A fast command and search menu."],
@@ -218,7 +217,6 @@ export const extendedComponents = [
   ["resizable", "Resizable", "Keyboard-accessible resizable panels."],
   ["scroll-area", "Scroll Area", "A consistently styled scroll container."],
   ["sheet", "Sheet", "A dialog anchored to an edge."],
-  ["sidebar", "Sidebar", "A responsive application sidebar."],
   ["spinner", "Spinner", "Indicates an in-progress operation."],
   ["toast", "Toast", "A transient Base UI notification."],
   ["toggle", "Toggle", "A two-state pressed control."],
@@ -228,7 +226,6 @@ export const extendedComponents = [
 const primaryImportNames: Partial<
   Record<(typeof extendedComponents)[number][0], string>
 > = {
-  chart: "ChartContainer",
   direction: "DirectionProvider",
   resizable: "ResizablePanelGroup",
   toast: "Toaster",

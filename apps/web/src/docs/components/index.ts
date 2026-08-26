@@ -5,7 +5,9 @@ import { badge } from "./badge"
 import { breadcrumb } from "./breadcrumb"
 import { button } from "./button"
 import { card } from "./card"
+import { chart } from "./chart"
 import { checkbox } from "./checkbox"
+import { d3Charts } from "./d3-charts"
 import { dialog } from "./dialog"
 import { dropdownMenu } from "./dropdown-menu"
 import { extendedComponentDocs } from "./extended"
@@ -17,6 +19,8 @@ import { progress } from "./progress"
 import { radioGroup } from "./radio-group"
 import { select } from "./select"
 import { separator } from "./separator"
+import { sidebar } from "./sidebar"
+import { signaturePad } from "./signature-pad"
 import { skeleton } from "./skeleton"
 import { slider } from "./slider"
 import { sonner } from "./sonner"
@@ -38,9 +42,11 @@ export const componentDocs: ComponentDoc[] = [
   breadcrumb,
   button,
   card,
+  chart,
   checkbox,
   dialog,
   dropdownMenu,
+  d3Charts,
   input,
   label,
   navigationMenu,
@@ -49,6 +55,8 @@ export const componentDocs: ComponentDoc[] = [
   radioGroup,
   select,
   separator,
+  sidebar,
+  signaturePad,
   skeleton,
   slider,
   sonner,

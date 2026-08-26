@@ -27,6 +27,8 @@ export default defineConfig((options) => ({
     "input-otp",
     "react-day-picker",
     "date-fns",
+    "d3",
+    "d3-sankey",
     "embla-carousel-react",
     "react-resizable-panels",
     "recharts",

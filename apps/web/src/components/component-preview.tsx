@@ -24,7 +24,7 @@ export function ComponentPreview({
       </TabsList>
       <TabsContent
         value="preview"
-        className="flex min-h-[220px] items-center justify-center overflow-x-auto border border-border bg-card p-8"
+        className="flex min-h-[220px] min-w-0 items-center justify-center overflow-x-auto border border-border bg-card p-8 [&>*]:max-w-full [&>*]:min-w-0"
       >
         {preview}
       </TabsContent>

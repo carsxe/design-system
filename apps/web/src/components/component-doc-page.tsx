@@ -7,7 +7,7 @@ import type { ComponentDoc } from "@/docs/components/types"
 
 export function ComponentDocPage({ doc }: { doc: ComponentDoc }) {
   return (
-    <article className="flex max-w-3xl flex-col gap-10">
+    <article className="flex max-w-3xl min-w-0 flex-col gap-10">
       <DocsPageHeader
         title={doc.title}
         description={doc.description}

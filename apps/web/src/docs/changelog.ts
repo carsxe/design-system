@@ -20,6 +20,21 @@ export type ChangelogEntry = {
 
 export const changelogEntries = [
   {
+    date: "2026-08-26",
+    title: "Primary hover colors restored",
+    summary:
+      "Primary hover states once again use the established CarsXE theme colors from the 0.0.4 release.",
+    groups: [
+      {
+        type: "fixed",
+        items: [
+          "Restored primary-hover to #00B6E5 in light mode and #4DCCEE in dark mode.",
+        ],
+      },
+    ],
+    sources: [],
+  },
+  {
     date: "2026-08-25",
     title: "A much larger component library",
     summary:
@@ -30,6 +45,8 @@ export const changelogEntries = [
         items: [
           "More than 40 shadcn-style components and composition recipes, including Calendar, Carousel, Chart, Combobox, Command, Drawer, Sidebar, and data-table patterns.",
           "Matching component documentation and Storybook coverage for the expanded library.",
+          "Complete chart-family recipes plus Sankey, force-directed, treemap, and sunburst visualizations.",
+          "A composable, pressure-aware Signature Pad API with history, form submission, and export controls.",
           "A parity check that keeps the shipped component catalog aligned with the supported shadcn set.",
         ],
       },
@@ -37,6 +54,7 @@ export const changelogEntries = [
         type: "changed",
         items: [
           "Existing primitives and examples were aligned with the expanded APIs, and hooks became available through package exports.",
+          "Sidebar examples and interaction coverage now exercise desktop collapse, mobile sheets, controlled state, right-side placement, and RTL layouts.",
         ],
       },
     ],
