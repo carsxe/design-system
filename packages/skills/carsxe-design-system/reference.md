@@ -31,7 +31,7 @@ Light (`:root`) values:
 | Token                 | Value     |
 | --------------------- | --------- |
 | `--primary`           | `#065774` |
-| `--primary-hover`     | `#00B6E5` |
+| `--primary-hover`     | `#387990` |
 | `--primary-disabled`  | `#83BACC` |
 | `--foreground`        | `#3A3A3A` |
 | `--muted-foreground`  | `#A8A8A8` |

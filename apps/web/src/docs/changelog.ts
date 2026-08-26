@@ -50,7 +50,7 @@ export const changelogEntries = [
       {
         type: "fixed",
         items: [
-          "Restored primary-hover to #00B6E5 in light mode and #4DCCEE in dark mode.",
+          "Restored primary-hover to #387990 in light mode and #4DCCEE in dark mode.",
         ],
       },
     ],
