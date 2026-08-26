@@ -58,11 +58,13 @@ function SidebarDemo({
           className="absolute h-full"
         >
           <SidebarHeader className="border-b border-sidebar-border">
-            <div className="flex h-9 items-center gap-2 px-2 font-heading text-sm font-semibold">
-              <span className="grid size-6 place-items-center bg-sidebar-primary text-sidebar-primary-foreground">
+            <div className="flex h-9 min-w-0 items-center gap-2 px-2 font-heading text-sm font-semibold group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:px-0">
+              <span className="grid size-6 shrink-0 place-items-center bg-sidebar-primary text-sidebar-primary-foreground">
                 CX
               </span>
-              <span>Vehicle ops</span>
+              <span className="truncate group-data-[collapsible=icon]:hidden">
+                Vehicle ops
+              </span>
             </div>
           </SidebarHeader>
           <SidebarContent>
@@ -101,9 +103,9 @@ function SidebarDemo({
           <SidebarRail />
         </Sidebar>
         <SidebarInset className="min-h-80 bg-background p-4">
-          <header className="flex items-center gap-3 border-b border-border pb-4">
-            <SidebarTrigger />
-            <div>
+          <header className="flex min-w-0 items-center gap-3 border-b border-border pb-4">
+            <SidebarTrigger className="shrink-0" />
+            <div className="min-w-0">
               <p className="font-heading text-sm font-medium">Inventory</p>
               <p className="text-xs text-muted-foreground">
                 128 active vehicles

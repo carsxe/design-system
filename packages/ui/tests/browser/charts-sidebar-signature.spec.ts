@@ -8,14 +8,21 @@ test("sidebar collapses from its trigger and keyboard shortcut", async ({
   )
   const sidebar = page.locator('[data-slot="sidebar"][data-state]')
   const trigger = page.locator('[data-slot="sidebar-trigger"]')
+  const brand = page.getByText("Vehicle ops", { exact: true })
 
   await expect(sidebar).toHaveAttribute("data-state", "expanded")
+  await expect(brand).toBeVisible()
   await trigger.click()
   await expect(sidebar).toHaveAttribute("data-state", "collapsed")
+  await expect(brand).toBeHidden()
   await page.keyboard.press("Control+b")
   await expect(sidebar).toHaveAttribute("data-state", "expanded")
   await page.locator('[data-slot="sidebar-rail"]').click({ force: true })
   await expect(sidebar).toHaveAttribute("data-state", "collapsed")
+  await expect(trigger).toBeVisible()
+  await trigger.click()
+  await expect(sidebar).toHaveAttribute("data-state", "expanded")
+  await expect(brand).toBeVisible()
 })
 
 test("sidebar supports controlled, right-side, and RTL configurations", async ({

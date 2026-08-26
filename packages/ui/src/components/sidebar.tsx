@@ -275,7 +275,7 @@ function SidebarTrigger({
       data-slot="sidebar-trigger"
       variant="ghost"
       size="icon-sm"
-      className={cn(className)}
+      className={cn("relative z-20 shrink-0", className)}
       onClick={(event) => {
         onClick?.(event)
         toggleSidebar()
