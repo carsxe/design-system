@@ -16,7 +16,7 @@ import {
   TabsTrigger,
 } from "@carsxe/design-system/components/tabs"
 
-import { CodeBlock } from "@/components/code-block"
+import { CodeBlock } from "@carsxe/design-system/components/code-block"
 import { Logo } from "@/components/logo"
 import { AGENT_PROMPT } from "@/lib/agent-prompt"
 import { SITE_DESCRIPTION, seo } from "@/lib/seo"
@@ -79,7 +79,7 @@ function Home() {
               </TabsList>
               {Object.entries(installCommands).map(([manager, command]) => (
                 <TabsContent key={manager} value={manager} className="mt-3">
-                  <CodeBlock code={command} lang="bash" />
+                  <CodeBlock code={command} language="bash" />
                 </TabsContent>
               ))}
             </Tabs>
@@ -94,7 +94,7 @@ function Home() {
             </CardDescription>
           </CardHeader>
           <CardContent className="flex flex-col gap-3">
-            <CodeBlock code={AGENT_PROMPT} lang="plaintext" />
+            <CodeBlock code={AGENT_PROMPT} language="text" />
             <Link
               to="/docs/skills"
               className="text-sm text-primary hover:underline"

@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router"
 
 import { Button } from "@carsxe/design-system/components/button"
 
-import { CodeBlock } from "@/components/code-block"
+import { CodeBlock } from "@carsxe/design-system/components/code-block"
 import { DocsPageHeader } from "@/components/docs-page-header"
 import { seo } from "@/lib/seo"
 
@@ -82,9 +82,9 @@ function GettingStarted() {
 
       <section className="flex flex-col gap-3">
         <h2 className="font-heading text-2xl font-medium">Install</h2>
-        <CodeBlock code="bun add @carsxe/design-system" lang="bash" />
-        <CodeBlock code="npm install @carsxe/design-system" lang="bash" />
-        <CodeBlock code="pnpm add @carsxe/design-system" lang="bash" />
+        <CodeBlock code="bun add @carsxe/design-system" language="bash" />
+        <CodeBlock code="npm install @carsxe/design-system" language="bash" />
+        <CodeBlock code="pnpm add @carsxe/design-system" language="bash" />
       </section>
 
       <section className="flex flex-col gap-3">
@@ -94,21 +94,21 @@ function GettingStarted() {
         </p>
         <CodeBlock
           code={`import "@carsxe/design-system/globals.css"`}
-          lang="tsx"
+          language="tsx"
         />
         <p className="text-sm text-muted-foreground">
           Otherwise use the prebuilt stylesheet:
         </p>
         <CodeBlock
           code={`import "@carsxe/design-system/styles.css"`}
-          lang="tsx"
+          language="tsx"
         />
       </section>
 
       <section className="flex flex-col gap-3">
         <h2 className="font-heading text-2xl font-medium">First button</h2>
         <CodeBlock
-          lang="tsx"
+          language="tsx"
           code={`import { Button } from "@carsxe/design-system/components/button"
 
 export function Example() {

@@ -1,4 +1,4 @@
-import { CodeBlock } from "@/components/code-block"
+import { CodeBlock } from "@carsxe/design-system/components/code-block"
 import { ComponentPreview } from "@/components/component-preview"
 import { DocsPageHeader } from "@/components/docs-page-header"
 import { PropsTable } from "@/components/props-table"
@@ -25,7 +25,7 @@ export function ComponentDocPage({ doc }: { doc: ComponentDoc }) {
             your app.
           </p>
           <CodeBlock
-            lang="tsx"
+            language="tsx"
             code={`import { ${doc.importName} } from "${doc.importPath}"`}
           />
         </section>
@@ -33,7 +33,7 @@ export function ComponentDocPage({ doc }: { doc: ComponentDoc }) {
 
       <section className="flex flex-col gap-3">
         <h2 className="font-heading text-2xl font-medium">Usage</h2>
-        <CodeBlock code={doc.usage} lang="tsx" />
+        <CodeBlock code={doc.usage} language="tsx" />
       </section>
 
       {doc.examples.map((example) => (

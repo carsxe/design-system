@@ -7,6 +7,7 @@ import { button } from "./button"
 import { card } from "./card"
 import { chart } from "./chart"
 import { checkbox } from "./checkbox"
+import { codeBlock } from "./code-block"
 import { d3Charts } from "./d3-charts"
 import { dialog } from "./dialog"
 import { dropdownMenu } from "./dropdown-menu"
@@ -44,6 +45,7 @@ export const componentDocs: ComponentDoc[] = [
   card,
   chart,
   checkbox,
+  codeBlock,
   dialog,
   dropdownMenu,
   d3Charts,

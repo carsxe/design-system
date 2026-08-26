@@ -3,7 +3,7 @@ import { getSkill } from "@carsxe/skills"
 
 import { Separator } from "@carsxe/design-system/components/separator"
 
-import { CodeBlock } from "@/components/code-block"
+import { CodeBlock } from "@carsxe/design-system/components/code-block"
 import { CopyButton } from "@/components/copy-button"
 import { DocsPageHeader } from "@/components/docs-page-header"
 import { seo } from "@/lib/seo"
@@ -92,7 +92,7 @@ function SkillDetail() {
         <section key={file.name} className="flex flex-col gap-3">
           <Separator />
           <h2 className="font-heading text-2xl font-medium">{file.name}</h2>
-          <CodeBlock code={file.content} lang="markdown" />
+          <CodeBlock code={file.content} language="markdown" />
         </section>
       ))}
     </article>

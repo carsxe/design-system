@@ -1,6 +1,6 @@
 import { Link, createFileRoute } from "@tanstack/react-router"
 
-import { CodeBlock } from "@/components/code-block"
+import { CodeBlock } from "@carsxe/design-system/components/code-block"
 import { DocsPageHeader } from "@/components/docs-page-header"
 import { AGENT_PROMPT } from "@/lib/agent-prompt"
 import { seo } from "@/lib/seo"
@@ -66,7 +66,7 @@ function SkillsCatalog() {
 
       <section className="flex flex-col gap-3">
         <h2 className="font-heading text-2xl font-medium">Short prompt</h2>
-        <CodeBlock code={AGENT_PROMPT} lang="plaintext" />
+        <CodeBlock code={AGENT_PROMPT} language="text" />
       </section>
 
       <section className="flex flex-col gap-3">

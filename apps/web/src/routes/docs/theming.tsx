@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router"
 
-import { CodeBlock } from "@/components/code-block"
+import { CodeBlock } from "@carsxe/design-system/components/code-block"
 import { DocsPageHeader } from "@/components/docs-page-header"
 import { seo } from "@/lib/seo"
 
@@ -130,7 +130,7 @@ function Theming() {
           <code className="font-mono">dark</code> class on an ancestor, usually{" "}
           <code className="font-mono">&lt;html&gt;</code>.
         </p>
-        <CodeBlock code={`<html class="dark">`} lang="html" />
+        <CodeBlock code={`<html class="dark">`} language="html" />
       </section>
     </article>
   )

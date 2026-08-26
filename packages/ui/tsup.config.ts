@@ -29,6 +29,7 @@ export default defineConfig((options) => ({
     "date-fns",
     "d3",
     "d3-sankey",
+    "shiki",
     "embla-carousel-react",
     "react-resizable-panels",
     "recharts",

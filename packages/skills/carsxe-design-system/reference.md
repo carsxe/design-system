@@ -72,6 +72,7 @@ Import from `@carsxe/design-system/components/<name>` or the package root.
 | D3 Charts         | `@carsxe/design-system/components/d3-chart`          |
 | Checkbox          | `@carsxe/design-system/components/checkbox`          |
 | Clipboard         | `@carsxe/design-system/components/clipboard`         |
+| Code Block        | `@carsxe/design-system/components/code-block`        |
 | Collapsible       | `@carsxe/design-system/components/collapsible`       |
 | Color Picker      | `@carsxe/design-system/components/color-picker`      |
 | Combobox          | `@carsxe/design-system/components/combobox`          |
@@ -147,6 +148,11 @@ Chart includes token-aware Recharts composition for Area, Bar, Line, Pie/Donut,
 Radar, and Radial charts. D3 Charts exports `SankeyChart`,
 `ForceDirectedGraph`, `TreemapChart`, and `SunburstChart` for relationship and
 hierarchy data.
+
+Code Block uses Shiki with a searchable catalog of all bundled light and dark
+themes. It follows the app's `.dark` class by default, loads the selected theme
+and language on demand, and includes copy feedback. Pass `theme="dracula"` for
+an explicit theme or keep `theme="system"` for light/dark defaults.
 
 Signature Pad can be used as the `SignaturePad` convenience component or with
 the compound `SignaturePadRoot`, `SignaturePadLabel`, `SignaturePadControl`,

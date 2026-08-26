@@ -13,7 +13,6 @@ import { SiteHeader } from "@/components/site-header"
 import { SITE_DESCRIPTION, SITE_NAME, seo } from "@/lib/seo"
 
 import appCss from "@carsxe/design-system/globals.css?url"
-import docsCss from "@/styles/docs.css?url"
 
 const defaults = seo({
   title: SITE_NAME,
@@ -59,10 +58,6 @@ export const Route = createRootRoute({
       {
         rel: "stylesheet",
         href: appCss,
-      },
-      {
-        rel: "stylesheet",
-        href: docsCss,
       },
     ],
   }),

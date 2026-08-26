@@ -7,7 +7,7 @@ import {
   TabsTrigger,
 } from "@carsxe/design-system/components/tabs"
 
-import { CodeBlock } from "@/components/code-block"
+import { CodeBlock } from "@carsxe/design-system/components/code-block"
 
 export function ComponentPreview({
   preview,
@@ -29,7 +29,7 @@ export function ComponentPreview({
         {preview}
       </TabsContent>
       <TabsContent value="code">
-        <CodeBlock code={code} lang="tsx" />
+        <CodeBlock code={code} language="tsx" />
       </TabsContent>
     </Tabs>
   )

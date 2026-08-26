@@ -21,6 +21,28 @@ export type ChangelogEntry = {
 export const changelogEntries = [
   {
     date: "2026-08-26",
+    title: "Shiki code blocks with theme choice",
+    summary:
+      "Code examples now use the shared design-system viewer with opt-in syntax theme picking and built-in copying.",
+    groups: [
+      {
+        type: "added",
+        items: [
+          "A public Code Block component with every bundled Shiki theme, all bundled languages, system-aware defaults, and accessible copy feedback.",
+          "An opt-in showThemePicker control so viewers can change the syntax theme in the UI; themes stay code-only by default.",
+        ],
+      },
+      {
+        type: "changed",
+        items: [
+          "Documentation code examples now use the exported Code Block instead of a private GitHub-theme-only renderer.",
+        ],
+      },
+    ],
+    sources: [],
+  },
+  {
+    date: "2026-08-26",
     title: "Primary hover colors restored",
     summary:
       "Primary hover states once again use the established CarsXE theme colors from the 0.0.4 release.",
