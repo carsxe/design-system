@@ -21,6 +21,23 @@ export type ChangelogEntry = {
 export const changelogEntries = [
   {
     date: "2026-08-31",
+    title: "World Map Chart maps global vehicle activity",
+    summary:
+      "WorldMapChart turns ISO country values into a responsive CarsXE choropleth with bundled geometry, accessible inspection, and selectable markets.",
+    groups: [
+      {
+        type: "added",
+        items: [
+          "WorldMapChart with ISO alpha-2, alpha-3, and numeric country-code normalization plus bundled 110m world geometry.",
+          "CarsXE token-aware color scales, missing-data treatment, external value tooltips, persistent selected-country outlines, and live light/dark theme updates.",
+          "Mouse selection and keyboard country navigation with live announcements, controlled and uncontrolled selection, empty states, docs, and Storybook examples.",
+        ],
+      },
+    ],
+    sources: [],
+  },
+  {
+    date: "2026-08-31",
     title: "Password Input learns to rate passwords",
     summary:
       "PasswordInput gains an optional strength meter: with feedback set, focusing the input opens a panel rating the value weak, medium, or strong as it is typed. The labels, the rating logic, the toggle icons, and the panel's header and footer are all replaceable.",

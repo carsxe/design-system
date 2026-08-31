@@ -33,6 +33,8 @@ export default defineConfig((options) => ({
     "embla-carousel-react",
     "react-resizable-panels",
     "recharts",
+    "chart.js",
+    "chartjs-chart-geo",
     "cmdk",
     "@shadcn/react",
     "sonner",

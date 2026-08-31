@@ -146,6 +146,7 @@ Import from `@carsxe/design-system/components/<name>` or the package root.
 | Tour              | `@carsxe/design-system/components/tour`              |
 | Tree View         | `@carsxe/design-system/components/tree-view`         |
 | Tooltip           | `@carsxe/design-system/components/tooltip`           |
+| World Map Chart   | `@carsxe/design-system/components/world-map-chart`   |
 
 Sidebar also exposes `useIsMobile` from `@carsxe/design-system/hooks/use-mobile`.
 
@@ -153,6 +154,12 @@ Chart includes token-aware Recharts composition for Area, Bar, Line, Pie/Donut,
 Radar, and Radial charts. D3 Charts exports `SankeyChart`,
 `ForceDirectedGraph`, `TreemapChart`, and `SunburstChart` for relationship and
 hierarchy data.
+
+World Map Chart is a Chart.js choropleth with bundled world geometry. Pass
+`data={[{ countryCode: "US", value: 18420 }]}` using ISO alpha-2, alpha-3, or
+numeric codes. It provides a CarsXE token scale, hover and keyboard previews,
+controlled or uncontrolled country selection, an accessible live region, and
+light/dark theme updates without runtime map fetches.
 
 Heatmap is a GitHub-style calendar heatmap. Pass
 `data={[{ date: "2026-08-12", value: 1240 }]}` (string dates are `YYYY-MM-DD`,

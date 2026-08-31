@@ -67,7 +67,7 @@ export const componentDates: Record<string, ComponentDates> = {
   "navigation-menu": { added: "2026-08-19", updated: "2026-08-25" },
   "number-input": { added: "2026-08-25", updated: "2026-08-25" },
   pagination: { added: "2026-08-19", updated: "2026-08-25" },
-  "password-input": { added: "2026-08-25", updated: "2026-08-25" },
+  "password-input": { added: "2026-08-25", updated: "2026-08-31" },
   popover: { added: "2026-08-25", updated: "2026-08-25" },
   progress: { added: "2026-08-19", updated: "2026-08-19" },
   "qr-code": { added: "2026-08-25", updated: "2026-08-25" },
