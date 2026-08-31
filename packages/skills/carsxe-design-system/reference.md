@@ -137,6 +137,7 @@ Import from `@carsxe/design-system/components/<name>` or the package root.
 | Tabs              | `@carsxe/design-system/components/tabs`              |
 | Tags Input        | `@carsxe/design-system/components/tags-input`        |
 | Textarea          | `@carsxe/design-system/components/textarea`          |
+| Timeline          | `@carsxe/design-system/components/timeline`          |
 | Timer             | `@carsxe/design-system/components/timer`             |
 | Toast             | `@carsxe/design-system/components/toast`             |
 | Toggle            | `@carsxe/design-system/components/toggle`            |

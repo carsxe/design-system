@@ -21,6 +21,23 @@ export type ChangelogEntry = {
 export const changelogEntries = [
   {
     date: "2026-08-31",
+    title: "Timeline for ordered events",
+    summary:
+      "A new Timeline component lays events out along a rail. Content, the opposite side, the marker, and the connector are render props receiving the item and its index, so an event can be a line of text or a full card.",
+    groups: [
+      {
+        type: "added",
+        items: [
+          "Timeline with vertical and horizontal orientation, and align of start, end, or alternate so the rail can centre itself between sides.",
+          "content, opposite, marker, and connector render props, a getKey override defaulting to the item id, and data-slot parts for the event, opposite side, separator, marker, connector, and content.",
+          "A Timeline docs page and Storybook stories.",
+        ],
+      },
+    ],
+    sources: [],
+  },
+  {
+    date: "2026-08-31",
     title: "Rating group gains clearing, icons, and orientation",
     summary:
       "The rating group can now be cleared, use any icon pair, and stack vertically. Existing usage is unchanged: every new prop is opt-in.",

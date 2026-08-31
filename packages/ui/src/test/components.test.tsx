@@ -30,6 +30,7 @@ import {
   Swap,
   TableOfContents,
   TagsInput,
+  Timeline,
   Timer,
   TreeView,
 } from "../index"
@@ -78,6 +79,7 @@ describe("Ark-inspired components", () => {
         <Swap value="one">One</Swap>
         <TableOfContents items={[{ id: "intro", title: "Intro" }]} />
         <TagsInput />
+        <Timeline items={["Ordered", "Ready"]} />
         <Timer running={false} />
         <TreeView aria-label="Tree" items={[{ id: "one", label: "One" }]} />
       </main>

@@ -82,6 +82,7 @@ export * from "./components/table-of-contents"
 export * from "./components/tabs"
 export * from "./components/tags-input"
 export * from "./components/textarea"
+export * from "./components/timeline"
 export * from "./components/timer"
 export {
   Toaster as ToastToaster,
