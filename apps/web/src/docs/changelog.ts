@@ -21,6 +21,21 @@ export type ChangelogEntry = {
 export const changelogEntries = [
   {
     date: "2026-08-31",
+    title: "Selected tree rows read clearly",
+    summary:
+      "A selected TreeView row used primary-colored text on the accent background, which blended together in dark mode. Selection now uses the foreground color, so the label reads white on the dark accent and dark on the light one.",
+    groups: [
+      {
+        type: "fixed",
+        items: [
+          "TreeView selected rows use text-foreground instead of text-primary, fixing the low-contrast teal-on-teal label in dark mode.",
+        ],
+      },
+    ],
+    sources: [],
+  },
+  {
+    date: "2026-08-31",
     title: "Steps connectors stay out of the titles",
     summary:
       "The line joining horizontal steps used to be drawn across the whole step, striking through its title. It now fills only the space between a step's label and the next indicator, and vertical steps get a proper rail below each indicator.",

@@ -481,7 +481,7 @@ function TreeView({
             data-dragging={drag?.id === item.id || undefined}
             draggable={canDrag || undefined}
             className={cn(
-              "flex min-h-9 items-center rounded-xl px-2 text-sm hover:bg-accent aria-selected:bg-accent aria-selected:text-primary data-dragging:opacity-50 data-selected:bg-accent data-selected:text-primary",
+              "flex min-h-9 items-center rounded-xl px-2 text-sm hover:bg-accent aria-selected:bg-accent aria-selected:text-foreground data-dragging:opacity-50 data-selected:bg-accent data-selected:text-foreground",
               "data-[drop-position=after]:shadow-[inset_0_-2px_0_0_var(--color-primary)] data-[drop-position=before]:shadow-[inset_0_2px_0_0_var(--color-primary)] data-[drop-position=inside]:ring-2 data-[drop-position=inside]:ring-primary/60"
             )}
             style={{ paddingInlineStart: `${8 + (level - 1) * 16}px` }}
