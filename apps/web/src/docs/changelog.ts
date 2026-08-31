@@ -21,6 +21,22 @@ export type ChangelogEntry = {
 export const changelogEntries = [
   {
     date: "2026-08-31",
+    title: "Knob dial for numeric input",
+    summary:
+      "A new Knob component enters a number by dragging around a 270° dial. It is fully keyboard operable, prints a templatable value in the centre, and exposes its arc colours as CSS variables.",
+    groups: [
+      {
+        type: "added",
+        items: [
+          "Knob with pointer dragging, arrow-key stepping, Page Up and Page Down for ten steps, and Home and End for the ends of the range.",
+          "Configurable size, stroke width, min, max, and step; a children render prop that replaces the printed value and feeds aria-valuetext; valueColor, rangeColor, and textColor overrides; read-only and disabled states; and a name prop for form submission.",
+        ],
+      },
+    ],
+    sources: [],
+  },
+  {
+    date: "2026-08-31",
     title: "Autocomplete with debounced suggestions",
     summary:
       "A new Autocomplete component suggests options as the user types. The delay prop debounces querying so a burst of keystrokes makes a single request, and passing onQueryChange hands filtering to the caller for server-backed search.",

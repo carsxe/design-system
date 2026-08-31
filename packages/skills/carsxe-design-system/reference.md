@@ -99,6 +99,7 @@ Import from `@carsxe/design-system/components/<name>` or the package root.
 | Item              | `@carsxe/design-system/components/item`              |
 | JSON Tree View    | `@carsxe/design-system/components/json-tree-view`    |
 | Kbd               | `@carsxe/design-system/components/kbd`               |
+| Knob              | `@carsxe/design-system/components/knob`              |
 | Label             | `@carsxe/design-system/components/label`             |
 | Listbox           | `@carsxe/design-system/components/listbox`           |
 | Marker            | `@carsxe/design-system/components/marker`            |

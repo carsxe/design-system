@@ -18,6 +18,7 @@ import {
   Highlight,
   ImageCropper,
   JsonTreeView,
+  Knob,
   Listbox,
   Marquee,
   NumberInput,
@@ -62,6 +63,7 @@ describe("Ark-inspired components", () => {
         <Highlight text="Carsxe design" query="design" />
         <ImageCropper src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'/%3E" />
         <JsonTreeView data={{ ready: true }} />
+        <Knob aria-label="Knob" defaultValue={40} />
         <Listbox
           aria-label="Options"
           items={[{ value: "one", label: "One" }]}

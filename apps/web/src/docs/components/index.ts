@@ -15,6 +15,7 @@ import { dropdownMenu } from "./dropdown-menu"
 import { extendedComponentDocs } from "./extended"
 import { heatmap } from "./heatmap"
 import { input } from "./input"
+import { knob } from "./knob"
 import { label } from "./label"
 import { marquee } from "./marquee"
 import { navigationMenu } from "./navigation-menu"
@@ -55,6 +56,7 @@ export const componentDocs: ComponentDoc[] = [
   d3Charts,
   heatmap,
   input,
+  knob,
   label,
   marquee,
   navigationMenu,
