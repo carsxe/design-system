@@ -35,6 +35,7 @@ import { tabs } from "./tabs"
 import { textarea } from "./textarea"
 import { timeline } from "./timeline"
 import { tooltip } from "./tooltip"
+import { treeView } from "./tree-view"
 import { ratingGroup } from "./rating-group"
 import { recipeDocs } from "./recipes"
 import type { ComponentDoc } from "./types"
@@ -79,6 +80,7 @@ export const componentDocs: ComponentDoc[] = [
   textarea,
   timeline,
   tooltip,
+  treeView,
   ...extendedComponentDocs,
   ...recipeDocs,
 ].sort((left, right) => left.title.localeCompare(right.title))

@@ -21,6 +21,30 @@ export type ChangelogEntry = {
 export const changelogEntries = [
   {
     date: "2026-08-31",
+    title: "Tree view gains checkboxes, filtering, and drag and drop",
+    summary:
+      "The tree view now cascades checkboxes with a derived mixed state, filters with a debounced search field, loads children on demand, templates its rows, and reorders by dragging. Existing usage is unchanged: single and multiple selection behave exactly as before.",
+    groups: [
+      {
+        type: "added",
+        items: [
+          'selectionMode of single, multiple, or checkbox. In checkbox mode value holds the fully checked ids and partial state is derived, reported as aria-checked="mixed".',
+          "Filtering through filter, defaultFilter, and onFilterChange, an optional built-in search field via showFilter, a filterDelay debounce, lenient and strict filterMode, and an emptyMessage when nothing matches. Matches are revealed without touching the caller's expanded state.",
+          "Lazy children: expanding a lazy node calls onExpand once and swaps its chevron for a spinner until the promise settles.",
+          "A renderItem row template receiving the item and its selected, expanded, checked, indeterminate, level, and disabled state, plus a per-item icon.",
+          "Drag and drop behind dragAndDrop, reporting the reordered tree through onItemsMove, with per-item draggable and droppable opt-outs and a guard against dropping a branch into its own subtree.",
+          "Exported helpers collectTreeViewIds, findTreeViewItem, filterTreeViewItems, moveTreeViewItem, and toggleTreeViewChecked, and a Tree view docs page with Storybook stories.",
+        ],
+      },
+      {
+        type: "changed",
+        items: ["Home and End move focus to the first and last visible node."],
+      },
+    ],
+    sources: [],
+  },
+  {
+    date: "2026-08-31",
     title: "Timeline for ordered events",
     summary:
       "A new Timeline component lays events out along a rail. Content, the opposite side, the marker, and the connector are render props receiving the item and its index, so an event can be a line of text or a full card.",

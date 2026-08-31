@@ -173,6 +173,17 @@ the compound `SignaturePadRoot`, `SignaturePadLabel`, `SignaturePadControl`,
 `SignaturePadRootProvider` when the state and export methods must be controlled
 outside the component tree.
 
+Tree View takes `items` of `{ id, label, children }` and keeps selection in
+`value` as an array of ids. `selectionMode="checkbox"` cascades to descendants
+and ancestors, with `value` holding only the fully checked ids — partial state
+is derived and reported as `aria-checked="mixed"`. `showFilter` adds a search
+field debounced by `filterDelay`; `filterMode="strict"` prunes a matched branch
+to the matching path. A `lazy` item calls `onExpand` once and shows a spinner
+until it resolves. `dragAndDrop` reports moves through `onItemsMove`, which
+hands back the reordered tree. Helpers: `collectTreeViewIds`,
+`findTreeViewItem`, `filterTreeViewItems`, `moveTreeViewItem`, and
+`toggleTreeViewChecked`.
+
 Data Table, Date Picker, Forms, and Typography are composition recipes in the docs, not component import paths.
 
 `Input` has no `size` variant prop — native `<input size>` is a number. Use `className` for compact heights (for example `h-8`).
