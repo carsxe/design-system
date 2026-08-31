@@ -173,6 +173,14 @@ the compound `SignaturePadRoot`, `SignaturePadLabel`, `SignaturePadControl`,
 `SignaturePadRootProvider` when the state and export methods must be controlled
 outside the component tree.
 
+Steps is both a standalone indicator (`steps`, `value`/`defaultValue`/
+`onValueChange`, `orientation`, `linear`) and the indicator for a wizard: wrap
+it in `StepsRoot` with `StepsContent` and one `StepsPanel step="<id>"` per step.
+Inactive panels stay mounted but hidden, so form state survives navigation.
+`useSteps()` returns `{ steps, index, value, isFirst, isLast, linear, next,
+prev, goTo }` for footer buttons; `linear` only blocks clicking the indicator,
+never programmatic navigation.
+
 Tree View takes `items` of `{ id, label, children }` and keeps selection in
 `value` as an array of ids. `selectionMode="checkbox"` cascades to descendants
 and ancestors, with `value` holding only the fully checked ids — partial state

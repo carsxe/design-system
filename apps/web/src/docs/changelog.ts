@@ -21,6 +21,30 @@ export type ChangelogEntry = {
 export const changelogEntries = [
   {
     date: "2026-08-31",
+    title: "Steps becomes a wizard",
+    summary:
+      "Steps can now drive panels. StepsRoot owns the active step, StepsPanel renders one step's content, and useSteps gives footer buttons their navigation. A standalone Steps indicator behaves exactly as before.",
+    groups: [
+      {
+        type: "added",
+        items: [
+          "StepsRoot, StepsContent, and StepsPanel. Inactive panels stay mounted but hidden so form state survives navigation, and a panel's children may be a render prop receiving the navigation helpers.",
+          "useSteps returning steps, index, value, isFirst, isLast, linear, next, prev, and goTo, which accepts a step index or id.",
+          "A linear prop that blocks clicking a step ahead of the current one while still allowing earlier steps and programmatic navigation.",
+          "A Steps docs page and Storybook stories.",
+        ],
+      },
+      {
+        type: "fixed",
+        items: [
+          "Step indicators are now labelled by their visible title, so the completed ones no longer render as unnamed buttons for screen readers.",
+        ],
+      },
+    ],
+    sources: [],
+  },
+  {
+    date: "2026-08-31",
     title: "Tree view gains checkboxes, filtering, and drag and drop",
     summary:
       "The tree view now cascades checkboxes with a derived mixed state, filters with a debounced search field, loads children on demand, templates its rows, and reorders by dragging. Existing usage is unchanged: single and multiple selection behave exactly as before.",

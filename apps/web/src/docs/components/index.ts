@@ -29,6 +29,7 @@ import { signaturePad } from "./signature-pad"
 import { skeleton } from "./skeleton"
 import { slider } from "./slider"
 import { sonner } from "./sonner"
+import { steps } from "./steps"
 import { switchDoc } from "./switch"
 import { table } from "./table"
 import { tabs } from "./tabs"
@@ -74,6 +75,7 @@ export const componentDocs: ComponentDoc[] = [
   skeleton,
   slider,
   sonner,
+  steps,
   switchDoc,
   table,
   tabs,
