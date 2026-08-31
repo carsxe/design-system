@@ -20,6 +20,7 @@ import { label } from "./label"
 import { marquee } from "./marquee"
 import { navigationMenu } from "./navigation-menu"
 import { pagination } from "./pagination"
+import { passwordInput } from "./password-input"
 import { progress } from "./progress"
 import { radioGroup } from "./radio-group"
 import { select } from "./select"
@@ -66,6 +67,7 @@ export const componentDocs: ComponentDoc[] = [
   marquee,
   navigationMenu,
   pagination,
+  passwordInput,
   progress,
   radioGroup,
   ratingGroup,

@@ -174,6 +174,14 @@ the compound `SignaturePadRoot`, `SignaturePadLabel`, `SignaturePadControl`,
 `SignaturePadRootProvider` when the state and export methods must be controlled
 outside the component tree.
 
+Password Input is a masked input with a visibility toggle (`toggleMask`,
+`showIcon`/`hideIcon`, controlled `visible`/`onVisibleChange`). Set `feedback`
+to open a strength panel while the input is focused, rating the value weak,
+medium, or strong; customize the captions with `promptLabel`/`weakLabel`/
+`mediumLabel`/`strongLabel`, replace the rating with `getStrength`, and add
+suggestions through `feedbackHeader`/`feedbackFooter`. The default
+`getPasswordStrength` is exported.
+
 Split Button is the data-driven pairing of a primary action with a menu. It
 takes every `Button` prop (including `variant`, `size`, and `onClick`) plus
 `items` of `{ id, label, icon, onSelect, href, disabled, destructive,

@@ -21,6 +21,24 @@ export type ChangelogEntry = {
 export const changelogEntries = [
   {
     date: "2026-08-31",
+    title: "Password Input learns to rate passwords",
+    summary:
+      "PasswordInput gains an optional strength meter: with feedback set, focusing the input opens a panel rating the value weak, medium, or strong as it is typed. The labels, the rating logic, the toggle icons, and the panel's header and footer are all replaceable.",
+    groups: [
+      {
+        type: "added",
+        items: [
+          "A feedback prop that opens a strength panel below the focused input, with promptLabel, weakLabel, mediumLabel, and strongLabel captions and feedbackHeader/feedbackFooter slots for suggestions.",
+          "getStrength to replace the rating logic; the default getPasswordStrength is exported and rates by character variety and length.",
+          "toggleMask to hide the visibility toggle, and showIcon/hideIcon to swap its icons.",
+          "aria-invalid styling matching Input, and a Password Input docs page and Storybook stories.",
+        ],
+      },
+    ],
+    sources: [],
+  },
+  {
+    date: "2026-08-31",
     title: "Selected tree rows read clearly",
     summary:
       "A selected TreeView row used primary-colored text on the accent background, which blended together in dark mode. Selection now uses the foreground color, so the label reads white on the dark accent and dark on the light one.",
