@@ -1,17 +1,22 @@
 import { CodeBlock } from "@carsxe/design-system/components/code-block"
 import { ComponentPreview } from "@/components/component-preview"
+import { ComponentStatusBadge } from "@/components/component-status-badge"
 import { DocsPageHeader } from "@/components/docs-page-header"
 import { PropsTable } from "@/components/props-table"
+import { getComponentStatus } from "@/docs/components/status"
 import { componentDocToMarkdown } from "@/docs/components/to-markdown"
 import type { ComponentDoc } from "@/docs/components/types"
 
 export function ComponentDocPage({ doc }: { doc: ComponentDoc }) {
+  const status = getComponentStatus(doc)
+
   return (
     <article className="flex max-w-3xl min-w-0 flex-col gap-10">
       <DocsPageHeader
         title={doc.title}
         description={doc.description}
         markdown={componentDocToMarkdown(doc)}
+        badge={status ? <ComponentStatusBadge status={status} /> : null}
       />
 
       <ComponentPreview preview={doc.preview} code={doc.previewCode} />

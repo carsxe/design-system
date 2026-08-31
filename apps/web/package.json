@@ -4,8 +4,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "vite dev --port 3000",
-    "build": "vite build",
+    "dev": "bun run docs:dates && vite dev --port 3000",
+    "build": "bun run docs:dates && vite build",
+    "docs:dates": "bun scripts/generate-component-dates.ts",
     "preview": "vite preview",
     "deploy": "bun run build && wrangler deploy",
     "cf-typegen": "wrangler types",

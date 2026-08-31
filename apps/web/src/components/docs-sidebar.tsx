@@ -2,7 +2,9 @@ import { Link, useRouterState } from "@tanstack/react-router"
 
 import { cn } from "@carsxe/design-system/lib/utils"
 
+import { ComponentStatusBadge } from "@/components/component-status-badge"
 import { componentDocs } from "@/docs/components"
+import { getComponentStatus } from "@/docs/components/status"
 
 const gettingStarted = [
   {
@@ -98,19 +100,23 @@ export function DocsSidebar() {
           <div className="flex flex-col">
             {componentDocs.map((doc) => {
               const href = `/docs/components/${doc.slug}`
+              const status = getComponentStatus(doc)
               return (
                 <Link
                   key={doc.slug}
                   to="/docs/components/$slug"
                   params={{ slug: doc.slug }}
                   className={cn(
-                    "block px-2 py-1 text-sm",
+                    "flex items-center gap-1.5 px-2 py-1 text-sm",
                     pathname === href
                       ? "font-medium text-foreground"
                       : "text-muted-foreground hover:text-foreground"
                   )}
                 >
                   {doc.title}
+                  {status ? (
+                    <ComponentStatusBadge status={status} compact />
+                  ) : null}
                 </Link>
               )
             })}

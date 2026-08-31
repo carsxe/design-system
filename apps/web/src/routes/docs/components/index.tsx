@@ -1,7 +1,9 @@
 import { Link, createFileRoute } from "@tanstack/react-router"
 
+import { ComponentStatusBadge } from "@/components/component-status-badge"
 import { DocsPageHeader } from "@/components/docs-page-header"
 import { componentDocs } from "@/docs/components"
+import { getComponentStatus } from "@/docs/components/status"
 import { seo } from "@/lib/seo"
 
 export const Route = createFileRoute("/docs/components/")({
@@ -18,7 +20,10 @@ export const Route = createFileRoute("/docs/components/")({
 
 function componentsIndexMarkdown() {
   const list = componentDocs
-    .map((doc) => `- [${doc.title}](/docs/components/${doc.slug}) — ${doc.description}`)
+    .map(
+      (doc) =>
+        `- [${doc.title}](/docs/components/${doc.slug}) — ${doc.description}`
+    )
     .join("\n")
 
   return `# Components
@@ -47,23 +52,31 @@ function ComponentsIndex() {
       />
 
       <ul className="grid gap-px border border-border sm:grid-cols-2">
-        {componentDocs.map((doc) => (
-          <li
-            key={doc.slug}
-            className="border-b border-border last:border-0 sm:odd:border-r"
-          >
-            <Link
-              to="/docs/components/$slug"
-              params={{ slug: doc.slug }}
-              className="flex flex-col gap-1 p-4 hover:bg-muted"
+        {componentDocs.map((doc) => {
+          const status = getComponentStatus(doc)
+          return (
+            <li
+              key={doc.slug}
+              className="border-b border-border last:border-0 sm:odd:border-r"
             >
-              <span className="text-sm font-medium">{doc.title}</span>
-              <span className="text-sm text-muted-foreground">
-                {doc.description}
-              </span>
-            </Link>
-          </li>
-        ))}
+              <Link
+                to="/docs/components/$slug"
+                params={{ slug: doc.slug }}
+                className="flex flex-col gap-1 p-4 hover:bg-muted"
+              >
+                <span className="flex items-center gap-2 text-sm font-medium">
+                  {doc.title}
+                  {status ? (
+                    <ComponentStatusBadge status={status} compact />
+                  ) : null}
+                </span>
+                <span className="text-sm text-muted-foreground">
+                  {doc.description}
+                </span>
+              </Link>
+            </li>
+          )
+        })}
       </ul>
     </article>
   )

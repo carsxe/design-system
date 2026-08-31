@@ -1,9 +1,9 @@
 import {
-  CarIcon,
   CheckIcon,
   FileTextIcon,
   SearchIcon,
   TruckIcon,
+  type LucideIcon,
 } from "lucide-react"
 import { Badge } from "@carsxe/design-system/components/badge"
 import { Card, CardContent } from "@carsxe/design-system/components/card"
@@ -16,7 +16,7 @@ type ReportEvent = {
   title: string
   detail: string
   time: string
-  icon: typeof CarIcon
+  icon: LucideIcon
 }
 
 const reportEvents: ReportEvent[] = [

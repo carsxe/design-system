@@ -9,6 +9,7 @@
     "deploy:web": "bun run --cwd apps/web deploy",
     "deploy:storybook": "bun run --cwd apps/storybook deploy",
     "deploy": "bun run deploy:web && bun run deploy:storybook",
+    "docs:dates": "bun run --cwd apps/web docs:dates",
     "lint": "turbo lint",
     "format": "turbo format",
     "typecheck": "turbo typecheck"
