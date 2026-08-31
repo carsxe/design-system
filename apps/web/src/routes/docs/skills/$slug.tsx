@@ -7,6 +7,7 @@ import { CodeBlock } from "@carsxe/design-system/components/code-block"
 import { CopyButton } from "@/components/copy-button"
 import { DocsPageHeader } from "@/components/docs-page-header"
 import { seo } from "@/lib/seo"
+import { SITE_URL } from "@/lib/site"
 import { loadSkill, skillMarkdownBody } from "@/lib/skills"
 
 export const Route = createFileRoute("/docs/skills/$slug")({
@@ -41,6 +42,7 @@ function SkillDetail() {
   }
 
   const skillMd = skillMarkdownBody(skill)
+  const examples = skill.examples ?? []
   const pageMarkdown = [
     `# ${skill.title}`,
     "",
@@ -48,6 +50,18 @@ function SkillDetail() {
     "",
     `Save as \`.cursor/skills/${skill.slug}/SKILL.md\`. Copy other files in this skill into the same folder.`,
     "",
+    ...(examples.length
+      ? [
+          "## Examples",
+          "",
+          ...examples.flatMap((example) => [
+            `![${example.alt}](${SITE_URL}${example.src})`,
+            "",
+            example.caption,
+            "",
+          ]),
+        ]
+      : []),
     ...skill.contents.flatMap((file) => [
       `## ${file.name}`,
       "",
@@ -87,6 +101,34 @@ function SkillDetail() {
           copiedLabel="Copied skill"
         />
       </div>
+
+      {examples.length ? (
+        <section className="flex flex-col gap-3">
+          <Separator />
+          <h2 className="font-heading text-2xl font-medium">Examples</h2>
+          <p className="text-sm text-muted-foreground">
+            Artwork this skill produced. Match this style, not these exact
+            diagrams.
+          </p>
+          <div className="flex flex-col gap-6">
+            {examples.map((example) => (
+              <figure key={example.src} className="flex flex-col gap-2">
+                <img
+                  src={example.src}
+                  alt={example.alt}
+                  width={1536}
+                  height={1024}
+                  loading="lazy"
+                  className="w-full border border-border bg-white"
+                />
+                <figcaption className="text-sm text-muted-foreground">
+                  {example.caption}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       {skill.contents.map((file) => (
         <section key={file.name} className="flex flex-col gap-3">
