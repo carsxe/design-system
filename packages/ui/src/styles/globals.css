@@ -55,6 +55,11 @@
   --chart-3: #00a63e;
   --chart-4: #f79008;
   --chart-5: #162849;
+  --heatmap-1: #00b6e5;
+  --heatmap-2: #0082aa;
+  --heatmap-3: #065774;
+  --heatmap-4: #043244;
+  --heatmap-5: #031e2a;
   --radius: 0;
   --sidebar: #ffffff;
   --sidebar-foreground: #3a3a3a;
@@ -97,6 +102,11 @@
   --chart-3: #00a63e;
   --chart-4: #f79008;
   --chart-5: #bfc7d5;
+  --heatmap-1: #065774;
+  --heatmap-2: #0082aa;
+  --heatmap-3: #00b6e5;
+  --heatmap-4: #4dccee;
+  --heatmap-5: #8cdef5;
   --sidebar: #1a1a1a;
   --sidebar-foreground: #ffffff;
   --sidebar-primary: #00b6e5;
@@ -138,6 +148,11 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+  --color-heatmap-1: var(--heatmap-1);
+  --color-heatmap-2: var(--heatmap-2);
+  --color-heatmap-3: var(--heatmap-3);
+  --color-heatmap-4: var(--heatmap-4);
+  --color-heatmap-5: var(--heatmap-5);
   --color-brand-50: var(--brand-50);
   --color-brand-100: var(--brand-100);
   --color-brand-200: var(--brand-200);

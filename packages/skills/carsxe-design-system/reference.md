@@ -88,6 +88,7 @@ Import from `@carsxe/design-system/components/<name>` or the package root.
 | Field             | `@carsxe/design-system/components/field`             |
 | Floating Panel    | `@carsxe/design-system/components/floating-panel`    |
 | Format            | `@carsxe/design-system/components/format`            |
+| Heatmap           | `@carsxe/design-system/components/heatmap`           |
 | Highlight         | `@carsxe/design-system/components/highlight`         |
 | Hover card        | `@carsxe/design-system/components/hover-card`        |
 | Image Cropper     | `@carsxe/design-system/components/image-cropper`     |
@@ -148,6 +149,14 @@ Chart includes token-aware Recharts composition for Area, Bar, Line, Pie/Donut,
 Radar, and Radial charts. D3 Charts exports `SankeyChart`,
 `ForceDirectedGraph`, `TreemapChart`, and `SunburstChart` for relationship and
 hierarchy data.
+
+Heatmap is a GitHub-style calendar heatmap. Pass
+`data={[{ date: "2026-08-12", value: 1240 }]}` (string dates are `YYYY-MM-DD`,
+parsed as local days); values quantize into as many levels as the `colors`
+array (five heatmap tokens by default, theme-aware), with zero or missing days
+rendered in `emptyColor`. It has no `height` prop — height derives from width
+and the number of weeks so cells stay square. `valueFormatter` drives both the
+cell tooltips and the legend's "up to" maximum.
 
 Code Block uses Shiki with a searchable catalog of all bundled light and dark
 themes. It follows the app's `.dark` class by default, loads the selected theme

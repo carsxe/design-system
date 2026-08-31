@@ -20,6 +20,22 @@ export type ChangelogEntry = {
 
 export const changelogEntries = [
   {
+    date: "2026-08-31",
+    title: "Calendar heatmap",
+    summary:
+      "A GitHub-style calendar heatmap shows a value per day so quiet stretches and spikes are visible at a glance.",
+    groups: [
+      {
+        type: "added",
+        items: [
+          "A Heatmap component with weeks as columns, month and weekday labels, keyboard-accessible cells with tooltips, and a Less-to-More legend with the formatted maximum.",
+          "Five heatmap color tokens per theme, tuned so intensity steps stay distinguishable on light and dark surfaces and overridable through the colors prop.",
+        ],
+      },
+    ],
+    sources: [],
+  },
+  {
     date: "2026-08-26",
     title: "Shiki code blocks with theme choice",
     summary:
