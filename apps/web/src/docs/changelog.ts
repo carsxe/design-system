@@ -21,6 +21,24 @@ export type ChangelogEntry = {
 export const changelogEntries = [
   {
     date: "2026-08-31",
+    title: "Rating group gains clearing, icons, and orientation",
+    summary:
+      "The rating group can now be cleared, use any icon pair, and stack vertically. Existing usage is unchanged: every new prop is opt-in.",
+    groups: [
+      {
+        type: "added",
+        items: [
+          "allowClear: picking the current value again, or pressing Delete or Backspace, resets the rating to zero.",
+          "icon and emptyIcon props so ratings can use hearts, thumbs, or any other icon for the filled and empty layers, with half values still clipping correctly.",
+          "A vertical orientation, reported through aria-orientation and data-orientation, plus a data-fill attribute of empty, partial, or full on every item.",
+          "A Rating group docs page and Storybook stories.",
+        ],
+      },
+    ],
+    sources: [],
+  },
+  {
+    date: "2026-08-31",
     title: "Knob dial for numeric input",
     summary:
       "A new Knob component enters a number by dragging around a 270° dial. It is fully keyboard operable, prints a templatable value in the centre, and exposes its arc colours as CSS variables.",

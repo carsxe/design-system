@@ -34,6 +34,7 @@ import { table } from "./table"
 import { tabs } from "./tabs"
 import { textarea } from "./textarea"
 import { tooltip } from "./tooltip"
+import { ratingGroup } from "./rating-group"
 import { recipeDocs } from "./recipes"
 import type { ComponentDoc } from "./types"
 
@@ -63,6 +64,7 @@ export const componentDocs: ComponentDoc[] = [
   pagination,
   progress,
   radioGroup,
+  ratingGroup,
   select,
   separator,
   sidebar,
