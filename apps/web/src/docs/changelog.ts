@@ -21,6 +21,23 @@ export type ChangelogEntry = {
 export const changelogEntries = [
   {
     date: "2026-08-31",
+    title: "Split Button pairs an action with its menu",
+    summary:
+      "SplitButton joins a primary Button to a dropdown of related actions in one component. The left half keeps every Button prop; the menu is described by data, so items, separators, links, and submenus need no markup.",
+    groups: [
+      {
+        type: "added",
+        items: [
+          "SplitButton with an items prop of { id, label, icon, onSelect, href, disabled, destructive, separator, items }, covering separators, link items, destructive entries, and one level of submenu.",
+          "A loading prop that shows a spinner and disables both halves, a menuLabel for the menu trigger's accessible name, and contentProps for positioning the menu.",
+          "A Split Button docs page and Storybook stories.",
+        ],
+      },
+    ],
+    sources: [],
+  },
+  {
+    date: "2026-08-31",
     title: "Steps becomes a wizard",
     summary:
       "Steps can now drive panels. StepsRoot owns the active step, StepsPanel renders one step's content, and useSteps gives footer buttons their navigation. A standalone Steps indicator behaves exactly as before.",

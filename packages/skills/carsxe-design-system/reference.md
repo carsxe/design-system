@@ -129,6 +129,7 @@ Import from `@carsxe/design-system/components/<name>` or the package root.
 | Slider            | `@carsxe/design-system/components/slider`            |
 | Sonner            | `@carsxe/design-system/components/sonner`            |
 | Spinner           | `@carsxe/design-system/components/spinner`           |
+| Split Button      | `@carsxe/design-system/components/split-button`      |
 | Steps             | `@carsxe/design-system/components/steps`             |
 | Swap              | `@carsxe/design-system/components/swap`              |
 | Switch            | `@carsxe/design-system/components/switch`            |
@@ -172,6 +173,14 @@ the compound `SignaturePadRoot`, `SignaturePadLabel`, `SignaturePadControl`,
 `SignaturePadHiddenInput`. Use `useSignaturePad` with
 `SignaturePadRootProvider` when the state and export methods must be controlled
 outside the component tree.
+
+Split Button is the data-driven pairing of a primary action with a menu. It
+takes every `Button` prop (including `variant`, `size`, and `onClick`) plus
+`items` of `{ id, label, icon, onSelect, href, disabled, destructive,
+separator, items }`; `items` on an item nests one level of submenu. `loading`
+shows a spinner and disables both halves, and `menuLabel` names the menu
+trigger. Build it by hand from `ButtonGroup` + `Button` + `DropdownMenu` when
+the menu needs arbitrary markup.
 
 Steps is both a standalone indicator (`steps`, `value`/`defaultValue`/
 `onValueChange`, `orientation`, `linear`) and the indicator for a wizard: wrap

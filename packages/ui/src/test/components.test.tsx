@@ -26,6 +26,7 @@ import {
   QrCode,
   RatingGroup,
   SignaturePad,
+  SplitButton,
   Steps,
   Swap,
   TableOfContents,
@@ -75,6 +76,9 @@ describe("Ark-inspired components", () => {
         <QrCode value="https://carsxe.com" />
         <RatingGroup aria-label="Rating" />
         <SignaturePad />
+        <SplitButton items={[{ id: "email", label: "Email" }]}>
+          Order
+        </SplitButton>
         <Steps steps={[{ id: "one", title: "One" }]} />
         <Swap value="one">One</Swap>
         <TableOfContents items={[{ id: "intro", title: "Intro" }]} />
