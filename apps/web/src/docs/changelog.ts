@@ -21,6 +21,29 @@ export type ChangelogEntry = {
 export const changelogEntries = [
   {
     date: "2026-08-31",
+    title: "Marquee pauses for manual scrolling",
+    summary:
+      "Hovering or focusing the marquee now stops the loop and lets the user scroll through the items themselves; the marquee resumes from wherever they left it.",
+    groups: [
+      {
+        type: "added",
+        items: [
+          "Manual scrolling while the marquee is paused: wheel, trackpad, and touch all work, vertical wheel input is mapped onto the strip, and the loop wraps in both directions so there is never an edge.",
+          "A dedicated Marquee docs page with reversed and always-running examples.",
+        ],
+      },
+      {
+        type: "fixed",
+        items: [
+          "pauseOnHover previously had no effect because it targeted CSS animation state while the motion was JS-driven; hovering now actually pauses the marquee.",
+          "With reduced motion enabled the marquee stays static but remains manually scrollable instead of being frozen.",
+        ],
+      },
+    ],
+    sources: [],
+  },
+  {
+    date: "2026-08-31",
     title: "Calendar heatmap",
     summary:
       "A GitHub-style calendar heatmap shows a value per day so quiet stretches and spikes are visible at a glance.",

@@ -15,6 +15,7 @@ import { extendedComponentDocs } from "./extended"
 import { heatmap } from "./heatmap"
 import { input } from "./input"
 import { label } from "./label"
+import { marquee } from "./marquee"
 import { navigationMenu } from "./navigation-menu"
 import { pagination } from "./pagination"
 import { progress } from "./progress"
@@ -53,6 +54,7 @@ export const componentDocs: ComponentDoc[] = [
   heatmap,
   input,
   label,
+  marquee,
   navigationMenu,
   pagination,
   progress,
