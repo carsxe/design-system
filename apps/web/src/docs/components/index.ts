@@ -1,5 +1,6 @@
 import { accordion } from "./accordion"
 import { alert } from "./alert"
+import { autocomplete } from "./autocomplete"
 import { avatar } from "./avatar"
 import { badge } from "./badge"
 import { breadcrumb } from "./breadcrumb"
@@ -40,6 +41,7 @@ export type { ComponentDoc } from "./types"
 export const componentDocs: ComponentDoc[] = [
   accordion,
   alert,
+  autocomplete,
   avatar,
   badge,
   breadcrumb,

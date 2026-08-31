@@ -21,6 +21,23 @@ export type ChangelogEntry = {
 export const changelogEntries = [
   {
     date: "2026-08-31",
+    title: "Autocomplete with debounced suggestions",
+    summary:
+      "A new Autocomplete component suggests options as the user types. The delay prop debounces querying so a burst of keystrokes makes a single request, and passing onQueryChange hands filtering to the caller for server-backed search.",
+    groups: [
+      {
+        type: "added",
+        items: [
+          "Autocomplete with a debounced delay prop, a minLength gate, and a loading state that renders a spinner in the input and a status row in the popup.",
+          "Async mode: providing onQueryChange disables built-in filtering so the items you supply render verbatim.",
+          "Dropdown trigger and clear button, multi-select chips, grouped and object suggestions, forceSelection, and inline completion modes.",
+        ],
+      },
+    ],
+    sources: [],
+  },
+  {
+    date: "2026-08-31",
     title: "Marquee pauses for manual scrolling",
     summary:
       "Hovering or focusing the marquee now stops the loop and lets the user scroll through the items themselves; the marquee resumes from wherever they left it.",

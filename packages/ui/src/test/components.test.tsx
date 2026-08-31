@@ -4,6 +4,11 @@ import { afterEach, describe, expect, it, vi } from "vitest"
 import { axe } from "vitest-axe"
 import {
   AngleSlider,
+  Autocomplete,
+  AutocompleteContent,
+  AutocompleteInput,
+  AutocompleteItem,
+  AutocompleteList,
   Clipboard,
   ColorPicker,
   DateInput,
@@ -34,6 +39,18 @@ describe("Ark-inspired components", () => {
     const { container } = render(
       <main>
         <AngleSlider aria-label="Angle" />
+        <Autocomplete<string> items={["Apple"]}>
+          <AutocompleteInput placeholder="Search fruit" />
+          <AutocompleteContent>
+            <AutocompleteList>
+              {(item: string) => (
+                <AutocompleteItem key={item} value={item}>
+                  {item}
+                </AutocompleteItem>
+              )}
+            </AutocompleteList>
+          </AutocompleteContent>
+        </Autocomplete>
         <Clipboard value="carsxe" />
         <ColorPicker />
         <DateInput />

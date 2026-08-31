@@ -59,6 +59,7 @@ Import from `@carsxe/design-system/components/<name>` or the package root.
 | Angle Slider      | `@carsxe/design-system/components/angle-slider`      |
 | Aspect ratio      | `@carsxe/design-system/components/aspect-ratio`      |
 | Attachment        | `@carsxe/design-system/components/attachment`        |
+| Autocomplete      | `@carsxe/design-system/components/autocomplete`      |
 | Avatar            | `@carsxe/design-system/components/avatar`            |
 | Badge             | `@carsxe/design-system/components/badge`             |
 | Breadcrumb        | `@carsxe/design-system/components/breadcrumb`        |
