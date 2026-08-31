@@ -67,6 +67,32 @@ describe("Steps", () => {
     ).toEqual(["complete", "current", "upcoming"])
   })
 
+  it("connects every step but the last", () => {
+    const { container } = render(<Steps steps={steps} />)
+    const connectors = container.querySelectorAll(
+      '[data-slot="steps-connector"]'
+    )
+    expect(connectors).toHaveLength(steps.length - 1)
+    // Laid out beside the label rather than over it, so it cannot cross the
+    // title: the connector is a flex sibling, never an absolute overlay.
+    for (const connector of connectors) {
+      expect(connector.className).toContain("flex-1")
+      expect(connector.className).not.toContain("absolute")
+    }
+  })
+
+  it("rails the connectors down the indicators when vertical", () => {
+    const { container } = render(<Steps steps={steps} orientation="vertical" />)
+    const connectors = container.querySelectorAll(
+      '[data-slot="steps-connector"]'
+    )
+    expect(connectors).toHaveLength(steps.length - 1)
+    for (const connector of connectors) {
+      expect(connector.className).toContain("absolute")
+      expect(connector.className).toContain("w-px")
+    }
+  })
+
   it("blocks forward clicks when linear, allowing backward ones", async () => {
     const onValueChange = vi.fn()
     render(

@@ -192,7 +192,7 @@ function Steps({
                 index + 1
               )}
             </button>
-            <div className="pt-1">
+            <div className="min-w-0 pt-1">
               <div id={titleId} className="text-sm font-medium">
                 {step.title}
               </div>
@@ -202,16 +202,35 @@ function Steps({
                 </div>
               )}
             </div>
-            {index < steps.length - 1 && (
-              <div className="absolute top-4 left-8 h-px w-[calc(100%-2rem)] bg-border group-data-[orientation=vertical]:hidden">
-                <motion.div
-                  className="h-full origin-left bg-primary"
-                  initial={false}
-                  animate={{ scaleX: index < current ? 1 : 0 }}
-                  transition={reduced ? { duration: 0 } : { duration: 0.25 }}
-                />
-              </div>
-            )}
+            {index < steps.length - 1 &&
+              (orientation === "horizontal" ? (
+                // A flex child rather than an overlay, so the line takes the
+                // space left over beside the label instead of crossing it.
+                <div
+                  data-slot="steps-connector"
+                  className="mt-4 h-px min-w-4 flex-1 bg-border"
+                >
+                  <motion.div
+                    className="h-full origin-left bg-primary"
+                    initial={false}
+                    animate={{ scaleX: index < current ? 1 : 0 }}
+                    transition={reduced ? { duration: 0 } : { duration: 0.25 }}
+                  />
+                </div>
+              ) : (
+                // A rail below the indicator, bridging the gap to the next one.
+                <div
+                  data-slot="steps-connector"
+                  className="absolute top-8 -bottom-3 left-4 w-px -translate-x-1/2 bg-border"
+                >
+                  <motion.div
+                    className="h-full w-full origin-top bg-primary"
+                    initial={false}
+                    animate={{ scaleY: index < current ? 1 : 0 }}
+                    transition={reduced ? { duration: 0 } : { duration: 0.25 }}
+                  />
+                </div>
+              ))}
           </li>
         )
       })}

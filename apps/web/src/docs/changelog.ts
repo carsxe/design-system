@@ -21,6 +21,22 @@ export type ChangelogEntry = {
 export const changelogEntries = [
   {
     date: "2026-08-31",
+    title: "Steps connectors stay out of the titles",
+    summary:
+      "The line joining horizontal steps used to be drawn across the whole step, striking through its title. It now fills only the space between a step's label and the next indicator, and vertical steps get a proper rail below each indicator.",
+    groups: [
+      {
+        type: "fixed",
+        items: [
+          "The horizontal Steps connector is a flex sibling of the label instead of an absolute overlay, so it can no longer cross the step titles.",
+          "Vertical Steps render a connector rail from each indicator down to the next; previously the horizontal line was drawn there too.",
+        ],
+      },
+    ],
+    sources: [],
+  },
+  {
+    date: "2026-08-31",
     title: "Split Button pairs an action with its menu",
     summary:
       "SplitButton joins a primary Button to a dropdown of related actions in one component. The left half keeps every Button prop; the menu is described by data, so items, separators, links, and submenus need no markup.",
