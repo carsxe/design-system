@@ -50,7 +50,7 @@ export const Inputs: Story = {
         />
       </div>
       <div className={section}>
-        <ColorPicker swatches={["#065774", "#00b6e5", "#f79008"]} />
+        <ColorPicker swatches={["#065774", "#387990", "#f79008"]} />
         <DateInput />
         <Editable defaultValue="Editable title" />
         <PasswordInput aria-label="Password" defaultValue="automotive" />

@@ -114,7 +114,7 @@ than forking components.
 | Token | Light |
 | --- | --- |
 | `--primary` | `#065774` |
-| `--primary-hover` | `#00B6E5` |
+| `--primary-hover` | `#387990` |
 | `--foreground` | `#3A3A3A` |
 | `--background` | `#F9F9F9` |
 | `--success` | `#00A63E` |
