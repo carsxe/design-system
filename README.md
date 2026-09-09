@@ -39,6 +39,13 @@ import "@carsxe/design-system/tokens.css"
 <div className="cx-theme">{/* design system components */}</div>
 ```
 
+A Tailwind v3 host whose config wraps tokens in `hsl()` wants the triplet build
+instead — same values, shaped for `hsl(var(--token))`:
+
+```ts
+import "@carsxe/design-system/tokens-hsl.css"
+```
+
 ## Adding components
 
 ```bash

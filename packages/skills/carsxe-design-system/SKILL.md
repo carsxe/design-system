@@ -70,11 +70,29 @@ import "@carsxe/design-system/tokens.css"
 ```
 
 Custom properties inherit, so everything inside that class gets our palette and
-the rest of the page keeps its own. `tokens.css` carries no utilities, so a
-Tailwind v3 host maps the variables in its own config — plain hex, no `hsl()`:
+the rest of the page keeps its own. `tokens.css` carries no utilities, so the
+host maps the variables in its own config — plain hex, no `hsl()`:
 
 ```js
 colors: { popover: "var(--popover)", accent: "var(--accent)" }
+```
+
+A shadcn-style Tailwind v3 host already wraps its tokens in `hsl()`, and
+`hsl(#eaf5ff)` is invalid — the declaration is dropped and the element renders
+with no colour. Import the triplet build instead and leave that config alone:
+
+```ts
+import "@carsxe/design-system/tokens-hsl.css"
+```
+
+Same values, shaped as `H S% L%`. Opacity modifiers such as `bg-accent/50` work
+there too, which hex tokens cannot support. Non-colour tokens are unchanged in
+both files, so map those without `hsl()`:
+
+```js
+boxShadow: {
+  panel: "var(--panel-shadow)"
+}
 ```
 
 ## Do not
