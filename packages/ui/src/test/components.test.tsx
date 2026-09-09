@@ -21,6 +21,8 @@ import {
   Knob,
   Listbox,
   Marquee,
+  MegaMenu,
+  MegaMenuItem,
   NumberInput,
   PasswordInput,
   QrCode,
@@ -71,6 +73,13 @@ describe("Ark-inspired components", () => {
           items={[{ value: "one", label: "One" }]}
         />
         <Marquee>Moving</Marquee>
+        <MegaMenu>
+          <MegaMenuItem
+            href="/vin-decoder"
+            title="VIN Decoder"
+            description="Decode any VIN."
+          />
+        </MegaMenu>
         <NumberInput aria-label="Count" />
         <PasswordInput aria-label="Password" />
         <QrCode value="https://carsxe.com" />

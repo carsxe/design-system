@@ -18,6 +18,7 @@ import { input } from "./input"
 import { knob } from "./knob"
 import { label } from "./label"
 import { marquee } from "./marquee"
+import { megaMenu } from "./mega-menu"
 import { navigationMenu } from "./navigation-menu"
 import { pagination } from "./pagination"
 import { passwordInput } from "./password-input"
@@ -66,6 +67,7 @@ export const componentDocs: ComponentDoc[] = [
   knob,
   label,
   marquee,
+  megaMenu,
   navigationMenu,
   pagination,
   passwordInput,
