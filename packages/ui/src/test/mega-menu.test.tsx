@@ -134,6 +134,19 @@ describe("MegaMenu", () => {
     )
     const separator = slots(container, "mega-menu-separator")[0]
     expect(separator).toHaveAttribute("data-orientation", "vertical")
+    // Sized explicitly, not via Separator's `data-vertical:` classes — those are
+    // v4 custom variants and a Tailwind v3 host emits nothing for them, which
+    // would leave the hairline in the DOM with no width.
+    expect(separator).toHaveClass("w-px")
+    expect(separator).toHaveClass("self-stretch")
+  })
+
+  it("sizes a horizontal separator explicitly too", () => {
+    const { container } = render(<MegaMenuSeparator orientation="horizontal" />)
+    const separator = slots(container, "mega-menu-separator")[0]
+    expect(separator).toHaveAttribute("data-orientation", "horizontal")
+    expect(separator).toHaveClass("h-px")
+    expect(separator).toHaveClass("w-full")
   })
 
   it("has no axe violations", async () => {

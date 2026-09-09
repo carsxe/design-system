@@ -3,7 +3,6 @@ import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
 
 import { cn } from "@carsxe/design-system/lib/utils"
-import { buttonVariants } from "@carsxe/design-system/components/button"
 import { Separator } from "@carsxe/design-system/components/separator"
 
 /**
@@ -70,16 +69,24 @@ function MegaMenuGroupLabel({
   )
 }
 
-/** The vertical hairline between zones. */
+/** The hairline between zones. Vertical, unless a menu stacks its zones. */
 function MegaMenuSeparator({
   className,
+  orientation = "vertical",
   ...props
 }: React.ComponentProps<typeof Separator>) {
   return (
     <Separator
       data-slot="mega-menu-separator"
-      orientation="vertical"
-      className={className}
+      orientation={orientation}
+      className={cn(
+        // Sized here rather than left to Separator's own `data-vertical:` /
+        // `data-horizontal:` classes. Those are Tailwind v4 custom variants, so
+        // a host still on v3 cannot generate them and the hairline would come
+        // out with no width at all — present in the DOM and invisible.
+        orientation === "vertical" ? "w-px self-stretch" : "h-px w-full",
+        className
+      )}
       {...props}
     />
   )
@@ -180,6 +187,10 @@ function MegaMenuLink({
 /**
  * The "All products →" link that closes a column or a zone. The arrow is the
  * component's, so every one of them points the same way in every locale.
+ *
+ * Styled here rather than as `buttonVariants({ variant: "link" })`: that base
+ * string carries `not-*` and `has-data-*` classes, which are Tailwind v4 only.
+ * Spelling this out keeps the whole mega menu compilable by a v3 host.
  */
 function MegaMenuMore({
   className,
@@ -192,8 +203,7 @@ function MegaMenuMore({
     props: mergeProps<"a">(
       {
         className: cn(
-          buttonVariants({ variant: "link" }),
-          "mt-0.5 gap-1 self-start px-2 py-0.5 text-[12.5px]",
+          "mt-0.5 inline-flex items-center gap-1 self-start rounded-xl px-2 py-0.5 text-[12.5px] font-medium text-primary underline-offset-4 transition-colors outline-none hover:text-primary-hover hover:underline focus-visible:ring-3 focus-visible:ring-ring/30",
           className
         ),
         children: (
