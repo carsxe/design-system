@@ -199,10 +199,7 @@ function Marquee({
       {...props}
     >
       <div className="flex min-w-max items-center gap-6">
-        <div
-          ref={firstCopyRef}
-          className="flex min-w-max items-center gap-6"
-        >
+        <div ref={firstCopyRef} className="flex min-w-max items-center gap-6">
           {children}
         </div>
         <div

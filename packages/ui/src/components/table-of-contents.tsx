@@ -45,9 +45,7 @@ function TableOfContents({
       (entries) => {
         const visible = entries
           .slice()
-          .sort(
-            (a, b) => a.boundingClientRect.top - b.boundingClientRect.top
-          )
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)
           .find((entry) => entry.isIntersecting)
         if (visible) {
           setActive(visible.target.id)

@@ -34,9 +34,7 @@ function ColorPicker({
     defaultValue,
     onChange: onValueChange,
   })
-  const parsed = toHsv(
-    parse(current) ?? { mode: "rgb", r: 0, g: 0, b: 0 }
-  )
+  const parsed = toHsv(parse(current) ?? { mode: "rgb", r: 0, g: 0, b: 0 })
   const alpha = parsed.alpha ?? 1
   const update = (candidate: string) => {
     const color = parse(candidate)

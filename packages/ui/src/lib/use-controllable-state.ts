@@ -16,7 +16,10 @@ export function useControllableState<T>({
   const current = controlled ? value : internal
   const setValue = React.useCallback(
     (next: T | ((previous: T) => T)) => {
-      const resolved = typeof next === "function" ? (next as (previous: T) => T)(current) : next
+      const resolved =
+        typeof next === "function"
+          ? (next as (previous: T) => T)(current)
+          : next
       if (!controlled) setInternal(resolved)
       if (!Object.is(current, resolved)) onChange?.(resolved)
     },

@@ -16,11 +16,7 @@ import {
   treemap,
   treemapSquarify,
 } from "d3"
-import {
-  sankey,
-  sankeyCenter,
-  sankeyLinkHorizontal,
-} from "d3-sankey"
+import { sankey, sankeyCenter, sankeyLinkHorizontal } from "d3-sankey"
 
 import { cn } from "@carsxe/design-system/lib/utils"
 

@@ -23,7 +23,12 @@ const originalOffsetLeft = Object.getOwnPropertyDescriptor(
 
 beforeEach(() => {
   vi.useFakeTimers({
-    toFake: ["requestAnimationFrame", "performance", "setTimeout", "clearTimeout"],
+    toFake: [
+      "requestAnimationFrame",
+      "performance",
+      "setTimeout",
+      "clearTimeout",
+    ],
   })
   Object.defineProperty(HTMLElement.prototype, "offsetLeft", {
     configurable: true,

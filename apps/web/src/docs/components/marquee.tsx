@@ -19,7 +19,7 @@ function MarqueeItems() {
       {endpoints.map((endpoint) => (
         <span
           key={endpoint}
-          className="whitespace-nowrap rounded-full border bg-card px-4 py-1.5 text-sm text-muted-foreground"
+          className="rounded-full border bg-card px-4 py-1.5 text-sm whitespace-nowrap text-muted-foreground"
         >
           {endpoint}
         </span>
@@ -35,8 +35,8 @@ function MarqueeDefaultExample() {
         <MarqueeItems />
       </Marquee>
       <p className="text-xs text-muted-foreground">
-        Hover to pause, then scroll through the items with your wheel,
-        trackpad, or a swipe.
+        Hover to pause, then scroll through the items with your wheel, trackpad,
+        or a swipe.
       </p>
     </div>
   )
@@ -45,7 +45,11 @@ function MarqueeDefaultExample() {
 function MarqueeReverseExample() {
   return (
     <div className="w-full max-w-xl">
-      <Marquee aria-label="CarsXE API endpoints, reversed" reverse duration={16}>
+      <Marquee
+        aria-label="CarsXE API endpoints, reversed"
+        reverse
+        duration={16}
+      >
         <MarqueeItems />
       </Marquee>
     </div>
