@@ -60,6 +60,7 @@ export const componentDates: Record<string, ComponentDates> = {
   listbox: { added: "2026-08-25", updated: "2026-08-25" },
   marker: { added: "2026-08-25", updated: "2026-08-25" },
   marquee: { added: "2026-08-25", updated: "2026-08-31" },
+  "mega-menu": { added: "2026-09-09", updated: "2026-09-14" },
   menubar: { added: "2026-08-25", updated: "2026-08-25" },
   "message-scroller": { added: "2026-08-25", updated: "2026-08-25" },
   message: { added: "2026-08-25", updated: "2026-08-25" },
