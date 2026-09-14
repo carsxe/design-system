@@ -104,6 +104,7 @@ Import from `@carsxe/design-system/components/<name>` or the package root.
 | Listbox           | `@carsxe/design-system/components/listbox`           |
 | Marker            | `@carsxe/design-system/components/marker`            |
 | Marquee           | `@carsxe/design-system/components/marquee`           |
+| Mega menu         | `@carsxe/design-system/components/mega-menu`         |
 | Menubar           | `@carsxe/design-system/components/menubar`           |
 | Message           | `@carsxe/design-system/components/message`           |
 | Message scroller  | `@carsxe/design-system/components/message-scroller`  |

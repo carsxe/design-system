@@ -27,6 +27,18 @@ Consumers who do not compile Tailwind can import the prebuilt stylesheet instead
 import "@carsxe/design-system/styles.css"
 ```
 
+Both put the palette on `:root`. An app with its own palette that only hosts a
+few of our components can take the tokens alone, scoped to a class, so the rest
+of the page is untouched:
+
+```ts
+import "@carsxe/design-system/tokens.css"
+```
+
+```tsx
+<div className="cx-theme">{/* design system components */}</div>
+```
+
 ## Adding components
 
 ```bash
