@@ -69,9 +69,11 @@ function MegaMenuGroupLabel({
   )
 }
 
-/** The hairline between zones. Vertical, unless a menu stacks its zones. */
+/**
+ * The hairline between zones. Vertical, unless a menu stacks its zones —
+ * `Separator` sizes itself from `orientation`, so only the default differs.
+ */
 function MegaMenuSeparator({
-  className,
   orientation = "vertical",
   ...props
 }: React.ComponentProps<typeof Separator>) {
@@ -79,14 +81,6 @@ function MegaMenuSeparator({
     <Separator
       data-slot="mega-menu-separator"
       orientation={orientation}
-      className={cn(
-        // Sized here rather than left to Separator's own `data-vertical:` /
-        // `data-horizontal:` classes. Those are Tailwind v4 custom variants, so
-        // a host still on v3 cannot generate them and the hairline would come
-        // out with no width at all — present in the DOM and invisible.
-        orientation === "vertical" ? "w-px self-stretch" : "h-px w-full",
-        className
-      )}
       {...props}
     />
   )
@@ -188,9 +182,10 @@ function MegaMenuLink({
  * The "All products →" link that closes a column or a zone. The arrow is the
  * component's, so every one of them points the same way in every locale.
  *
- * Styled here rather than as `buttonVariants({ variant: "link" })`: that base
- * string carries `not-*` and `has-data-*` classes, which are Tailwind v4 only.
- * Spelling this out keeps the whole mega menu compilable by a v3 host.
+ * Styled here rather than as `buttonVariants({ variant: "link" })`: that shares
+ * only `text-primary underline-offset-4 hover:underline` with this row, and
+ * would drag in the button base — `h-10 px-8`, `rounded-2xl`, a border, the
+ * press translate — all of which a menu row then has to override.
  */
 function MegaMenuMore({
   className,
