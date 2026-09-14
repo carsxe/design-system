@@ -30,10 +30,6 @@
       "style": "./dist/tokens.css",
       "default": "./dist/tokens.css"
     },
-    "./tokens-hsl.css": {
-      "style": "./dist/tokens-hsl.css",
-      "default": "./dist/tokens-hsl.css"
-    },
     "./lib/*": {
       "types": "./dist/lib/*.d.ts",
       "import": "./dist/lib/*.js"
