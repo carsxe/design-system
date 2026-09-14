@@ -30,7 +30,7 @@ export const changelogEntries = [
         items: [
           "MegaMenu, MegaMenuColumn, MegaMenuGroup, MegaMenuGroupLabel, MegaMenuItem, MegaMenuLink, MegaMenuMore, and MegaMenuSeparator, with rows polymorphic through render so a router Link or analytics wrapper drops straight in.",
           "splitIntoColumns for filling a fixed column count top-to-bottom, left-to-right so reading order matches the DOM order.",
-          "--foreground-secondary and --foreground-tertiary for secondary body copy, and --panel-ring and --panel-shadow for menu-panel elevation, all with light and dark values.",
+          "--foreground-tertiary for secondary body copy, and --panel-ring and --panel-shadow for menu-panel elevation, all with light and dark values.",
         ],
       },
     ],

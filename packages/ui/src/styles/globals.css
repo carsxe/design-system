@@ -70,9 +70,8 @@
   --sidebar-border: #ebebeb;
   --sidebar-ring: #065774;
 
-  /* Secondary and tertiary body copy. --muted-foreground is a caption token and
-     does not reach WCAG AA on --background or --popover; these do, on both. */
-  --foreground-secondary: #656565;
+  /* Tertiary body copy. --muted-foreground is a caption token and does not
+     reach WCAG AA on --background or --popover; this does, on both. */
   --foreground-tertiary: #727272;
 
   /* Menu-panel elevation: a hairline ring carried in the shadow rather than a
@@ -127,8 +126,7 @@
   --sidebar-border: #3a3a3a;
   --sidebar-ring: #387990;
 
-  /* Dark has contrast headroom, so secondary copy sits near the real foreground. */
-  --foreground-secondary: #d4d4d4;
+  /* Dark has contrast headroom, so tertiary copy sits nearer the real foreground. */
   --foreground-tertiary: #a0a0a0;
   --panel-ring: rgba(255, 255, 255, 0.1);
   --panel-shadow:
@@ -150,7 +148,6 @@
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
-  --color-foreground-secondary: var(--foreground-secondary);
   --color-foreground-tertiary: var(--foreground-tertiary);
   --color-panel-ring: var(--panel-ring);
   --shadow-panel: var(--panel-shadow);
