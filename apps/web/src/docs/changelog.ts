@@ -38,6 +38,15 @@ export const changelogEntries = [
         items: [
           "Default padding and gaps on MegaMenu, MegaMenuColumn, MegaMenuGroup, MegaMenuGroupLabel, MegaMenuItem, MegaMenuLink, and MegaMenuMore so the panel has more room.",
           "Inside NavigationMenuContent, MegaMenu drops its own surface so it no longer double-paints over the positioner, and the content padding collapses around the panel. The existing shared viewport is the morphing panel: switching triggers resizes one popup instead of remounting a cold one.",
+          "Column reveals stop queueing after the fourth zone and separators no longer take a place in the queue, so a wide panel finishes drawing instead of trickling in.",
+        ],
+      },
+      {
+        type: "fixed",
+        items: [
+          "Reduced-motion fallbacks no longer break hydration. Motion resolves prefers-reduced-motion during the client's first render but leaves it unset on the server, so menu rows hydrated a different tree than was sent. The new useReducedMotionAfterMount hook pins the first render to the server's answer.",
+          "MegaMenuTriggers outside a MegaMenuList each get their own indicator instead of sharing one hardcoded layoutId, which made every unscoped trigger on a page the same layout-projection target.",
+          "The trigger indicator takes its corner radius from the radius token rather than a hardcoded 16px, so it no longer floats a rounded pill behind a square trigger.",
         ],
       },
     ],

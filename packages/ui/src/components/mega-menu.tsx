@@ -4,11 +4,12 @@ import * as React from "react"
 import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
 import { NavigationMenu as NavigationMenuPrimitive } from "@base-ui/react/navigation-menu"
-import { LayoutGroup, motion, useReducedMotion } from "motion/react"
+import { LayoutGroup, motion } from "motion/react"
 import { ChevronDownIcon } from "lucide-react"
 
 import { cn } from "@carsxe/design-system/lib/utils"
 import { Separator } from "@carsxe/design-system/components/separator"
+import { useReducedMotionAfterMount } from "@carsxe/design-system/hooks/use-reduced-motion"
 import {
   NavigationMenuList,
   navigationMenuTriggerStyle,
@@ -34,6 +35,13 @@ const columnReveal = {
   damping: 28,
 }
 
+/**
+ * How many zones stagger before the rest share the last slot. A nav panel that
+ * is still drawing itself a second after it opened reads as slow, so the queue
+ * stops growing rather than tracking the child count.
+ */
+const MAX_REVEAL_STEPS = 3
+
 type MegaMenuMotionValue = {
   indicatorId: string
   visibleKey: string | null
@@ -46,7 +54,7 @@ const MegaMenuMotionContext = React.createContext<MegaMenuMotionValue | null>(
 )
 
 function useMegaMenuHover() {
-  const reduced = Boolean(useReducedMotion())
+  const reduced = useReducedMotionAfterMount()
   const [highlight, setHighlight] = React.useState(false)
   return {
     reduced,
@@ -131,7 +139,8 @@ function MegaMenu({
   children,
   ...props
 }: React.ComponentProps<"div">) {
-  const reduced = Boolean(useReducedMotion())
+  const reduced = useReducedMotionAfterMount()
+  let revealIndex = 0
   return (
     <div
       data-slot="mega-menu"
@@ -142,18 +151,24 @@ function MegaMenu({
       {...props}
     >
       {React.Children.map(children, (child, index) => {
-        if (child == null || child === false) return child
+        if (child == null || typeof child === "boolean") return child
+        // Only content takes a place in the queue. Separators are panel chrome,
+        // so they arrive with the panel rather than springing in as if they
+        // were a column — and they don't push the zones after them further
+        // down the queue. Skipped children don't hold a slot either, so a
+        // conditional column can't leave a gap in the rhythm.
+        const staggered =
+          !React.isValidElement(child) || child.type !== MegaMenuSeparator
+        const delay = staggered
+          ? 0.06 + Math.min(revealIndex++, MAX_REVEAL_STEPS) * 0.16
+          : 0
         return (
           <motion.div
             key={React.isValidElement(child) ? (child.key ?? index) : index}
             className="flex items-stretch"
             initial={reduced ? false : { opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={
-              reduced
-                ? { duration: 0 }
-                : { ...columnReveal, delay: 0.06 + index * 0.16 }
-            }
+            transition={reduced ? { duration: 0 } : { ...columnReveal, delay }}
           >
             {child}
           </motion.div>
@@ -259,8 +274,10 @@ function MegaMenuTriggerSurface({
         <motion.span
           layoutId={indicatorId}
           data-slot="mega-menu-indicator"
-          className="absolute inset-0 -z-10 bg-muted"
-          style={{ borderRadius: 16 }}
+          // Radius comes from the same token as the trigger's `rounded-2xl`.
+          // This system ships `--radius: 0`, so a hardcoded value would float a
+          // rounded pill behind a square trigger.
+          className="absolute inset-0 -z-10 rounded-2xl bg-muted"
           transition={panelSpring}
         />
       ) : null}
@@ -275,7 +292,9 @@ function MegaMenuTriggerSurface({
  * wraps the panel — that is what actually opens the popup.
  *
  * When several of these sit in a `MegaMenuList`, a shared `layoutId` pill
- * springs between the hovered or open trigger.
+ * springs between the hovered or open trigger. Passing `render` replaces the
+ * button the pill is positioned inside, so a custom-rendered trigger opts out
+ * of the indicator — hover and open styling are then the consumer's to draw.
  */
 function MegaMenuTrigger({
   className,
@@ -287,10 +306,14 @@ function MegaMenuTrigger({
   onBlur,
   ...props
 }: NavigationMenuPrimitive.Trigger.Props) {
-  const reduced = Boolean(useReducedMotion())
+  const reduced = useReducedMotionAfterMount()
   const motionCtx = React.useContext(MegaMenuMotionContext)
   const triggerKey = React.useId()
-  const indicatorId = motionCtx?.indicatorId ?? "mega-menu-indicator"
+  // Outside a MegaMenuList there is no LayoutGroup to scope the pill, so each
+  // trigger needs its own `layoutId`. A shared constant would make every
+  // unscoped trigger on the page the same projection target.
+  const ownIndicatorId = React.useId()
+  const indicatorId = motionCtx?.indicatorId ?? ownIndicatorId
   const [hovered, setHovered] = React.useState(false)
   const [focused, setFocused] = React.useState(false)
 
@@ -299,7 +322,7 @@ function MegaMenuTrigger({
       data-slot="mega-menu-trigger"
       className={cn(
         navigationMenuTriggerStyle(),
-        "group/mega-menu-trigger relative isolate h-10 gap-1 bg-transparent px-3 font-semibold hover:bg-transparent focus:bg-transparent data-popup-open:bg-transparent data-popup-open:hover:bg-transparent data-open:bg-transparent data-open:hover:bg-transparent data-open:focus:bg-transparent",
+        "group/mega-menu-trigger relative isolate h-10 bg-transparent px-3 font-semibold hover:bg-transparent focus:bg-transparent data-popup-open:bg-transparent data-popup-open:hover:bg-transparent data-open:bg-transparent data-open:hover:bg-transparent data-open:focus:bg-transparent",
         className
       )}
       onPointerEnter={(event) => {

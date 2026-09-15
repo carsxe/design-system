@@ -2,9 +2,10 @@
 
 import { NavigationMenu as NavigationMenuPrimitive } from "@base-ui/react/navigation-menu"
 import { cva } from "class-variance-authority"
-import { motion, useReducedMotion } from "motion/react"
+import { motion } from "motion/react"
 
 import { cn } from "@carsxe/design-system/lib/utils"
+import { useReducedMotionAfterMount } from "@carsxe/design-system/hooks/use-reduced-motion"
 import { ChevronDownIcon } from "lucide-react"
 
 const popupSpring = {
@@ -99,7 +100,7 @@ function NavigationMenuContent({
       className={cn(
         "data-ending-style:data-activation-direction=left:translate-x-[50%] data-ending-style:data-activation-direction=right:translate-x-[-50%] data-starting-style:data-activation-direction=left:translate-x-[-50%] data-starting-style:data-activation-direction=right:translate-x-[50%] h-full w-auto p-1.5 transition-[opacity,transform,translate] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)] group-data-[viewport=false]/navigation-menu:rounded-2xl group-data-[viewport=false]/navigation-menu:bg-popover group-data-[viewport=false]/navigation-menu:text-popover-foreground group-data-[viewport=false]/navigation-menu:shadow-lg group-data-[viewport=false]/navigation-menu:ring-1 group-data-[viewport=false]/navigation-menu:ring-foreground/5 group-data-[viewport=false]/navigation-menu:duration-300 has-data-[slot=mega-menu]:p-0 data-ending-style:opacity-0 data-starting-style:opacity-0 data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52 data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52 data-[motion^=from-]:animate-in data-[motion^=from-]:fade-in data-[motion^=to-]:animate-out data-[motion^=to-]:fade-out **:data-[slot=navigation-menu-link]:focus:ring-0 **:data-[slot=navigation-menu-link]:focus:outline-none group-data-[viewport=false]/navigation-menu:dark:ring-foreground/10 group-data-[viewport=false]/navigation-menu:data-open:animate-in group-data-[viewport=false]/navigation-menu:data-open:fade-in-0 group-data-[viewport=false]/navigation-menu:data-open:zoom-in-95 group-data-[viewport=false]/navigation-menu:data-closed:animate-out group-data-[viewport=false]/navigation-menu:data-closed:fade-out-0 group-data-[viewport=false]/navigation-menu:data-closed:zoom-out-95",
         // MegaMenu plays its own stagger; don't hide it behind content opacity/slide.
-        "has-data-[slot=mega-menu]:data-starting-style:opacity-100 has-data-[slot=mega-menu]:data-ending-style:opacity-100 has-data-[slot=mega-menu]:data-starting-style:translate-x-0 has-data-[slot=mega-menu]:data-ending-style:translate-x-0 has-data-[slot=mega-menu]:animate-none has-data-[slot=mega-menu]:transition-none has-data-[slot=mega-menu]:data-[motion^=from-]:animate-none has-data-[slot=mega-menu]:data-[motion^=to-]:animate-none",
+        "has-data-[slot=mega-menu]:animate-none has-data-[slot=mega-menu]:transition-none has-data-[slot=mega-menu]:data-ending-style:translate-x-0 has-data-[slot=mega-menu]:data-ending-style:opacity-100 has-data-[slot=mega-menu]:data-starting-style:translate-x-0 has-data-[slot=mega-menu]:data-starting-style:opacity-100 has-data-[slot=mega-menu]:data-[motion^=from-]:animate-none has-data-[slot=mega-menu]:data-[motion^=to-]:animate-none",
         className
       )}
       {...props}
@@ -113,7 +114,7 @@ function NavigationMenuContent({
  * styles so close still waits on `getAnimations()`; Motion springs y/scale.
  */
 function NavigationMenuPopup() {
-  const reduced = Boolean(useReducedMotion())
+  const reduced = useReducedMotionAfterMount()
   return (
     <NavigationMenuPrimitive.Popup
       className={cn(
