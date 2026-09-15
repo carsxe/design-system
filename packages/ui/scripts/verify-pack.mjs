@@ -40,6 +40,7 @@ try {
       (slug) => `./components/${slug}`
     ),
     "./hooks/use-mobile",
+    "./hooks/use-reduced-motion",
   ]
 
   const failures = []
