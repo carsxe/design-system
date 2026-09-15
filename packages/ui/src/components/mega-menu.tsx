@@ -35,14 +35,14 @@ const panelVariants = {
     y: 0,
     transition: {
       ...panelSpring,
-      staggerChildren: 0.07,
-      delayChildren: 0.04,
+        staggerChildren: 0.12,
+        delayChildren: 0.08,
     },
   },
 }
 
 const columnVariants = {
-  hidden: { opacity: 0, y: 16 },
+  hidden: { opacity: 0, y: 22 },
   show: {
     opacity: 1,
     y: 0,
