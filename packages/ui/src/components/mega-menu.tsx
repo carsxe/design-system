@@ -35,8 +35,8 @@ const panelVariants = {
     y: 0,
     transition: {
       ...panelSpring,
-        staggerChildren: 0.12,
-        delayChildren: 0.08,
+      staggerChildren: 0.12,
+      delayChildren: 0.08,
     },
   },
 }
@@ -161,12 +161,10 @@ function MegaMenu({
       {...(props as React.ComponentProps<typeof motion.div>)}
     >
       {React.Children.map(children, (child, index) => {
-        if (!React.isValidElement(child) || child.type === MegaMenuColumn) {
-          return child
-        }
+        if (child == null || child === false) return child
         return (
           <motion.div
-            key={child.key ?? index}
+            key={React.isValidElement(child) ? (child.key ?? index) : index}
             className="flex items-stretch"
             variants={reduced ? undefined : columnVariants}
           >
@@ -180,13 +178,11 @@ function MegaMenu({
 
 /** A vertical run of groups. Zones of columns are split by `MegaMenuSeparator`. */
 function MegaMenuColumn({ className, ...props }: React.ComponentProps<"div">) {
-  const reduced = Boolean(useReducedMotion())
   return (
-    <motion.div
+    <div
       data-slot="mega-menu-column"
       className={cn("flex flex-col gap-5 px-5", className)}
-      variants={reduced ? undefined : columnVariants}
-      {...(props as React.ComponentProps<typeof motion.div>)}
+      {...props}
     />
   )
 }
