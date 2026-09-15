@@ -28,26 +28,10 @@ const panelSpring = {
   mass: 0.7,
 }
 
-const panelVariants = {
-  hidden: { opacity: 0, y: 14 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      ...panelSpring,
-      staggerChildren: 0.12,
-      delayChildren: 0.08,
-    },
-  },
-}
-
-const columnVariants = {
-  hidden: { opacity: 0, y: 22 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: panelSpring,
-  },
+const columnReveal = {
+  ...panelSpring,
+  stiffness: 380,
+  damping: 28,
 }
 
 type MegaMenuMotionValue = {
@@ -155,9 +139,9 @@ function MegaMenu({
         "flex max-h-[calc(100vh-8rem)] w-max items-stretch overflow-y-auto rounded-2xl bg-popover py-6 text-popover-foreground shadow-panel ring-1 ring-panel-ring in-data-[slot=navigation-menu-content]:rounded-none in-data-[slot=navigation-menu-content]:bg-transparent in-data-[slot=navigation-menu-content]:shadow-none in-data-[slot=navigation-menu-content]:ring-0",
         className
       )}
-      initial={reduced ? false : "hidden"}
-      animate="show"
-      variants={reduced ? undefined : panelVariants}
+      initial={reduced ? false : { opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={reduced ? { duration: 0 } : { duration: 0.18 }}
       {...(props as React.ComponentProps<typeof motion.div>)}
     >
       {React.Children.map(children, (child, index) => {
@@ -166,7 +150,13 @@ function MegaMenu({
           <motion.div
             key={React.isValidElement(child) ? (child.key ?? index) : index}
             className="flex items-stretch"
-            variants={reduced ? undefined : columnVariants}
+            initial={reduced ? false : { opacity: 0, y: 28 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={
+              reduced
+                ? { duration: 0 }
+                : { ...columnReveal, delay: 0.1 + index * 0.16 }
+            }
           >
             {child}
           </motion.div>
