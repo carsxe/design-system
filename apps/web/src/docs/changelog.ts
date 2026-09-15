@@ -20,6 +20,29 @@ export type ChangelogEntry = {
 
 export const changelogEntries = [
   {
+    date: "2026-09-15",
+    title: "Mega menu breathes, hovers, and gets a trigger",
+    summary:
+      "MegaMenu spacing opens up so columns and rows are no longer cramped, interactive rows pick up subtle motion.dev hover (with a reduced-motion colour fallback), and MegaMenuTrigger is the NavigationMenu trigger suited to opening a mega menu panel.",
+    groups: [
+      {
+        type: "added",
+        items: [
+          "MegaMenuTrigger, a drop-in for NavigationMenuTrigger that opens MegaMenu panels from a NavigationMenuItem next to NavigationMenuContent.",
+          "Motion hover on MegaMenuItem, MegaMenuLink, and MegaMenuMore: a soft fill and icon-chip or arrow motion, skipped when prefers-reduced-motion is set.",
+        ],
+      },
+      {
+        type: "changed",
+        items: [
+          "Default padding and gaps on MegaMenu, MegaMenuColumn, MegaMenuGroup, MegaMenuGroupLabel, MegaMenuItem, MegaMenuLink, and MegaMenuMore so the panel has more room.",
+          "Inside NavigationMenuContent, MegaMenu drops its own surface so it no longer double-paints over the positioner, and the content padding collapses around the panel.",
+        ],
+      },
+    ],
+    sources: [],
+  },
+  {
     date: "2026-09-09",
     title: "Mega menu brings the navigation dropdowns into the system",
     summary:

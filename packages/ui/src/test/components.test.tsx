@@ -23,6 +23,11 @@ import {
   Marquee,
   MegaMenu,
   MegaMenuItem,
+  MegaMenuTrigger,
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuList,
   NumberInput,
   PasswordInput,
   QrCode,
@@ -80,6 +85,18 @@ describe("Ark-inspired components", () => {
             description="Decode any VIN."
           />
         </MegaMenu>
+        <NavigationMenu>
+          <NavigationMenuList>
+            <NavigationMenuItem>
+              <MegaMenuTrigger>Products</MegaMenuTrigger>
+              <NavigationMenuContent>
+                <MegaMenu>
+                  <MegaMenuItem href="/vin-decoder" title="VIN Decoder" />
+                </MegaMenu>
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+          </NavigationMenuList>
+        </NavigationMenu>
         <NumberInput aria-label="Count" />
         <PasswordInput aria-label="Password" />
         <QrCode value="https://carsxe.com" />
