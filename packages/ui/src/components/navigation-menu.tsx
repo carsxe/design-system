@@ -1,8 +1,18 @@
+"use client"
+
 import { NavigationMenu as NavigationMenuPrimitive } from "@base-ui/react/navigation-menu"
 import { cva } from "class-variance-authority"
+import { motion, useReducedMotion } from "motion/react"
 
 import { cn } from "@carsxe/design-system/lib/utils"
 import { ChevronDownIcon } from "lucide-react"
+
+const popupSpring = {
+  type: "spring" as const,
+  stiffness: 420,
+  damping: 32,
+  mass: 0.65,
+}
 
 function NavigationMenu({
   align = "start",
@@ -95,6 +105,40 @@ function NavigationMenuContent({
   )
 }
 
+/**
+ * Shared NavigationMenu viewport. Base UI keeps one popup mounted and morphs
+ * `--popup-width/height` between triggers. Opacity stays on CSS starting/ending
+ * styles so close still waits on `getAnimations()`; Motion springs y/scale.
+ */
+function NavigationMenuPopup() {
+  const reduced = Boolean(useReducedMotion())
+  return (
+    <NavigationMenuPrimitive.Popup
+      className={cn(
+        "xs:w-(--popup-width) relative h-(--popup-height) w-(--popup-width) origin-(--transform-origin) rounded-3xl bg-popover text-popover-foreground shadow-lg ring-1 ring-foreground/5 transition-[width,height,opacity] duration-[400ms] ease-[cubic-bezier(0.22,1.2,0.36,1)] outline-none data-ending-style:opacity-0 data-ending-style:duration-200 data-starting-style:opacity-0 dark:ring-foreground/10",
+        reduced && "transition-none"
+      )}
+      render={(renderProps, state) => (
+        <motion.nav
+          {...(renderProps as React.ComponentProps<typeof motion.nav>)}
+          initial={reduced ? false : { y: 12, scale: 0.96 }}
+          animate={
+            reduced
+              ? { y: 0, scale: 1 }
+              : {
+                  y: state.open ? 0 : 12,
+                  scale: state.open ? 1 : 0.96,
+                }
+          }
+          transition={reduced ? { duration: 0 } : popupSpring}
+        />
+      )}
+    >
+      <NavigationMenuPrimitive.Viewport className="relative size-full overflow-hidden" />
+    </NavigationMenuPrimitive.Popup>
+  )
+}
+
 function NavigationMenuPositioner({
   className,
   side = "bottom",
@@ -111,14 +155,12 @@ function NavigationMenuPositioner({
         align={align}
         alignOffset={alignOffset}
         className={cn(
-          "isolate z-50 h-(--positioner-height) w-(--positioner-width) max-w-(--available-width) transition-[top,left,right,bottom] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)] data-instant:transition-none data-[side=bottom]:before:top-[-10px] data-[side=bottom]:before:right-0 data-[side=bottom]:before:left-0",
+          "isolate z-50 h-(--positioner-height) w-(--positioner-width) max-w-(--available-width) transition-[top,left,right,bottom] duration-[400ms] ease-[cubic-bezier(0.22,1.2,0.36,1)] data-instant:transition-none data-[side=bottom]:before:top-[-10px] data-[side=bottom]:before:right-0 data-[side=bottom]:before:left-0",
           className
         )}
         {...props}
       >
-        <NavigationMenuPrimitive.Popup className="data-[ending-style]:easing-[ease] xs:w-(--popup-width) relative h-(--popup-height) w-(--popup-width) origin-(--transform-origin) rounded-3xl bg-popover text-popover-foreground shadow-lg ring-1 ring-foreground/5 transition-[opacity,transform,width,height,scale,translate] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)] outline-none data-ending-style:scale-90 data-ending-style:opacity-0 data-ending-style:duration-150 data-starting-style:scale-90 data-starting-style:opacity-0 dark:ring-foreground/10">
-          <NavigationMenuPrimitive.Viewport className="relative size-full overflow-hidden" />
-        </NavigationMenuPrimitive.Popup>
+        <NavigationMenuPopup />
       </NavigationMenuPrimitive.Positioner>
     </NavigationMenuPrimitive.Portal>
   )

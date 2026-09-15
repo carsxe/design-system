@@ -4,12 +4,15 @@ import * as React from "react"
 import { mergeProps } from "@base-ui/react/merge-props"
 import { useRender } from "@base-ui/react/use-render"
 import { NavigationMenu as NavigationMenuPrimitive } from "@base-ui/react/navigation-menu"
-import { motion, useReducedMotion } from "motion/react"
+import { LayoutGroup, motion, useReducedMotion } from "motion/react"
 import { ChevronDownIcon } from "lucide-react"
 
 import { cn } from "@carsxe/design-system/lib/utils"
 import { Separator } from "@carsxe/design-system/components/separator"
-import { navigationMenuTriggerStyle } from "@carsxe/design-system/components/navigation-menu"
+import {
+  NavigationMenuList,
+  navigationMenuTriggerStyle,
+} from "@carsxe/design-system/components/navigation-menu"
 
 const hoverSpring = {
   type: "spring" as const,
@@ -17,6 +20,46 @@ const hoverSpring = {
   damping: 34,
   mass: 0.55,
 }
+
+const panelSpring = {
+  type: "spring" as const,
+  stiffness: 420,
+  damping: 32,
+  mass: 0.7,
+}
+
+const panelVariants = {
+  hidden: { opacity: 0, y: 14 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      ...panelSpring,
+      staggerChildren: 0.07,
+      delayChildren: 0.04,
+    },
+  },
+}
+
+const columnVariants = {
+  hidden: { opacity: 0, y: 16 },
+  show: {
+    opacity: 1,
+    y: 0,
+    transition: panelSpring,
+  },
+}
+
+type MegaMenuMotionValue = {
+  indicatorId: string
+  visibleKey: string | null
+  setHoveredKey: React.Dispatch<React.SetStateAction<string | null>>
+  setOpenKey: React.Dispatch<React.SetStateAction<string | null>>
+}
+
+const MegaMenuMotionContext = React.createContext<MegaMenuMotionValue | null>(
+  null
+)
 
 function useMegaMenuHover() {
   const reduced = Boolean(useReducedMotion())
@@ -58,6 +101,35 @@ function MegaMenuHoverFill({
 }
 
 /**
+ * Scopes the sliding trigger indicator. Wrap the same `NavigationMenuList`
+ * that holds `MegaMenuTrigger`s so the pill can travel between them.
+ */
+function MegaMenuList({
+  className,
+  ...props
+}: React.ComponentProps<typeof NavigationMenuList>) {
+  const id = React.useId()
+  const [hoveredKey, setHoveredKey] = React.useState<string | null>(null)
+  const [openKey, setOpenKey] = React.useState<string | null>(null)
+  const value = React.useMemo(
+    () => ({
+      indicatorId: `${id}-indicator`,
+      visibleKey: hoveredKey ?? openKey,
+      setHoveredKey,
+      setOpenKey,
+    }),
+    [id, hoveredKey, openKey]
+  )
+  return (
+    <MegaMenuMotionContext.Provider value={value}>
+      <LayoutGroup id={id}>
+        <NavigationMenuList className={cn("relative", className)} {...props} />
+      </LayoutGroup>
+    </MegaMenuMotionContext.Provider>
+  )
+}
+
+/**
  * The panel a navigation dropdown opens: zones of columns, each column a run of
  * labelled rows.
  *
@@ -66,27 +138,55 @@ function MegaMenuHoverFill({
  * or a plain anchor. Standalone, the panel paints its own surface. Inside
  * NavigationMenu the positioner already paints one, so this shell goes
  * transparent and the inner spacing is what you see.
+ *
+ * Opening springs the panel up and staggers its columns; NavigationMenu keeps a
+ * single shared viewport that morphs size as the active trigger changes.
  */
-function MegaMenu({ className, ...props }: React.ComponentProps<"div">) {
+function MegaMenu({
+  className,
+  children,
+  ...props
+}: React.ComponentProps<"div">) {
+  const reduced = Boolean(useReducedMotion())
   return (
-    <div
+    <motion.div
       data-slot="mega-menu"
       className={cn(
         "flex max-h-[calc(100vh-8rem)] w-max items-stretch overflow-y-auto rounded-2xl bg-popover py-6 text-popover-foreground shadow-panel ring-1 ring-panel-ring in-data-[slot=navigation-menu-content]:rounded-none in-data-[slot=navigation-menu-content]:bg-transparent in-data-[slot=navigation-menu-content]:shadow-none in-data-[slot=navigation-menu-content]:ring-0",
         className
       )}
-      {...props}
-    />
+      initial={reduced ? false : "hidden"}
+      animate="show"
+      variants={reduced ? undefined : panelVariants}
+      {...(props as React.ComponentProps<typeof motion.div>)}
+    >
+      {React.Children.map(children, (child, index) => {
+        if (!React.isValidElement(child) || child.type === MegaMenuColumn) {
+          return child
+        }
+        return (
+          <motion.div
+            key={child.key ?? index}
+            className="flex items-stretch"
+            variants={reduced ? undefined : columnVariants}
+          >
+            {child}
+          </motion.div>
+        )
+      })}
+    </motion.div>
   )
 }
 
 /** A vertical run of groups. Zones of columns are split by `MegaMenuSeparator`. */
 function MegaMenuColumn({ className, ...props }: React.ComponentProps<"div">) {
+  const reduced = Boolean(useReducedMotion())
   return (
-    <div
+    <motion.div
       data-slot="mega-menu-column"
       className={cn("flex flex-col gap-5 px-5", className)}
-      {...props}
+      variants={reduced ? undefined : columnVariants}
+      {...(props as React.ComponentProps<typeof motion.div>)}
     />
   )
 }
@@ -139,29 +239,128 @@ function MegaMenuSeparator({
   )
 }
 
+function MegaMenuTriggerSurface({
+  renderProps,
+  open,
+  reduced,
+  indicatorId,
+  triggerKey,
+  motionCtx,
+  localActive,
+}: {
+  renderProps: React.ComponentProps<"button">
+  open: boolean
+  reduced: boolean
+  indicatorId: string
+  triggerKey: string
+  motionCtx: MegaMenuMotionValue | null
+  localActive: boolean
+}) {
+  const { children: triggerChildren, ...rest } = renderProps
+  const setOpenKey = motionCtx?.setOpenKey
+
+  React.useEffect(() => {
+    if (!setOpenKey) return
+    if (open) setOpenKey(triggerKey)
+    else setOpenKey((current) => (current === triggerKey ? null : current))
+    return () =>
+      setOpenKey((current) => (current === triggerKey ? null : current))
+  }, [open, setOpenKey, triggerKey])
+
+  const showIndicator =
+    !reduced && (motionCtx ? motionCtx.visibleKey === triggerKey : localActive)
+
+  return (
+    <button type="button" {...rest}>
+      {showIndicator ? (
+        <motion.span
+          layoutId={indicatorId}
+          data-slot="mega-menu-indicator"
+          className="absolute inset-0 -z-10 bg-muted"
+          style={{ borderRadius: 16 }}
+          transition={panelSpring}
+        />
+      ) : null}
+      {triggerChildren}
+    </button>
+  )
+}
+
 /**
  * Opens a MegaMenu panel. Same Base UI trigger as `NavigationMenuTrigger`, so
  * it belongs in a `NavigationMenuItem` next to `NavigationMenuContent` that
  * wraps the panel — that is what actually opens the popup.
+ *
+ * When several of these sit in a `MegaMenuList`, a shared `layoutId` pill
+ * springs between the hovered or open trigger.
  */
 function MegaMenuTrigger({
   className,
   children,
+  render,
+  onPointerEnter,
+  onPointerLeave,
+  onFocus,
+  onBlur,
   ...props
 }: NavigationMenuPrimitive.Trigger.Props) {
   const reduced = Boolean(useReducedMotion())
+  const motionCtx = React.useContext(MegaMenuMotionContext)
+  const triggerKey = React.useId()
+  const indicatorId = motionCtx?.indicatorId ?? "mega-menu-indicator"
+  const [hovered, setHovered] = React.useState(false)
+  const [focused, setFocused] = React.useState(false)
+
   return (
     <NavigationMenuPrimitive.Trigger
       data-slot="mega-menu-trigger"
       className={cn(
         navigationMenuTriggerStyle(),
-        "group/mega-menu-trigger h-10 gap-1 px-3 font-semibold",
+        "group/mega-menu-trigger relative isolate h-10 gap-1 bg-transparent px-3 font-semibold hover:bg-transparent focus:bg-transparent data-popup-open:bg-transparent data-popup-open:hover:bg-transparent data-open:bg-transparent data-open:hover:bg-transparent data-open:focus:bg-transparent",
         className
       )}
+      onPointerEnter={(event) => {
+        setHovered(true)
+        motionCtx?.setHoveredKey(triggerKey)
+        onPointerEnter?.(event)
+      }}
+      onPointerLeave={(event) => {
+        setHovered(false)
+        motionCtx?.setHoveredKey((current) =>
+          current === triggerKey ? null : current
+        )
+        onPointerLeave?.(event)
+      }}
+      onFocus={(event) => {
+        setFocused(true)
+        motionCtx?.setHoveredKey(triggerKey)
+        onFocus?.(event)
+      }}
+      onBlur={(event) => {
+        setFocused(false)
+        motionCtx?.setHoveredKey((current) =>
+          current === triggerKey ? null : current
+        )
+        onBlur?.(event)
+      }}
+      render={
+        render ??
+        ((renderProps, state) => (
+          <MegaMenuTriggerSurface
+            renderProps={renderProps as React.ComponentProps<"button">}
+            open={state.open}
+            reduced={reduced}
+            indicatorId={indicatorId}
+            triggerKey={triggerKey}
+            motionCtx={motionCtx}
+            localActive={hovered || focused || state.open}
+          />
+        ))
+      }
       {...props}
     >
       <motion.span
-        className="inline-flex items-center"
+        className="relative inline-flex items-center"
         whileHover={reduced ? undefined : { y: -1 }}
         transition={reduced ? { duration: 0 } : hoverSpring}
       >
@@ -361,6 +560,7 @@ export {
   MegaMenuItem,
   type MegaMenuItemProps,
   MegaMenuLink,
+  MegaMenuList,
   MegaMenuMore,
   MegaMenuSeparator,
   MegaMenuTrigger,

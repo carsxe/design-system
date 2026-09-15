@@ -10,6 +10,7 @@ import {
   MegaMenuGroupLabel,
   MegaMenuItem,
   MegaMenuLink,
+  MegaMenuList,
   MegaMenuMore,
   MegaMenuSeparator,
   MegaMenuTrigger,
@@ -19,7 +20,6 @@ import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuList,
 } from "../components/navigation-menu"
 
 let reducedMotion = false
@@ -27,7 +27,8 @@ let reducedMotion = false
 vi.mock("motion/react", async (importOriginal) => {
   const actual = await importOriginal()
   return {
-    ...actual,
+    // importOriginal() is untyped in this mock factory.
+    ...(actual as { [key: string]: unknown }),
     useReducedMotion: () => reducedMotion,
   }
 })
@@ -269,7 +270,7 @@ describe("MegaMenuTrigger", () => {
   it("is the NavigationMenu trigger that opens a MegaMenu panel", async () => {
     render(
       <NavigationMenu>
-        <NavigationMenuList>
+        <MegaMenuList>
           <NavigationMenuItem>
             <MegaMenuTrigger>Products</MegaMenuTrigger>
             <NavigationMenuContent>
@@ -280,7 +281,7 @@ describe("MegaMenuTrigger", () => {
               </MegaMenu>
             </NavigationMenuContent>
           </NavigationMenuItem>
-        </NavigationMenuList>
+        </MegaMenuList>
       </NavigationMenu>
     )
     const trigger = screen.getByRole("button", { name: /Products/ })
@@ -291,14 +292,74 @@ describe("MegaMenuTrigger", () => {
     ).toBeInTheDocument()
   })
 
+  it("springs a sliding indicator behind the open trigger", async () => {
+    const { container } = render(
+      <NavigationMenu>
+        <MegaMenuList>
+          <NavigationMenuItem>
+            <MegaMenuTrigger>Products</MegaMenuTrigger>
+            <NavigationMenuContent>
+              <MegaMenu>
+                <MegaMenuColumn>
+                  <MegaMenuItem href="/vin-decoder" title="VIN Decoder" />
+                </MegaMenuColumn>
+              </MegaMenu>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <MegaMenuTrigger>Developers</MegaMenuTrigger>
+            <NavigationMenuContent>
+              <MegaMenu>
+                <MegaMenuColumn>
+                  <MegaMenuItem href="/widgets" title="Widgets" />
+                </MegaMenuColumn>
+              </MegaMenu>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        </MegaMenuList>
+      </NavigationMenu>
+    )
+    expect(slots(container, "mega-menu-indicator")).toHaveLength(0)
+    await userEvent.click(screen.getByRole("button", { name: /Products/ }))
+    expect(slots(document.body, "mega-menu-indicator")).toHaveLength(1)
+    await userEvent.hover(screen.getByRole("button", { name: /Developers/ }))
+    expect(slots(document.body, "mega-menu-indicator")).toHaveLength(1)
+  })
+
+  it("skips the sliding indicator when motion is reduced", async () => {
+    reducedMotion = true
+    const { container } = render(
+      <NavigationMenu>
+        <MegaMenuList>
+          <NavigationMenuItem>
+            <MegaMenuTrigger>Products</MegaMenuTrigger>
+            <NavigationMenuContent>
+              <MegaMenu>
+                <MegaMenuColumn>
+                  <MegaMenuItem href="/vin-decoder" title="VIN Decoder" />
+                </MegaMenuColumn>
+              </MegaMenu>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        </MegaMenuList>
+      </NavigationMenu>
+    )
+    await userEvent.click(screen.getByRole("button", { name: /Products/ }))
+    expect(slots(container, "mega-menu-indicator")).toHaveLength(0)
+    expect(slots(document.body, "mega-menu-indicator")).toHaveLength(0)
+    expect(
+      screen.getByRole("link", { name: "VIN Decoder" })
+    ).toBeInTheDocument()
+  })
+
   it("keeps the consumer's className alongside the mega trigger style", () => {
     render(
       <NavigationMenu>
-        <NavigationMenuList>
+        <MegaMenuList>
           <NavigationMenuItem>
             <MegaMenuTrigger className="text-primary">Products</MegaMenuTrigger>
           </NavigationMenuItem>
-        </NavigationMenuList>
+        </MegaMenuList>
       </NavigationMenu>
     )
     const trigger = screen.getByRole("button", { name: /Products/ })

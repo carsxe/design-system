@@ -23,11 +23,11 @@ import {
   Marquee,
   MegaMenu,
   MegaMenuItem,
+  MegaMenuList,
   MegaMenuTrigger,
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuList,
   NumberInput,
   PasswordInput,
   QrCode,
@@ -86,7 +86,7 @@ describe("Ark-inspired components", () => {
           />
         </MegaMenu>
         <NavigationMenu>
-          <NavigationMenuList>
+          <MegaMenuList>
             <NavigationMenuItem>
               <MegaMenuTrigger>Products</MegaMenuTrigger>
               <NavigationMenuContent>
@@ -95,7 +95,7 @@ describe("Ark-inspired components", () => {
                 </MegaMenu>
               </NavigationMenuContent>
             </NavigationMenuItem>
-          </NavigationMenuList>
+          </MegaMenuList>
         </NavigationMenu>
         <NumberInput aria-label="Count" />
         <PasswordInput aria-label="Password" />

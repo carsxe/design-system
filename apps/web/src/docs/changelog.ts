@@ -21,22 +21,23 @@ export type ChangelogEntry = {
 export const changelogEntries = [
   {
     date: "2026-09-15",
-    title: "Mega menu breathes, hovers, and gets a trigger",
+    title: "Mega menu breathes, hovers, and animates like a Motion mega menu",
     summary:
-      "MegaMenu spacing opens up so columns and rows are no longer cramped, interactive rows pick up subtle motion.dev hover (with a reduced-motion colour fallback), and MegaMenuTrigger is the NavigationMenu trigger suited to opening a mega menu panel.",
+      "MegaMenu spacing opens up so columns and rows are no longer cramped. Interactive rows pick up motion.dev hover. MegaMenuTrigger opens panels from NavigationMenu, MegaMenuList slides a layoutId indicator between triggers, the shared viewport springs open and morphs between sections, and columns stagger in — with a reduced-motion colour-only fallback.",
     groups: [
       {
         type: "added",
         items: [
           "MegaMenuTrigger, a drop-in for NavigationMenuTrigger that opens MegaMenu panels from a NavigationMenuItem next to NavigationMenuContent.",
-          "Motion hover on MegaMenuItem, MegaMenuLink, and MegaMenuMore: a soft fill and icon-chip or arrow motion, skipped when prefers-reduced-motion is set.",
+          "MegaMenuList, which scopes a shared layoutId pill that springs between the hovered or open MegaMenuTrigger.",
+          "Spring-driven panel open (opacity, y, scale) on the NavigationMenu popup, staggered column reveals on MegaMenu, and row hover fills — all skipped when prefers-reduced-motion is set.",
         ],
       },
       {
         type: "changed",
         items: [
           "Default padding and gaps on MegaMenu, MegaMenuColumn, MegaMenuGroup, MegaMenuGroupLabel, MegaMenuItem, MegaMenuLink, and MegaMenuMore so the panel has more room.",
-          "Inside NavigationMenuContent, MegaMenu drops its own surface so it no longer double-paints over the positioner, and the content padding collapses around the panel.",
+          "Inside NavigationMenuContent, MegaMenu drops its own surface so it no longer double-paints over the positioner, and the content padding collapses around the panel. The existing shared viewport is the morphing panel: switching triggers resizes one popup instead of remounting a cold one.",
         ],
       },
     ],

@@ -16,6 +16,7 @@ import {
   MegaMenuGroupLabel,
   MegaMenuItem,
   MegaMenuLink,
+  MegaMenuList,
   MegaMenuMore,
   MegaMenuSeparator,
   MegaMenuTrigger,
@@ -24,7 +25,6 @@ import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuList,
 } from "@carsxe/design-system/components/navigation-menu"
 
 import type { ComponentDoc } from "./types"
@@ -230,16 +230,16 @@ function MegaMenuRenderExample() {
 }
 
 /**
- * MegaMenuTrigger is the NavigationMenu trigger suited to opening a MegaMenu
- * panel. It sits in a NavigationMenuItem next to NavigationMenuContent — the
- * same pairing NavigationMenuTrigger uses, with roomier chrome and a motion
- * hover on the label.
+ * MegaMenuTrigger opens a MegaMenu panel from NavigationMenu. Several triggers
+ * in a MegaMenuList share a sliding layoutId indicator; NavigationMenu keeps
+ * one viewport that morphs as the active section changes, and columns stagger
+ * in on open.
  */
 function MegaMenuTriggerExample() {
   return (
-    <div className="flex min-h-[28rem] w-full justify-center pt-4">
+    <div className="flex min-h-[32rem] w-full justify-center pt-4">
       <NavigationMenu>
-        <NavigationMenuList>
+        <MegaMenuList>
           <NavigationMenuItem>
             <MegaMenuTrigger>Products</MegaMenuTrigger>
             <NavigationMenuContent>
@@ -261,7 +261,35 @@ function MegaMenuTriggerExample() {
               </MegaMenu>
             </NavigationMenuContent>
           </NavigationMenuItem>
-        </NavigationMenuList>
+          <NavigationMenuItem>
+            <MegaMenuTrigger>Developers</MegaMenuTrigger>
+            <NavigationMenuContent>
+              <MegaMenu>
+                <MegaMenuColumn className="w-[260px]">
+                  <MegaMenuGroup>
+                    <MegaMenuGroupLabel>Widgets</MegaMenuGroupLabel>
+                    {rows(widgets)}
+                    <MegaMenuMore href="/widgets">All widgets</MegaMenuMore>
+                  </MegaMenuGroup>
+                </MegaMenuColumn>
+                <MegaMenuColumn className="w-[196px]">
+                  <MegaMenuGroupLabel>Browse</MegaMenuGroupLabel>
+                  {browse.map((link) => (
+                    <MegaMenuLink
+                      key={link.href}
+                      href={link.href}
+                      {...(link.external
+                        ? { target: "_blank", rel: "noopener noreferrer" }
+                        : {})}
+                    >
+                      {link.label}
+                    </MegaMenuLink>
+                  ))}
+                </MegaMenuColumn>
+              </MegaMenu>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        </MegaMenuList>
       </NavigationMenu>
     </div>
   )
@@ -271,7 +299,7 @@ const megaMenu = {
   slug: "mega-menu",
   title: "Mega menu",
   description:
-    "The panel a navigation dropdown opens: zones of columns, each column a run of labelled rows carrying an icon, a title, and a line of description. Rows are polymorphic through `render`, so the element a link becomes — a router Link, an analytics wrapper, a plain anchor — stays the consumer's decision. Pair it with NavigationMenu and MegaMenuTrigger, which supply the trigger, positioning, and keyboard behaviour. Standalone, the panel paints its own surface; inside NavigationMenu the positioner already does, so MegaMenu drops that chrome and keeps the inner spacing.",
+    "The panel a navigation dropdown opens: zones of columns, each column a run of labelled rows carrying an icon, a title, and a line of description. Rows are polymorphic through `render`. Pair it with NavigationMenu and MegaMenuTrigger. MegaMenuList shares a sliding layoutId indicator across triggers; NavigationMenu keeps one viewport that morphs between sections; columns spring in with a stagger. Standalone, the panel paints its own surface; inside NavigationMenu the positioner already does.",
   importName: "MegaMenu",
   importPath: "@carsxe/design-system/components/mega-menu",
   usage: `import {
@@ -280,17 +308,17 @@ const megaMenu = {
   MegaMenuGroup,
   MegaMenuGroupLabel,
   MegaMenuItem,
+  MegaMenuList,
   MegaMenuTrigger,
 } from "@carsxe/design-system/components/mega-menu"
 import {
   NavigationMenu,
   NavigationMenuContent,
   NavigationMenuItem,
-  NavigationMenuList,
 } from "@carsxe/design-system/components/navigation-menu"
 
 <NavigationMenu>
-  <NavigationMenuList>
+  <MegaMenuList>
     <NavigationMenuItem>
       <MegaMenuTrigger>Products</MegaMenuTrigger>
       <NavigationMenuContent>
@@ -309,7 +337,7 @@ import {
         </MegaMenu>
       </NavigationMenuContent>
     </NavigationMenuItem>
-  </NavigationMenuList>
+  </MegaMenuList>
 </NavigationMenu>`,
   preview: <MegaMenuDefaultExample />,
   previewCode: `<MegaMenu>
@@ -328,17 +356,23 @@ import {
 </MegaMenu>`,
   examples: [
     {
-      title: "Opened by MegaMenuTrigger",
+      title: "Sliding indicator and morphing panel",
       preview: <MegaMenuTriggerExample />,
       code: `<NavigationMenu>
-  <NavigationMenuList>
+  <MegaMenuList>
     <NavigationMenuItem>
       <MegaMenuTrigger>Products</MegaMenuTrigger>
       <NavigationMenuContent>
         <MegaMenu>…</MegaMenu>
       </NavigationMenuContent>
     </NavigationMenuItem>
-  </NavigationMenuList>
+    <NavigationMenuItem>
+      <MegaMenuTrigger>Developers</MegaMenuTrigger>
+      <NavigationMenuContent>
+        <MegaMenu>…</MegaMenu>
+      </NavigationMenuContent>
+    </NavigationMenuItem>
+  </MegaMenuList>
 </NavigationMenu>`,
     },
     {
@@ -401,6 +435,11 @@ import {
       name: "MegaMenuTrigger",
       type: "NavigationMenu.Trigger props",
       defaultValue: "drop-in for NavigationMenuTrigger",
+    },
+    {
+      name: "MegaMenuList",
+      type: "NavigationMenuList props",
+      defaultValue: "scopes the sliding trigger indicator",
     },
     { name: "MegaMenuItem · title", type: "ReactNode" },
     { name: "MegaMenuItem · description", type: "ReactNode" },
