@@ -17,11 +17,12 @@ const popupSpring = {
 
 function NavigationMenu({
   align = "start",
+  sideOffset,
   className,
   children,
   ...props
 }: NavigationMenuPrimitive.Root.Props &
-  Pick<NavigationMenuPrimitive.Positioner.Props, "align">) {
+  Pick<NavigationMenuPrimitive.Positioner.Props, "align" | "sideOffset">) {
   return (
     <NavigationMenuPrimitive.Root
       data-slot="navigation-menu"
@@ -32,7 +33,10 @@ function NavigationMenu({
       {...props}
     >
       {children}
-      <NavigationMenuPositioner align={align} />
+      {/* The root owns the positioner, so positioning props have to be forwarded
+          through it — left in `...props` they reach the rendered element instead,
+          and React warns about `sideOffset` on a DOM node. */}
+      <NavigationMenuPositioner align={align} sideOffset={sideOffset} />
     </NavigationMenuPrimitive.Root>
   )
 }
