@@ -20,6 +20,23 @@ export type ChangelogEntry = {
 
 export const changelogEntries = [
   {
+    date: "2026-09-09",
+    title: "Mega menu brings the navigation dropdowns into the system",
+    summary:
+      "MegaMenu ships the panel a nav dropdown opens — zones of columns, labelled groups, icon rows, and text links — with polymorphic rows and two new text tokens that reach WCAG AA where --muted-foreground does not.",
+    groups: [
+      {
+        type: "added",
+        items: [
+          "MegaMenu, MegaMenuColumn, MegaMenuGroup, MegaMenuGroupLabel, MegaMenuItem, MegaMenuLink, MegaMenuMore, and MegaMenuSeparator, with rows polymorphic through render so a router Link or analytics wrapper drops straight in.",
+          "splitIntoColumns for filling a fixed column count top-to-bottom, left-to-right so reading order matches the DOM order.",
+          "--foreground-tertiary for secondary body copy, and --panel-ring and --panel-shadow for menu-panel elevation, all with light and dark values.",
+        ],
+      },
+    ],
+    sources: [],
+  },
+  {
     date: "2026-08-31",
     title: "World Map Chart maps global vehicle activity",
     summary:

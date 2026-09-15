@@ -57,6 +57,34 @@ Otherwise use the prebuilt stylesheet:
 import "@carsxe/design-system/styles.css"
 ```
 
+Both of those put the palette on `:root`. If the app has its own palette and
+only part of the page should be ours — a header inside an app themed some other
+way — take the tokens on their own and scope them instead:
+
+```ts
+import "@carsxe/design-system/tokens.css"
+```
+
+```tsx
+<div className="cx-theme">{/* design system components */}</div>
+```
+
+Custom properties inherit, so everything inside that class gets our palette and
+the rest of the page keeps its own. `tokens.css` carries no utilities, so the
+host maps the variables in its own config — plain hex, no `hsl()`:
+
+```js
+colors: { popover: "var(--popover)", accent: "var(--accent)" }
+```
+
+Non-colour tokens — shadows, radii — map straight across too:
+
+```js
+boxShadow: {
+  panel: "var(--panel-shadow)"
+}
+```
+
 ## Do not
 
 - Do not run `shadcn add` in the consumer app. Components ship from this package.
