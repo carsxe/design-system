@@ -59,7 +59,7 @@ function TagsInput({
       data-slot="tags-input"
       aria-disabled={disabled}
       className={cn(
-        "flex min-h-10 w-full flex-wrap items-center gap-1.5 rounded-2xl border border-border bg-muted p-1.5 focus-within:border-primary focus-within:bg-card focus-within:ring-1 focus-within:ring-primary",
+        "flex min-h-10 w-full flex-wrap items-center gap-1.5 rounded-2xl border border-border bg-card p-1.5 focus-within:border-primary focus-within:bg-card focus-within:ring-1 focus-within:ring-primary aria-disabled:bg-muted",
         className
       )}
       {...props}

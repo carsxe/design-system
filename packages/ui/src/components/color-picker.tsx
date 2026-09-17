@@ -73,7 +73,7 @@ function ColorPicker({
           onBlur={() => {
             if (!parse(current)) setCurrent(defaultValue)
           }}
-          className="h-9 rounded-xl border border-border bg-muted px-3 font-mono text-sm text-foreground outline-none focus:border-primary"
+          className="h-9 rounded-xl border border-border bg-card px-3 font-mono text-sm text-foreground outline-none focus:border-primary disabled:bg-muted"
         />
       </label>
       {(

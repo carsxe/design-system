@@ -45,7 +45,7 @@ function NumberInput({
     <div
       data-slot="number-input"
       className={cn(
-        "inline-flex h-10 items-stretch rounded-2xl border border-border bg-muted focus-within:border-primary focus-within:ring-1 focus-within:ring-primary",
+        "inline-flex h-10 items-stretch rounded-2xl border border-border bg-card focus-within:border-primary focus-within:bg-card focus-within:ring-1 focus-within:ring-primary has-[input:disabled]:bg-muted",
         className
       )}
     >

@@ -66,7 +66,7 @@ function DateInput({
       data-slot="date-input"
       aria-disabled={disabled}
       className={cn(
-        "inline-flex h-10 items-center rounded-2xl border border-border bg-muted px-2 focus-within:border-primary focus-within:bg-card focus-within:ring-1 focus-within:ring-primary",
+        "inline-flex h-10 items-center rounded-2xl border border-border bg-card px-2 focus-within:border-primary focus-within:bg-card focus-within:ring-1 focus-within:ring-primary aria-disabled:bg-muted",
         className
       )}
       {...props}
