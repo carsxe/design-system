@@ -71,7 +71,7 @@ import { Button, Card, Input } from "@carsxe/design-system"
 Accordion, Alert, Angle Slider, Avatar, Badge, Breadcrumb, Button, Card,
 Checkbox, Clipboard, Color Picker, Date Input, Dialog, Dropdown menu, Editable,
 Floating Panel, Format, Highlight, Image Cropper, Input, JSON Tree View, Label,
-Listbox, Marquee, Navigation menu, Number Input, Pagination, Password Input,
+Listbox, Marquee, Mega menu, Navigation menu, Number Input, Pagination, Password Input,
 Progress, QR Code, Radio group, Rating Group, Select, Separator, Signature Pad,
 Skeleton, Slider, Sonner, Steps, Swap, Switch, Table, Table of Contents, Tabs,
 Tags Input, Textarea, Timer, Tour, Tree View, Tooltip.
@@ -111,16 +111,16 @@ return (
 Semantic tokens live on `:root` and `.dark`. Customize with CSS variables rather
 than forking components.
 
-| Token | Light |
-| --- | --- |
-| `--primary` | `#065774` |
+| Token             | Light     |
+| ----------------- | --------- |
+| `--primary`       | `#065774` |
 | `--primary-hover` | `#387990` |
-| `--foreground` | `#3A3A3A` |
-| `--background` | `#F9F9F9` |
-| `--success` | `#00A63E` |
-| `--destructive` | `#DA373E` |
-| `--warning` | `#F79008` |
-| `--radius` | `0` |
+| `--foreground`    | `#3A3A3A` |
+| `--background`    | `#F9F9F9` |
+| `--success`       | `#00A63E` |
+| `--destructive`   | `#DA373E` |
+| `--warning`       | `#F79008` |
+| `--radius`        | `0`       |
 
 `--radius` is `0`, so corners are sharp; circular controls keep `rounded-full`.
 Enable dark mode by adding the `dark` class on an ancestor, usually `<html>`:

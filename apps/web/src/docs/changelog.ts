@@ -20,16 +20,33 @@ export type ChangelogEntry = {
 
 export const changelogEntries = [
   {
-    date: "2026-09-17",
-    title: "Enabled inputs contrast with the page in light mode",
+    date: "2026-09-15",
+    title: "Mega menu breathes, hovers, and animates like a Motion mega menu",
     summary:
-      "Form fields used the muted fill, which is the same color as the page in light mode, so enabled inputs looked disabled. Rest-state fields now use the card fill so they read as white wells on the page; disabled fields stay muted.",
+      "MegaMenu spacing opens up so columns and rows are no longer cramped. Interactive rows pick up motion.dev hover. MegaMenuTrigger opens panels from NavigationMenu, MegaMenuList slides a layoutId indicator between triggers, the shared viewport springs open and morphs between sections, and columns stagger in — with a reduced-motion colour-only fallback.",
     groups: [
+      {
+        type: "added",
+        items: [
+          "MegaMenuTrigger, a drop-in for NavigationMenuTrigger that opens MegaMenu panels from a NavigationMenuItem next to NavigationMenuContent.",
+          "MegaMenuList, which scopes a shared layoutId pill that springs between the hovered or open MegaMenuTrigger.",
+          "Spring-driven panel open (opacity, y, scale) on the NavigationMenu popup, staggered column reveals on MegaMenu, and row hover fills — all skipped when prefers-reduced-motion is set.",
+        ],
+      },
+      {
+        type: "changed",
+        items: [
+          "Default padding and gaps on MegaMenu, MegaMenuColumn, MegaMenuGroup, MegaMenuGroupLabel, MegaMenuItem, MegaMenuLink, and MegaMenuMore so the panel has more room.",
+          "Inside NavigationMenuContent, MegaMenu drops its own surface so it no longer double-paints over the positioner, and the content padding collapses around the panel. The existing shared viewport is the morphing panel: switching triggers resizes one popup instead of remounting a cold one.",
+          "Column reveals stop queueing after the fourth zone and separators no longer take a place in the queue, so a wide panel finishes drawing instead of trickling in.",
+        ],
+      },
       {
         type: "fixed",
         items: [
-          "Enabled Input, Textarea, Select, PasswordInput, and related form controls use bg-card instead of bg-muted, so they contrast with --background in light mode.",
-          "Disabled fields keep bg-muted so inactive inputs still look inactive at a glance.",
+          "Reduced-motion fallbacks no longer break hydration. Motion resolves prefers-reduced-motion during the client's first render but leaves it unset on the server, so menu rows hydrated a different tree than was sent. The new useReducedMotionAfterMount hook pins the first render to the server's answer.",
+          "MegaMenuTriggers outside a MegaMenuList each get their own indicator instead of sharing one hardcoded layoutId, which made every unscoped trigger on a page the same layout-projection target.",
+          "The trigger indicator takes its corner radius from the radius token rather than a hardcoded 16px, so it no longer floats a rounded pill behind a square trigger.",
         ],
       },
     ],

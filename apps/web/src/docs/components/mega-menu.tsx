@@ -16,9 +16,16 @@ import {
   MegaMenuGroupLabel,
   MegaMenuItem,
   MegaMenuLink,
+  MegaMenuList,
   MegaMenuMore,
   MegaMenuSeparator,
+  MegaMenuTrigger,
 } from "@carsxe/design-system/components/mega-menu"
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+} from "@carsxe/design-system/components/navigation-menu"
 
 import type { ComponentDoc } from "./types"
 
@@ -108,13 +115,13 @@ function rows(items: MenuRow[]) {
 function MegaMenuDefaultExample() {
   return (
     <MegaMenu>
-      <MegaMenuColumn className="w-[250px]">
+      <MegaMenuColumn className="w-[280px]">
         <MegaMenuGroup>
           <MegaMenuGroupLabel>Vehicle data</MegaMenuGroupLabel>
           {rows(vehicleData)}
         </MegaMenuGroup>
       </MegaMenuColumn>
-      <MegaMenuColumn className="w-[250px]">
+      <MegaMenuColumn className="w-[280px]">
         <MegaMenuGroup>
           <MegaMenuGroupLabel>History &amp; safety</MegaMenuGroupLabel>
           {rows(history)}
@@ -131,20 +138,20 @@ function MegaMenuZonesExample() {
           at once rather than reading as the end of the second one. */}
       <div className="flex flex-col">
         <div className="flex items-stretch">
-          <MegaMenuColumn className="w-[230px]">
+          <MegaMenuColumn className="w-[260px]">
             <MegaMenuGroup>
               <MegaMenuGroupLabel>Vehicle data</MegaMenuGroupLabel>
               {rows(vehicleData)}
             </MegaMenuGroup>
           </MegaMenuColumn>
-          <MegaMenuColumn className="w-[230px]">
+          <MegaMenuColumn className="w-[260px]">
             <MegaMenuGroup>
               <MegaMenuGroupLabel>History &amp; safety</MegaMenuGroupLabel>
               {rows(history)}
             </MegaMenuGroup>
           </MegaMenuColumn>
         </div>
-        <div className="flex px-4">
+        <div className="flex px-5">
           <MegaMenuMore href="/all-products" className="mt-3">
             All products
           </MegaMenuMore>
@@ -152,14 +159,14 @@ function MegaMenuZonesExample() {
       </div>
 
       <MegaMenuSeparator />
-      <MegaMenuColumn className="w-[230px] gap-2">
+      <MegaMenuColumn className="w-[260px]">
         <MegaMenuGroupLabel>Widgets</MegaMenuGroupLabel>
         {rows(widgets)}
         <MegaMenuMore href="/widgets">All widgets</MegaMenuMore>
       </MegaMenuColumn>
 
       <MegaMenuSeparator />
-      <MegaMenuColumn className="w-[170px] gap-0.5">
+      <MegaMenuColumn className="w-[196px]">
         <MegaMenuGroupLabel>Browse</MegaMenuGroupLabel>
         {browse.map((link) => (
           <MegaMenuLink
@@ -180,7 +187,7 @@ function MegaMenuZonesExample() {
 function MegaMenuPlainExample() {
   return (
     <MegaMenu>
-      <MegaMenuColumn className="w-[250px]">
+      <MegaMenuColumn className="w-[280px]">
         <MegaMenuGroup>
           {rows(vehicleData)}
           <MegaMenuMore href="/all-industries">All industries</MegaMenuMore>
@@ -204,7 +211,7 @@ function TrackedLink({
 function MegaMenuRenderExample() {
   return (
     <MegaMenu>
-      <MegaMenuColumn className="w-[250px]">
+      <MegaMenuColumn className="w-[280px]">
         <MegaMenuGroup>
           {vehicleData.map((item) => (
             <MegaMenuItem
@@ -222,11 +229,77 @@ function MegaMenuRenderExample() {
   )
 }
 
+/**
+ * MegaMenuTrigger opens a MegaMenu panel from NavigationMenu. Several triggers
+ * in a MegaMenuList share a sliding layoutId indicator; NavigationMenu keeps
+ * one viewport that morphs as the active section changes, and columns stagger
+ * in on open.
+ */
+function MegaMenuTriggerExample() {
+  return (
+    <div className="flex min-h-[32rem] w-full justify-center pt-4">
+      <NavigationMenu>
+        <MegaMenuList>
+          <NavigationMenuItem>
+            <MegaMenuTrigger>Products</MegaMenuTrigger>
+            <NavigationMenuContent>
+              <MegaMenu>
+                <MegaMenuColumn className="w-[280px]">
+                  <MegaMenuGroup>
+                    <MegaMenuGroupLabel>Vehicle data</MegaMenuGroupLabel>
+                    {rows(vehicleData)}
+                  </MegaMenuGroup>
+                </MegaMenuColumn>
+                <MegaMenuColumn className="w-[280px]">
+                  <MegaMenuGroup>
+                    <MegaMenuGroupLabel>
+                      History &amp; safety
+                    </MegaMenuGroupLabel>
+                    {rows(history)}
+                  </MegaMenuGroup>
+                </MegaMenuColumn>
+              </MegaMenu>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+          <NavigationMenuItem>
+            <MegaMenuTrigger>Developers</MegaMenuTrigger>
+            <NavigationMenuContent>
+              <MegaMenu>
+                <MegaMenuColumn className="w-[260px]">
+                  <MegaMenuGroup>
+                    <MegaMenuGroupLabel>Widgets</MegaMenuGroupLabel>
+                    {rows(widgets)}
+                    <MegaMenuMore href="/widgets">All widgets</MegaMenuMore>
+                  </MegaMenuGroup>
+                </MegaMenuColumn>
+                <MegaMenuColumn className="w-[196px]">
+                  <MegaMenuGroupLabel>Browse</MegaMenuGroupLabel>
+                  {browse.map((link) => (
+                    <MegaMenuLink
+                      key={link.href}
+                      href={link.href}
+                      {...(link.external
+                        ? { target: "_blank", rel: "noopener noreferrer" }
+                        : {})}
+                    >
+                      {link.label}
+                    </MegaMenuLink>
+                  ))}
+                </MegaMenuColumn>
+              </MegaMenu>
+            </NavigationMenuContent>
+          </NavigationMenuItem>
+        </MegaMenuList>
+      </NavigationMenu>
+    </div>
+  )
+}
+
 const megaMenu = {
   slug: "mega-menu",
   title: "Mega menu",
   description:
-    "The panel a navigation dropdown opens: zones of columns, each column a run of labelled rows carrying an icon, a title, and a line of description. Rows are polymorphic through `render`, so the element a link becomes — a router Link, an analytics wrapper, a plain anchor — stays the consumer's decision. Pair it with NavigationMenu, which supplies the trigger, positioning, and keyboard behaviour; the panel paints its own surface, so the positioner carrying it should not paint one too.",
+    "The panel a navigation dropdown opens: zones of columns, each column a run of labelled rows carrying an icon, a title, and a line of description. Rows are polymorphic through `render`. Pair it with NavigationMenu and MegaMenuTrigger. MegaMenuList shares a sliding layoutId indicator across triggers; NavigationMenu keeps one viewport that morphs between sections; columns spring in with a stagger. Standalone, the panel paints its own surface; inside NavigationMenu the positioner already does.",
   importName: "MegaMenu",
   importPath: "@carsxe/design-system/components/mega-menu",
   usage: `import {
@@ -235,30 +308,46 @@ const megaMenu = {
   MegaMenuGroup,
   MegaMenuGroupLabel,
   MegaMenuItem,
+  MegaMenuList,
+  MegaMenuTrigger,
 } from "@carsxe/design-system/components/mega-menu"
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+} from "@carsxe/design-system/components/navigation-menu"
 
-<MegaMenu>
-  <MegaMenuColumn>
-    <MegaMenuGroup>
-      <MegaMenuGroupLabel>Vehicle data</MegaMenuGroupLabel>
-      <MegaMenuItem
-        href="/vin-decoder"
-        title="VIN Decoder"
-        description="Decode any VIN to full specs."
-        icon={<ScanLineIcon />}
-      />
-    </MegaMenuGroup>
-  </MegaMenuColumn>
-</MegaMenu>`,
+<NavigationMenu>
+  <MegaMenuList>
+    <NavigationMenuItem>
+      <MegaMenuTrigger>Products</MegaMenuTrigger>
+      <NavigationMenuContent>
+        <MegaMenu>
+          <MegaMenuColumn>
+            <MegaMenuGroup>
+              <MegaMenuGroupLabel>Vehicle data</MegaMenuGroupLabel>
+              <MegaMenuItem
+                href="/vin-decoder"
+                title="VIN Decoder"
+                description="Decode any VIN to full specs."
+                icon={<ScanLineIcon />}
+              />
+            </MegaMenuGroup>
+          </MegaMenuColumn>
+        </MegaMenu>
+      </NavigationMenuContent>
+    </NavigationMenuItem>
+  </MegaMenuList>
+</NavigationMenu>`,
   preview: <MegaMenuDefaultExample />,
   previewCode: `<MegaMenu>
-  <MegaMenuColumn className="w-[250px]">
+  <MegaMenuColumn className="w-[280px]">
     <MegaMenuGroup>
       <MegaMenuGroupLabel>Vehicle data</MegaMenuGroupLabel>
       {rows(vehicleData)}
     </MegaMenuGroup>
   </MegaMenuColumn>
-  <MegaMenuColumn className="w-[250px]">
+  <MegaMenuColumn className="w-[280px]">
     <MegaMenuGroup>
       <MegaMenuGroupLabel>History &amp; safety</MegaMenuGroupLabel>
       {rows(history)}
@@ -267,15 +356,35 @@ const megaMenu = {
 </MegaMenu>`,
   examples: [
     {
+      title: "Sliding indicator and morphing panel",
+      preview: <MegaMenuTriggerExample />,
+      code: `<NavigationMenu>
+  <MegaMenuList>
+    <NavigationMenuItem>
+      <MegaMenuTrigger>Products</MegaMenuTrigger>
+      <NavigationMenuContent>
+        <MegaMenu>…</MegaMenu>
+      </NavigationMenuContent>
+    </NavigationMenuItem>
+    <NavigationMenuItem>
+      <MegaMenuTrigger>Developers</MegaMenuTrigger>
+      <NavigationMenuContent>
+        <MegaMenu>…</MegaMenu>
+      </NavigationMenuContent>
+    </NavigationMenuItem>
+  </MegaMenuList>
+</NavigationMenu>`,
+    },
+    {
       title: "Zones split by a hairline",
       preview: <MegaMenuZonesExample />,
       code: `<MegaMenu>
   <div className="flex flex-col">
     <div className="flex items-stretch">
-      <MegaMenuColumn className="w-[230px]">…</MegaMenuColumn>
-      <MegaMenuColumn className="w-[230px]">…</MegaMenuColumn>
+      <MegaMenuColumn className="w-[260px]">…</MegaMenuColumn>
+      <MegaMenuColumn className="w-[260px]">…</MegaMenuColumn>
     </div>
-    <div className="flex px-4">
+    <div className="flex px-5">
       <MegaMenuMore href="/all-products" className="mt-3">
         All products
       </MegaMenuMore>
@@ -283,14 +392,14 @@ const megaMenu = {
   </div>
 
   <MegaMenuSeparator />
-  <MegaMenuColumn className="w-[230px] gap-2">
+  <MegaMenuColumn className="w-[260px]">
     <MegaMenuGroupLabel>Widgets</MegaMenuGroupLabel>
     {rows(widgets)}
     <MegaMenuMore href="/widgets">All widgets</MegaMenuMore>
   </MegaMenuColumn>
 
   <MegaMenuSeparator />
-  <MegaMenuColumn className="w-[170px] gap-0.5">
+  <MegaMenuColumn className="w-[196px]">
     <MegaMenuGroupLabel>Browse</MegaMenuGroupLabel>
     <MegaMenuLink href="/docs">Documentation</MegaMenuLink>
     <MegaMenuLink href="/pricing">Pricing</MegaMenuLink>
@@ -301,7 +410,7 @@ const megaMenu = {
       title: "One unlabelled column",
       preview: <MegaMenuPlainExample />,
       code: `<MegaMenu>
-  <MegaMenuColumn className="w-[250px]">
+  <MegaMenuColumn className="w-[280px]">
     <MegaMenuGroup>
       {rows(vehicleData)}
       <MegaMenuMore href="/all-industries">All industries</MegaMenuMore>
@@ -322,6 +431,16 @@ const megaMenu = {
     },
   ],
   props: [
+    {
+      name: "MegaMenuTrigger",
+      type: "NavigationMenu.Trigger props",
+      defaultValue: "drop-in for NavigationMenuTrigger",
+    },
+    {
+      name: "MegaMenuList",
+      type: "NavigationMenuList props",
+      defaultValue: "scopes the sliding trigger indicator",
+    },
     { name: "MegaMenuItem · title", type: "ReactNode" },
     { name: "MegaMenuItem · description", type: "ReactNode" },
     {
@@ -361,5 +480,6 @@ export {
   MegaMenuDefaultExample,
   MegaMenuPlainExample,
   MegaMenuRenderExample,
+  MegaMenuTriggerExample,
   MegaMenuZonesExample,
 }

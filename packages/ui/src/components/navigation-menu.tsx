@@ -1,16 +1,28 @@
+"use client"
+
 import { NavigationMenu as NavigationMenuPrimitive } from "@base-ui/react/navigation-menu"
 import { cva } from "class-variance-authority"
+import { motion } from "motion/react"
 
 import { cn } from "@carsxe/design-system/lib/utils"
+import { useReducedMotionAfterMount } from "@carsxe/design-system/hooks/use-reduced-motion"
 import { ChevronDownIcon } from "lucide-react"
+
+const popupSpring = {
+  type: "spring" as const,
+  stiffness: 420,
+  damping: 32,
+  mass: 0.65,
+}
 
 function NavigationMenu({
   align = "start",
+  sideOffset,
   className,
   children,
   ...props
 }: NavigationMenuPrimitive.Root.Props &
-  Pick<NavigationMenuPrimitive.Positioner.Props, "align">) {
+  Pick<NavigationMenuPrimitive.Positioner.Props, "align" | "sideOffset">) {
   return (
     <NavigationMenuPrimitive.Root
       data-slot="navigation-menu"
@@ -21,7 +33,10 @@ function NavigationMenu({
       {...props}
     >
       {children}
-      <NavigationMenuPositioner align={align} />
+      {/* The root owns the positioner, so positioning props have to be forwarded
+          through it — left in `...props` they reach the rendered element instead,
+          and React warns about `sideOffset` on a DOM node. */}
+      <NavigationMenuPositioner align={align} sideOffset={sideOffset} />
     </NavigationMenuPrimitive.Root>
   )
 }
@@ -87,11 +102,47 @@ function NavigationMenuContent({
     <NavigationMenuPrimitive.Content
       data-slot="navigation-menu-content"
       className={cn(
-        "data-ending-style:data-activation-direction=left:translate-x-[50%] data-ending-style:data-activation-direction=right:translate-x-[-50%] data-starting-style:data-activation-direction=left:translate-x-[-50%] data-starting-style:data-activation-direction=right:translate-x-[50%] h-full w-auto p-1.5 transition-[opacity,transform,translate] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)] group-data-[viewport=false]/navigation-menu:rounded-2xl group-data-[viewport=false]/navigation-menu:bg-popover group-data-[viewport=false]/navigation-menu:text-popover-foreground group-data-[viewport=false]/navigation-menu:shadow-lg group-data-[viewport=false]/navigation-menu:ring-1 group-data-[viewport=false]/navigation-menu:ring-foreground/5 group-data-[viewport=false]/navigation-menu:duration-300 data-ending-style:opacity-0 data-starting-style:opacity-0 data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52 data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52 data-[motion^=from-]:animate-in data-[motion^=from-]:fade-in data-[motion^=to-]:animate-out data-[motion^=to-]:fade-out **:data-[slot=navigation-menu-link]:focus:ring-0 **:data-[slot=navigation-menu-link]:focus:outline-none group-data-[viewport=false]/navigation-menu:dark:ring-foreground/10 group-data-[viewport=false]/navigation-menu:data-open:animate-in group-data-[viewport=false]/navigation-menu:data-open:fade-in-0 group-data-[viewport=false]/navigation-menu:data-open:zoom-in-95 group-data-[viewport=false]/navigation-menu:data-closed:animate-out group-data-[viewport=false]/navigation-menu:data-closed:fade-out-0 group-data-[viewport=false]/navigation-menu:data-closed:zoom-out-95",
+        "data-ending-style:data-activation-direction=left:translate-x-[50%] data-ending-style:data-activation-direction=right:translate-x-[-50%] data-starting-style:data-activation-direction=left:translate-x-[-50%] data-starting-style:data-activation-direction=right:translate-x-[50%] h-full w-auto p-1.5 transition-[opacity,transform,translate] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)] group-data-[viewport=false]/navigation-menu:rounded-2xl group-data-[viewport=false]/navigation-menu:bg-popover group-data-[viewport=false]/navigation-menu:text-popover-foreground group-data-[viewport=false]/navigation-menu:shadow-lg group-data-[viewport=false]/navigation-menu:ring-1 group-data-[viewport=false]/navigation-menu:ring-foreground/5 group-data-[viewport=false]/navigation-menu:duration-300 has-data-[slot=mega-menu]:p-0 data-ending-style:opacity-0 data-starting-style:opacity-0 data-[motion=from-end]:slide-in-from-right-52 data-[motion=from-start]:slide-in-from-left-52 data-[motion=to-end]:slide-out-to-right-52 data-[motion=to-start]:slide-out-to-left-52 data-[motion^=from-]:animate-in data-[motion^=from-]:fade-in data-[motion^=to-]:animate-out data-[motion^=to-]:fade-out **:data-[slot=navigation-menu-link]:focus:ring-0 **:data-[slot=navigation-menu-link]:focus:outline-none group-data-[viewport=false]/navigation-menu:dark:ring-foreground/10 group-data-[viewport=false]/navigation-menu:data-open:animate-in group-data-[viewport=false]/navigation-menu:data-open:fade-in-0 group-data-[viewport=false]/navigation-menu:data-open:zoom-in-95 group-data-[viewport=false]/navigation-menu:data-closed:animate-out group-data-[viewport=false]/navigation-menu:data-closed:fade-out-0 group-data-[viewport=false]/navigation-menu:data-closed:zoom-out-95",
+        // MegaMenu plays its own stagger; don't hide it behind content opacity/slide.
+        "has-data-[slot=mega-menu]:animate-none has-data-[slot=mega-menu]:transition-none has-data-[slot=mega-menu]:data-ending-style:translate-x-0 has-data-[slot=mega-menu]:data-ending-style:opacity-100 has-data-[slot=mega-menu]:data-starting-style:translate-x-0 has-data-[slot=mega-menu]:data-starting-style:opacity-100 has-data-[slot=mega-menu]:data-[motion^=from-]:animate-none has-data-[slot=mega-menu]:data-[motion^=to-]:animate-none",
         className
       )}
       {...props}
     />
+  )
+}
+
+/**
+ * Shared NavigationMenu viewport. Base UI keeps one popup mounted and morphs
+ * `--popup-width/height` between triggers. Opacity stays on CSS starting/ending
+ * styles so close still waits on `getAnimations()`; Motion springs y/scale.
+ */
+function NavigationMenuPopup() {
+  const reduced = useReducedMotionAfterMount()
+  return (
+    <NavigationMenuPrimitive.Popup
+      className={cn(
+        "xs:w-(--popup-width) relative h-(--popup-height) w-(--popup-width) origin-(--transform-origin) rounded-3xl bg-popover text-popover-foreground shadow-lg ring-1 ring-foreground/5 transition-[width,height,opacity] duration-[400ms] ease-[cubic-bezier(0.22,1.2,0.36,1)] outline-none data-ending-style:opacity-0 data-ending-style:duration-200 data-starting-style:opacity-0 dark:ring-foreground/10",
+        reduced && "transition-none"
+      )}
+      render={(renderProps, state) => (
+        <motion.nav
+          {...(renderProps as React.ComponentProps<typeof motion.nav>)}
+          initial={reduced ? false : { y: 12, scale: 0.96 }}
+          animate={
+            reduced
+              ? { y: 0, scale: 1 }
+              : {
+                  y: state.open ? 0 : 12,
+                  scale: state.open ? 1 : 0.96,
+                }
+          }
+          transition={reduced ? { duration: 0 } : popupSpring}
+        />
+      )}
+    >
+      <NavigationMenuPrimitive.Viewport className="relative size-full overflow-hidden" />
+    </NavigationMenuPrimitive.Popup>
   )
 }
 
@@ -111,14 +162,12 @@ function NavigationMenuPositioner({
         align={align}
         alignOffset={alignOffset}
         className={cn(
-          "isolate z-50 h-(--positioner-height) w-(--positioner-width) max-w-(--available-width) transition-[top,left,right,bottom] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)] data-instant:transition-none data-[side=bottom]:before:top-[-10px] data-[side=bottom]:before:right-0 data-[side=bottom]:before:left-0",
+          "isolate z-50 h-(--positioner-height) w-(--positioner-width) max-w-(--available-width) transition-[top,left,right,bottom] duration-[400ms] ease-[cubic-bezier(0.22,1.2,0.36,1)] data-instant:transition-none data-[side=bottom]:before:top-[-10px] data-[side=bottom]:before:right-0 data-[side=bottom]:before:left-0",
           className
         )}
         {...props}
       >
-        <NavigationMenuPrimitive.Popup className="data-[ending-style]:easing-[ease] xs:w-(--popup-width) relative h-(--popup-height) w-(--popup-width) origin-(--transform-origin) rounded-3xl bg-popover text-popover-foreground shadow-lg ring-1 ring-foreground/5 transition-[opacity,transform,width,height,scale,translate] duration-[0.35s] ease-[cubic-bezier(0.22,1,0.36,1)] outline-none data-ending-style:scale-90 data-ending-style:opacity-0 data-ending-style:duration-150 data-starting-style:scale-90 data-starting-style:opacity-0 dark:ring-foreground/10">
-          <NavigationMenuPrimitive.Viewport className="relative size-full overflow-hidden" />
-        </NavigationMenuPrimitive.Popup>
+        <NavigationMenuPopup />
       </NavigationMenuPrimitive.Positioner>
     </NavigationMenuPrimitive.Portal>
   )
