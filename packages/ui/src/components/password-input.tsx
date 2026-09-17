@@ -114,7 +114,7 @@ function PasswordInput({
           onBlur?.(event)
         }}
         className={cn(
-          "h-10 w-full rounded-2xl border border-border bg-muted px-3 text-sm outline-none focus-visible:border-primary focus-visible:bg-card focus-visible:ring-1 focus-visible:ring-primary disabled:text-muted-foreground aria-invalid:border-destructive aria-invalid:ring-1 aria-invalid:ring-destructive",
+          "h-10 w-full rounded-2xl border border-border bg-card px-3 text-sm outline-none focus-visible:border-primary focus-visible:bg-card focus-visible:ring-1 focus-visible:ring-primary disabled:bg-muted disabled:text-muted-foreground aria-invalid:border-destructive aria-invalid:ring-1 aria-invalid:ring-destructive",
           toggleMask && "pr-10",
           className
         )}

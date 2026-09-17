@@ -20,6 +20,22 @@ export type ChangelogEntry = {
 
 export const changelogEntries = [
   {
+    date: "2026-09-17",
+    title: "Enabled inputs contrast with the page in light mode",
+    summary:
+      "Form fields used the muted fill, which is the same color as the page in light mode, so enabled inputs looked disabled. Rest-state fields now use the card fill so they read as white wells on the page; disabled fields stay muted.",
+    groups: [
+      {
+        type: "fixed",
+        items: [
+          "Enabled Input, Textarea, Select, PasswordInput, and related form controls use bg-card instead of bg-muted, so they contrast with --background in light mode.",
+          "Disabled fields keep bg-muted so inactive inputs still look inactive at a glance.",
+        ],
+      },
+    ],
+    sources: [],
+  },
+  {
     date: "2026-09-09",
     title: "Mega menu brings the navigation dropdowns into the system",
     summary:
