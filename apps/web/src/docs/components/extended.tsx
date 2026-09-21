@@ -18,11 +18,6 @@ import {
   AttachmentTitle,
 } from "@carsxe/design-system/components/attachment"
 import {
-  Bubble,
-  BubbleContent,
-  BubbleGroup,
-} from "@carsxe/design-system/components/bubble"
-import {
   ButtonGroup,
   ButtonGroupSeparator,
 } from "@carsxe/design-system/components/button-group"
@@ -186,7 +181,6 @@ export const extendedComponents = [
   ["alert-dialog", "Alert Dialog", "A modal dialog requiring a response."],
   ["aspect-ratio", "Aspect Ratio", "Displays content within a fixed ratio."],
   ["attachment", "Attachment", "Displays a file or linked attachment."],
-  ["bubble", "Bubble", "Groups compact conversational content."],
   ["button-group", "Button Group", "Groups related buttons and controls."],
   ["calendar", "Calendar", "A date selection calendar."],
   ["carousel", "Carousel", "A keyboard-accessible content carousel."],
@@ -270,17 +264,6 @@ function ExtendedPreview({ slug }: { slug: string }) {
             <AttachmentDescription>2.4 MB PDF</AttachmentDescription>
           </AttachmentContent>
         </Attachment>
-      )
-    case "bubble":
-      return (
-        <BubbleGroup>
-          <Bubble>
-            <BubbleContent>How can I help with this vehicle?</BubbleContent>
-          </Bubble>
-          <Bubble variant="secondary">
-            <BubbleContent>Show its latest valuation.</BubbleContent>
-          </Bubble>
-        </BubbleGroup>
       )
     case "button-group":
       return (

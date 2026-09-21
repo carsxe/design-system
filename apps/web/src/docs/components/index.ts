@@ -4,6 +4,7 @@ import { autocomplete } from "./autocomplete"
 import { avatar } from "./avatar"
 import { badge } from "./badge"
 import { breadcrumb } from "./breadcrumb"
+import { bubble } from "./bubble"
 import { button } from "./button"
 import { card } from "./card"
 import { chart } from "./chart"
@@ -54,6 +55,7 @@ export const componentDocs: ComponentDoc[] = [
   avatar,
   badge,
   breadcrumb,
+  bubble,
   button,
   card,
   chart,
