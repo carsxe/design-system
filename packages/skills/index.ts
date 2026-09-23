@@ -62,6 +62,18 @@ export const skills: Skill[] = [
       },
     ],
   },
+  {
+    slug: "carsxe-animejs-artwork",
+    title: "Carsxe Anime.js artwork",
+    description:
+      "Turn carsxe-feature-artwork concepts into accessible inline SVG animations with Anime.js v4 — draw-on linework, cyan data-flow connectors, card reveals, optional looping, design-system token inheritance. Requires carsxe-feature-artwork.",
+    files: [
+      "SKILL.md",
+      "references/animation-handoff.md",
+      "references/animejs-v4-patterns.md",
+      "references/do-dont-examples.md",
+    ],
+  },
 ]
 
 export function getSkill(slug: string) {

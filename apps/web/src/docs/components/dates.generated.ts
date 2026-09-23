@@ -19,7 +19,7 @@ export const componentDates: Record<string, ComponentDates> = {
   avatar: { added: "2026-08-19", updated: "2026-08-19" },
   badge: { added: "2026-08-19", updated: "2026-08-25" },
   breadcrumb: { added: "2026-08-19", updated: "2026-08-25" },
-  bubble: { added: "2026-08-25", updated: "2026-08-25" },
+  bubble: { added: "2026-08-25", updated: "2026-09-21" },
   "button-group": { added: "2026-08-25", updated: "2026-08-25" },
   button: { added: "2026-08-19", updated: "2026-08-25" },
   calendar: { added: "2026-08-25", updated: "2026-08-25" },

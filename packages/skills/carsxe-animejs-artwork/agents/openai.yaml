@@ -1,0 +1,14 @@
+interface:
+  display_name: CarsXE Anime.js Artwork
+  short_description: Animate CarsXE feature artwork as inline SVG
+  default_prompt: Use $carsxe-animejs-artwork with $carsxe-feature-artwork to turn a
+    CarsXE feature concept into an accessible Anime.js SVG animation.
+  icon_small: assets/icon.svg
+  icon_large: assets/icon.svg
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true

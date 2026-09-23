@@ -14,3 +14,5 @@ The first skill is [`carsxe-design-system`](packages/skills/carsxe-design-system
 [`carsxe-migrate-loop`](packages/skills/carsxe-migrate-loop) is a greploop: inventory leftover UI, migrate a slice, browser screenshot/video QA, and repeat until the app is fully on `@carsxe/design-system`. Copy it together with `carsxe-design-system`.
 
 [`carsxe-feature-artwork`](packages/skills/carsxe-feature-artwork) generates the light navy-and-cyan vehicle-workflow illustrations used in auth side panels and marketing layouts. It ships a binary style reference at `assets/vehicle-image-workflow-reference.png`, so copy the whole folder from the repo rather than pasting `SKILL.md` alone from the docs catalog.
+
+[`carsxe-animejs-artwork`](packages/skills/carsxe-animejs-artwork) turns a `carsxe-feature-artwork` concept into an accessible inline SVG animation with Anime.js v4. It requires `carsxe-feature-artwork` as its concept stage and ships `references/`, `scripts/audit_svg.py`, and `agents/openai.yaml`, so copy both folders whole.

@@ -46,6 +46,10 @@ The vehicle-images example is the same artwork as the bundled reference. The pub
 6. Save every accepted project-bound asset into the user's requested directory. In the CarsXE monorepo, default to `apps/web/public/images/auth/<feature-slug>-workflow.png`. Never overwrite an existing asset unless explicitly requested.
 7. Report the saved path, final prompt, and generation mode. Do not implement a carousel or page changes unless the user also requests integration.
 
+## Animated variant
+
+When the user wants the artwork animated, this skill supplies the concept and `carsxe-animejs-artwork` rebuilds it as an inline Anime.js SVG. Generate (or reuse) the accepted bitmap here first, then follow that skill's handoff. For animation-bound concepts, keep the vehicle, connectors, and each card clearly separated so they can be redrawn as SVG groups.
+
 ## Prompt template
 
 Use this compact structure and replace bracketed content:
