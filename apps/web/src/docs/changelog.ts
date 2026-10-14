@@ -20,6 +20,22 @@ export type ChangelogEntry = {
 
 export const changelogEntries = [
   {
+    date: "2026-10-14",
+    title: "Dialogs scroll vertically without spilling sideways",
+    summary:
+      "DialogContent clips the shell and scrolls a padded body, so a wide row stays inside the max width. Galleries, image viewers, and other dialogs that already own their layout keep a single scrollbar.",
+    groups: [
+      {
+        type: "fixed",
+        items: [
+          "DialogContent is overflow-hidden with a max height, and the content body is the only vertical scrollport (overflow-y-auto overflow-x-hidden). Padding sits inside that max width.",
+          "Passing overflow-hidden, a viewport height (h-dvh, h-screen, h-full, inset-0, h-[100…]), or p-0 still overrides the default through cn. Those dialogs are not wrapped in a second scrollport.",
+        ],
+      },
+    ],
+    sources: [],
+  },
+  {
     date: "2026-09-15",
     title: "Mega menu breathes, hovers, and animates like a Motion mega menu",
     summary:

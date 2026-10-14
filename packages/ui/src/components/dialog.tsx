@@ -39,6 +39,34 @@ function DialogOverlay({
   )
 }
 
+function dialogTokens(className: unknown) {
+  return typeof className === "string"
+    ? className.trim().split(/\s+/).filter(Boolean)
+    : []
+}
+
+function bareUtility(token: string) {
+  const parts = token.split(":")
+  return (parts[parts.length - 1] ?? token).replace(/^!/, "")
+}
+
+function hasUtility(tokens: string[], name: string) {
+  return tokens.some((token) => bareUtility(token) === name)
+}
+
+function fillsViewport(tokens: string[]) {
+  return tokens.some((token) => {
+    const bare = bareUtility(token)
+    return (
+      bare === "h-dvh" ||
+      bare === "h-screen" ||
+      bare === "h-full" ||
+      bare === "inset-0" ||
+      bare.startsWith("h-[100")
+    )
+  })
+}
+
 function DialogContent({
   className,
   children,
@@ -47,18 +75,41 @@ function DialogContent({
 }: DialogPrimitive.Popup.Props & {
   showCloseButton?: boolean
 }) {
+  const tokens = dialogTokens(className)
+  const flush = hasUtility(tokens, "p-0")
+  const viewport = fillsViewport(tokens)
+  // overflow-hidden and viewport-filling dialogs own their flex children (pinned
+  // footer, fullscreen viewer). Wrapping those in a second scrollport double-scrolls.
+  const ownsLayout = hasUtility(tokens, "overflow-hidden") || viewport
+
   return (
     <DialogPortal>
       <DialogOverlay />
       <DialogPrimitive.Popup
         data-slot="dialog-content"
         className={cn(
-          "fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] -translate-x-1/2 -translate-y-1/2 gap-6 rounded-[min(var(--radius-4xl),24px)] bg-popover p-6 text-sm text-popover-foreground shadow-xl ring-1 ring-foreground/5 duration-100 outline-none sm:max-w-md dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
-          className
+          "fixed top-1/2 left-1/2 z-50 flex w-full max-w-[calc(100%-2rem)] min-w-0 -translate-x-1/2 -translate-y-1/2 flex-col gap-6 rounded-[min(var(--radius-4xl),24px)] bg-popover text-sm text-popover-foreground shadow-xl ring-1 ring-foreground/5 duration-100 outline-none sm:max-w-md dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+          viewport ? undefined : "max-h-[90vh]",
+          className,
+          // After className so a caller overflow-y-auto cannot turn the shell into the scrollport.
+          "overflow-hidden"
         )}
         {...props}
       >
-        {children}
+        {ownsLayout ? (
+          children
+        ) : (
+          <div
+            data-slot="dialog-body"
+            className={cn(
+              "flex min-h-0 w-full max-w-full min-w-0 flex-col overflow-x-hidden overflow-y-auto overscroll-contain",
+              flush ? "p-0" : "p-6",
+              hasUtility(tokens, "gap-0") ? "gap-0" : "gap-6"
+            )}
+          >
+            {children}
+          </div>
+        )}
         {showCloseButton && (
           <DialogPrimitive.Close
             data-slot="dialog-close"
