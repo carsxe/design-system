@@ -21,6 +21,21 @@ export type ChangelogEntry = {
 export const changelogEntries = [
   {
     date: "2026-10-15",
+    title: "FileUpload is restored to source",
+    summary:
+      "FileUpload shipped in 0.3.6 and was missing from the repository. The component, its exports, and the file-upload-dropzone styles are restored to source.",
+    groups: [
+      {
+        type: "added",
+        items: [
+          "FileUpload is restored to source, including FileUploadAdvanced, FileUploadDropzone, FileUploadClearButton, and the rest of the 0.3.6 exports.",
+        ],
+      },
+    ],
+    sources: [],
+  },
+  {
+    date: "2026-10-15",
     title: "Dialogs scroll vertically without spilling sideways",
     summary:
       "DialogContent clips the shell. The header and footer stay put, and only the middle scrolls, so a wide row stays inside the max width. Galleries, image viewers, and other dialogs that already own their layout keep a single scrollbar.",
