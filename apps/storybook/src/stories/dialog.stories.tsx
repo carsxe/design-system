@@ -63,6 +63,44 @@ export const LongContent: Story = {
   ),
 }
 
+export const LongStatement: Story = {
+  render: () => (
+    <Dialog defaultOpen>
+      <DialogTrigger render={<Button variant="outline" />} nativeButton={false}>
+        Open statement
+      </DialogTrigger>
+      <DialogContent className="rounded-none sm:max-w-xl">
+        <DialogHeader>
+          <DialogTitle>Usage statement</DialogTitle>
+          <DialogDescription>
+            The full sentence stays visible beside the scrollbar.
+          </DialogDescription>
+        </DialogHeader>
+        <p>
+          This statement confirms that every word of a long line remains
+          readable next to the vertical scrollbar, including the unbroken
+          reference
+          VIN-1HGCM82633A004352-PLATE-DECODER-CAP-STATEMENT-SHOULD-WRAP-NOT-HIDE-UNDER-THE-BAR
+          and the closing words of this sentence.
+        </p>
+        {Array.from({ length: 12 }, (_, index) => (
+          <p key={index}>
+            Paragraph {index + 1}. The right edge of this sentence must stay
+            fully visible beside the scrollbar, with the same inset as the left
+            side of the dialog, all the way to the final word.
+          </p>
+        ))}
+        <DialogFooter>
+          <DialogClose render={<Button variant="ghost" />} nativeButton={false}>
+            Back
+          </DialogClose>
+          <Button>Acknowledge</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  ),
+}
+
 export const Default: Story = {
   render: () => (
     <Dialog defaultOpen>

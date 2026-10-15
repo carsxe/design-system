@@ -112,8 +112,9 @@ function isPresentChild(child: React.ReactNode) {
  * DialogContent is a flex column capped at 90vh (`overflow-hidden`).
  * Direct `DialogHeader` and `DialogFooter` children stay pinned (`flex-none`).
  * Everything else is wrapped as one group in `DialogBody` (`flex-1 min-h-0
- * overflow-y-auto overflow-x-hidden`), created automatically when callers
- * omit it. The group keeps the caller's element identity and keys.
+ * overflow-y-auto overflow-x-hidden`, with a stable scrollbar gutter, `pr-6`,
+ * and `break-words`), created automatically when callers omit it. The group
+ * keeps the caller's element identity and keys.
  * `overflow-hidden` skips that split and keeps the default padding.
  * A viewport height or `p-0` also skips the split. `p-0` (or any padding
  * utility) replaces the default `p-6`.
@@ -233,7 +234,7 @@ function DialogBody({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="dialog-body"
       className={cn(
-        "flex min-h-0 w-full max-w-full min-w-0 flex-1 flex-col gap-6 overflow-x-hidden overflow-y-auto overscroll-contain",
+        "flex min-h-0 w-full max-w-full min-w-0 flex-1 [scrollbar-gutter:stable] flex-col gap-6 overflow-x-hidden overflow-y-auto overscroll-contain pr-6 break-words",
         className
       )}
       {...props}

@@ -64,6 +64,9 @@ describe("DialogContent scrollport", () => {
     expect(body).toContain("min-h-0")
     expect(body).toContain("gap-6")
     expect(body).toContain("overscroll-contain")
+    expect(body).toContain("[scrollbar-gutter:stable]")
+    expect(body).toContain("break-words")
+    expect(body).toContain("pr-6")
     expect(body).not.toContain("overflow-auto")
     expect(body).not.toContain("overflow-x-auto")
     expect(
@@ -71,6 +74,21 @@ describe("DialogContent scrollport", () => {
         .querySelector("[data-slot='dialog-body']")
         ?.contains(screen.getByText("Title"))
     ).toBe(true)
+  })
+
+  it("reserves a scrollbar gutter and wraps long body text", () => {
+    renderDialog("rounded-none sm:max-w-xl")
+
+    const body = classes("[data-slot='dialog-body']")
+    expect(body).toContain("[scrollbar-gutter:stable]")
+    expect(body).toContain("break-words")
+    expect(body).toContain("min-w-0")
+    expect(body).toContain("pr-6")
+    expect(body).toContain("overflow-y-auto")
+    expect(body).toContain("overflow-x-hidden")
+    expect(body).not.toContain("overflow-x-auto")
+    expect(classes("[data-slot='dialog-content']")).toContain("p-6")
+    expect(classes("[data-slot='dialog-content']")).toContain("overflow-hidden")
   })
 
   it("keeps a caller overflow-y-auto from scrolling the shell", () => {
