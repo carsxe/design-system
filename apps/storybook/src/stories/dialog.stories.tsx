@@ -20,6 +20,49 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+export const LongContent: Story = {
+  render: () => (
+    <Dialog defaultOpen>
+      <DialogTrigger render={<Button variant="outline" />} nativeButton={false}>
+        Open long dialog
+      </DialogTrigger>
+      <DialogContent className="rounded-none sm:max-w-xl">
+        <DialogHeader>
+          <DialogTitle>Confirm payment</DialogTitle>
+          <DialogDescription>
+            The title and actions stay put. Only the rows between them scroll.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="flex justify-between gap-8">
+          <span>Subtotal</span>
+          <span className="whitespace-nowrap">$5.00 USD</span>
+        </div>
+        <div className="flex justify-between gap-8">
+          <span>Taxes</span>
+          <span className="whitespace-nowrap">$0.40 USD</span>
+        </div>
+        <div className="flex justify-between gap-8 font-medium">
+          <span>Total</span>
+          <span className="whitespace-nowrap">$5.40 USD</span>
+        </div>
+        <p className="max-w-none whitespace-nowrap">
+          VIN-1HGCM82633A004352-plate-confirm-payment-should-not-widen-the-dialog
+        </p>
+        {Array.from({ length: 24 }, (_, index) => (
+          <p key={index}>Line {index + 1} of a tall confirmation.</p>
+        ))}
+        <p>End of confirmation.</p>
+        <DialogFooter>
+          <DialogClose render={<Button variant="ghost" />} nativeButton={false}>
+            Back
+          </DialogClose>
+          <Button>Confirm payment</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  ),
+}
+
 export const Default: Story = {
   render: () => (
     <Dialog defaultOpen>
