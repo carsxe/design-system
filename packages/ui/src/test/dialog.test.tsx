@@ -1,5 +1,6 @@
 import { cleanup, render, screen } from "@testing-library/react"
-import type { ReactNode } from "react"
+import userEvent from "@testing-library/user-event"
+import { useState, type ReactNode } from "react"
 import { afterEach, describe, expect, it } from "vitest"
 
 import { CommandDialog } from "../components/command"
@@ -56,13 +57,20 @@ describe("DialogContent scrollport", () => {
     expect(body).toContain("overflow-y-auto")
     expect(body).toContain("overflow-x-hidden")
     expect(body).toContain("min-w-0")
-    expect(body).toContain("max-w-full")
-    expect(body).toContain("w-full")
+    expect(body).toContain("*:min-w-0")
+    expect(body).toContain("w-[calc(100%+1.5rem)]")
+    expect(body).toContain("max-w-none")
+    expect(body).not.toContain("max-w-full")
     expect(body).toContain("flex-1")
     expect(body).not.toContain("p-6")
     expect(body).toContain("min-h-0")
     expect(body).toContain("gap-6")
     expect(body).toContain("overscroll-contain")
+    expect(body).toContain("[scrollbar-gutter:stable]")
+    expect(body).toContain("break-words")
+    expect(body).not.toContain("[overflow-wrap:anywhere]")
+    expect(body).toContain("-mr-6")
+    expect(body).toContain("pr-6")
     expect(body).not.toContain("overflow-auto")
     expect(body).not.toContain("overflow-x-auto")
     expect(
@@ -70,6 +78,105 @@ describe("DialogContent scrollport", () => {
         .querySelector("[data-slot='dialog-body']")
         ?.contains(screen.getByText("Title"))
     ).toBe(true)
+  })
+
+  it("reserves a scrollbar gutter and wraps long body text", () => {
+    renderDialog("rounded-none sm:max-w-xl")
+
+    const body = classes("[data-slot='dialog-body']")
+    expect(body).toContain("[scrollbar-gutter:stable]")
+    expect(body).toContain("break-words")
+    expect(body).not.toContain("[overflow-wrap:anywhere]")
+    expect(body).toContain("min-w-0")
+    expect(body).toContain("*:min-w-0")
+    expect(body).toContain("-mr-6")
+    expect(body).toContain("pr-6")
+    expect(body).toContain("overflow-y-auto")
+    expect(body).toContain("overflow-x-hidden")
+    expect(body).not.toContain("overflow-x-auto")
+    expect(classes("[data-slot='dialog-content']")).toContain("p-6")
+    expect(classes("[data-slot='dialog-content']")).toContain("overflow-hidden")
+  })
+
+  it.each(["px-0", "pr-0", "p-4", "px-6"])(
+    "drops the scrollbar inset when the shell uses %s",
+    (padding) => {
+      renderDialog(padding, <p>Body copy</p>)
+
+      const body = classes("[data-slot='dialog-body']")
+      expect(body).not.toContain("-mr-6")
+      expect(body).not.toContain("pr-6")
+      expect(body).not.toContain("w-[calc(100%+1.5rem)]")
+      expect(body).toContain("w-full")
+      expect(body).toContain("max-w-full")
+      expect(body).toContain("[scrollbar-gutter:stable]")
+      expect(body).toContain("break-words")
+      expect(body).not.toContain("[overflow-wrap:anywhere]")
+      expect(body).toContain("*:min-w-0")
+      expect(body).toContain("min-w-0")
+      expect(classes("[data-slot='dialog-content']")).toContain(padding)
+      expect(classes("[data-slot='dialog-content']")).not.toContain("p-6")
+    }
+  )
+
+  it.each(["p-0", "px-0", "pr-0", "p-4", "px-6"])(
+    "drops the scrollbar inset when DialogBody uses %s",
+    (padding) => {
+      render(
+        <Dialog open>
+          <DialogContent>
+            <DialogBody className={padding}>
+              <p>Body copy</p>
+            </DialogBody>
+          </DialogContent>
+        </Dialog>
+      )
+
+      const body = classes("[data-slot='dialog-body']")
+      expect(body).not.toContain("-mr-6")
+      expect(body).not.toContain("pr-6")
+      expect(body).toContain(padding)
+      expect(body).toContain("[scrollbar-gutter:stable]")
+      expect(body).toContain("break-words")
+      expect(body).not.toContain("[overflow-wrap:anywhere]")
+      expect(body).toContain("*:min-w-0")
+    }
+  )
+
+  it("drops the scrollbar inset on an explicit body when the shell sets padding", () => {
+    render(
+      <Dialog open>
+        <DialogContent className="p-4">
+          <DialogBody>
+            <p>Body copy</p>
+          </DialogBody>
+        </DialogContent>
+      </Dialog>
+    )
+
+    const body = classes("[data-slot='dialog-body']")
+    expect(body).not.toContain("-mr-6")
+    expect(body).not.toContain("pr-6")
+    expect(body).toContain("w-full")
+    expect(body).toContain("break-words")
+    expect(body).not.toContain("[overflow-wrap:anywhere]")
+  })
+
+  it("keeps the scrollbar inset when only the left padding changes", () => {
+    render(
+      <Dialog open>
+        <DialogContent>
+          <DialogBody className="pl-4">
+            <p>Body copy</p>
+          </DialogBody>
+        </DialogContent>
+      </Dialog>
+    )
+
+    const body = classes("[data-slot='dialog-body']")
+    expect(body).toContain("-mr-6")
+    expect(body).toContain("pr-6")
+    expect(body).toContain("pl-4")
   })
 
   it("keeps a caller overflow-y-auto from scrolling the shell", () => {
@@ -286,6 +393,115 @@ describe("DialogContent scrollport", () => {
     expect(
       document.querySelector("[data-slot='dialog-footer']")?.parentElement
     ).toBe(shell)
+  })
+
+  it("keeps inputs mounted when a conditional sibling appears while typing", async () => {
+    function CapDialog() {
+      const [plate, setPlate] = useState("")
+      const blocked = plate.length > 0
+      return (
+        <Dialog open>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Enterprise usage cap</DialogTitle>
+            </DialogHeader>
+            <input aria-label="Notes" defaultValue="" />
+            {blocked ? <p>Requests above this cap may be blocked.</p> : null}
+            {(blocked ? ["plate_decoder"] : []).map((api) => (
+              <p key={api}>Plate Decoder has no enterprise overage price.</p>
+            ))}
+            <input
+              aria-label="Plate Decoder cap"
+              value={plate}
+              onChange={(event) => setPlate(event.target.value)}
+            />
+            <input aria-label="Monthly cap" defaultValue="" />
+            <DialogFooter>
+              <button type="button">Save</button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )
+    }
+
+    const user = userEvent.setup()
+    render(<CapDialog />)
+
+    const notes = screen.getByRole("textbox", { name: "Notes" })
+    const plate = screen.getByRole("textbox", { name: "Plate Decoder cap" })
+    const monthly = screen.getByRole("textbox", { name: "Monthly cap" })
+
+    await user.type(plate, "12")
+
+    expect(screen.getByRole("textbox", { name: "Plate Decoder cap" })).toBe(
+      plate
+    )
+    expect(plate).toHaveFocus()
+    expect(plate).toHaveValue("12")
+    expect(screen.getByRole("textbox", { name: "Notes" })).toBe(notes)
+    expect(screen.getByRole("textbox", { name: "Monthly cap" })).toBe(monthly)
+    expect(
+      screen.getByText("Requests above this cap may be blocked.")
+    ).toBeTruthy()
+    expect(
+      screen.getByText("Plate Decoder has no enterprise overage price.")
+    ).toBeTruthy()
+    expect(
+      document.querySelector("[data-slot='dialog-body']")?.contains(plate)
+    ).toBe(true)
+    expect(
+      document.querySelector("[data-slot='dialog-header']")?.parentElement
+    ).toBe(document.querySelector("[data-slot='dialog-content']"))
+    expect(
+      document.querySelector("[data-slot='dialog-footer']")?.parentElement
+    ).toBe(document.querySelector("[data-slot='dialog-content']"))
+  })
+
+  it("keeps the next input mounted when a footer appears between fields", async () => {
+    function Editor() {
+      const [value, setValue] = useState("")
+      return (
+        <Dialog open>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Title</DialogTitle>
+            </DialogHeader>
+            <input aria-label="First cap" defaultValue="" />
+            {value ? (
+              <DialogFooter>
+                <button type="button">Save</button>
+              </DialogFooter>
+            ) : null}
+            <input
+              aria-label="Second cap"
+              value={value}
+              onChange={(event) => setValue(event.target.value)}
+            />
+          </DialogContent>
+        </Dialog>
+      )
+    }
+
+    const user = userEvent.setup()
+    render(<Editor />)
+    const first = screen.getByRole("textbox", { name: "First cap" })
+    const second = screen.getByRole("textbox", { name: "Second cap" })
+
+    await user.type(second, "1")
+
+    expect(screen.getByRole("textbox", { name: "Second cap" })).toBe(second)
+    expect(second).toHaveFocus()
+    expect(second).toHaveValue("1")
+    expect(screen.getByRole("textbox", { name: "First cap" })).toBe(first)
+    const shell = document.querySelector("[data-slot='dialog-content']")
+    const footer = document.querySelector("[data-slot='dialog-footer']")
+    expect(footer?.parentElement).toBe(shell)
+    expect(
+      document.querySelector("[data-slot='dialog-body']")?.contains(footer)
+    ).toBe(false)
+    expect(
+      document.querySelector("[data-slot='dialog-body']")?.contains(second)
+    ).toBe(true)
   })
 
   it("does not wrap the command palette in a second scrollport", () => {

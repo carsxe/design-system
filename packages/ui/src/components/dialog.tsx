@@ -61,6 +61,14 @@ function hasOwnPadding(tokens: string[]) {
   )
 }
 
+/** p-0, px-6, pr-0, pe-4 — padding that replaces the body's right inset. */
+function setsRightPadding(tokens: string[]) {
+  return tokens.some((token) => /^(?:p|px|pr|pe)-/.test(bareUtility(token)))
+}
+
+// False when the shell replaced the default p-6, including for an explicit DialogBody.
+const DialogInsetContext = React.createContext(true)
+
 function fillsViewport(tokens: string[]) {
   return tokens.some((token) => {
     const bare = bareUtility(token)
@@ -81,27 +89,43 @@ function isElementOf<T extends React.ElementType>(
   return React.isValidElement(child) && child.type === type
 }
 
-/** Direct children, with fragments opened so a wrapped header still pins. */
-function flattenDialogChildren(children: React.ReactNode): React.ReactNode[] {
-  const flat: React.ReactNode[] = []
-  React.Children.forEach(children, (child) => {
+/**
+ * Opens fragments so a header wrapped in <>...</> still pins.
+ * Leaves every other slot alone: nested arrays stay nested, and null or
+ * boolean holes stay put. React.Children.toArray and forEach flatten those
+ * slots and re-index what follows, so a warning line that appears while
+ * typing remounts the inputs after it.
+ */
+function dialogSlots(children: React.ReactNode): React.ReactNode[] {
+  const source = Array.isArray(children) ? children : [children]
+  const slots: React.ReactNode[] = []
+  for (const child of source) {
     if (
       React.isValidElement<{ children?: React.ReactNode }>(child) &&
       child.type === React.Fragment
     ) {
-      flat.push(...flattenDialogChildren(child.props.children))
-      return
+      slots.push(...dialogSlots(child.props.children))
+      continue
     }
-    flat.push(child)
-  })
-  return flat
+    slots.push(child)
+  }
+  return slots
+}
+
+function isPresentChild(child: React.ReactNode) {
+  return child != null && typeof child !== "boolean"
 }
 
 /**
  * DialogContent is a flex column capped at 90vh (`overflow-hidden`).
  * Direct `DialogHeader` and `DialogFooter` children stay pinned (`flex-none`).
- * Everything between them goes in `DialogBody` (`flex-1 min-h-0 overflow-y-auto
- * overflow-x-hidden`), which is created automatically when callers omit it.
+ * Everything else is wrapped as one group in `DialogBody` (`flex-1 min-h-0
+ * overflow-y-auto overflow-x-hidden`, with a stable scrollbar gutter). The
+ * body uses `-mr-6 pr-6` so that gutter sits in the shell's right padding and
+ * text stays a `p-6` away from the bar. Caller padding (`p-0`, `px-0`, `pr-0`,
+ * `p-4`, `px-6`) drops both. Long strings wrap (`overflow-wrap: break-word`,
+ * `min-w-0` on the body and its children). The group keeps the caller's
+ * element identity and keys.
  * `overflow-hidden` skips that split and keeps the default padding.
  * A viewport height or `p-0` also skips the split. `p-0` (or any padding
  * utility) replaces the default `p-6`.
@@ -111,10 +135,16 @@ function partitionDialogChildren(children: React.ReactNode) {
   const footer: React.ReactNode[] = []
   const body: React.ReactNode[] = []
 
-  for (const child of flattenDialogChildren(children)) {
-    if (isElementOf(child, DialogHeader)) header.push(child)
-    else if (isElementOf(child, DialogFooter)) footer.push(child)
-    else body.push(child)
+  for (const child of dialogSlots(children)) {
+    // Leave a hole where the header or footer was. Dropping the slot shifts
+    // every input after a footer that appears while typing, and React remounts them.
+    if (isElementOf(child, DialogHeader)) {
+      header.push(child)
+      body.push(null)
+    } else if (isElementOf(child, DialogFooter)) {
+      footer.push(child)
+      body.push(null)
+    } else body.push(child)
   }
 
   return { header, footer, body }
@@ -141,57 +171,63 @@ function DialogContent({
     ? { header: [], footer: [], body: [] }
     : partitionDialogChildren(children)
   const gap0 = hasUtility(tokens, "gap-0")
+  // Ignore null and boolean holes so a conditional sibling does not change
+  // whether the caller already owns the scrollport.
+  const renderedBody = body.filter(isPresentChild)
   const explicitBody =
-    body.length > 0 && body.every((child) => isElementOf(child, DialogBody))
+    renderedBody.length > 0 &&
+    renderedBody.every((child) => isElementOf(child, DialogBody))
 
   return (
     <DialogPortal>
       <DialogOverlay />
-      <DialogPrimitive.Popup
-        data-slot="dialog-content"
-        className={cn(
-          "fixed top-1/2 left-1/2 z-50 flex w-full max-w-[calc(100%-2rem)] min-w-0 -translate-x-1/2 -translate-y-1/2 flex-col gap-6 rounded-[min(var(--radius-4xl),24px)] bg-popover text-sm text-popover-foreground shadow-xl ring-1 ring-foreground/5 duration-100 outline-none sm:max-w-md dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
-          viewport ? undefined : "max-h-[90vh]",
-          // Default padding stays inside the max width. A caller padding utility
-          // replaces it; overflow-hidden does not.
-          hasOwnPadding(tokens) ? undefined : "p-6",
-          className,
-          // After className so a caller overflow-y-auto cannot turn the shell into the scrollport.
-          "overflow-hidden"
-        )}
-        {...props}
-      >
-        {skipWrap ? (
-          children
-        ) : (
-          <>
-            {header}
-            {explicitBody ? (
-              body
-            ) : body.length > 0 ? (
-              <DialogBody className={gap0 ? "gap-0" : undefined}>
-                {body}
-              </DialogBody>
-            ) : null}
-            {footer}
-          </>
-        )}
-        {showCloseButton && (
-          <DialogPrimitive.Close
-            data-slot="dialog-close"
-            render={
-              <Button
-                variant="ghost"
-                className="absolute top-4 right-4 bg-secondary"
-                size="icon-sm"
-              />
-            }
-          >
-            <XIcon />
-            <span className="sr-only">Close</span>
-          </DialogPrimitive.Close>
-        )}
-      </DialogPrimitive.Popup>
+      <DialogInsetContext.Provider value={!hasOwnPadding(tokens)}>
+        <DialogPrimitive.Popup
+          data-slot="dialog-content"
+          className={cn(
+            "fixed top-1/2 left-1/2 z-50 flex w-full max-w-[calc(100%-2rem)] min-w-0 -translate-x-1/2 -translate-y-1/2 flex-col gap-6 rounded-[min(var(--radius-4xl),24px)] bg-popover text-sm text-popover-foreground shadow-xl ring-1 ring-foreground/5 duration-100 outline-none sm:max-w-md dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+            viewport ? undefined : "max-h-[90vh]",
+            // Default padding stays inside the max width. A caller padding utility
+            // replaces it; overflow-hidden does not.
+            hasOwnPadding(tokens) ? undefined : "p-6",
+            className,
+            // After className so a caller overflow-y-auto cannot turn the shell into the scrollport.
+            "overflow-hidden"
+          )}
+          {...props}
+        >
+          {skipWrap ? (
+            children
+          ) : (
+            <>
+              {header}
+              {explicitBody ? (
+                body
+              ) : renderedBody.length > 0 ? (
+                <DialogBody className={gap0 ? "gap-0" : undefined}>
+                  {body}
+                </DialogBody>
+              ) : null}
+              {footer}
+            </>
+          )}
+          {showCloseButton && (
+            <DialogPrimitive.Close
+              data-slot="dialog-close"
+              render={
+                <Button
+                  variant="ghost"
+                  className="absolute top-4 right-4 bg-secondary"
+                  size="icon-sm"
+                />
+              }
+            >
+              <XIcon />
+              <span className="sr-only">Close</span>
+            </DialogPrimitive.Close>
+          )}
+        </DialogPrimitive.Popup>
+      </DialogInsetContext.Provider>
     </DialogPortal>
   )
 }
@@ -207,11 +243,17 @@ function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
 }
 
 function DialogBody({ className, ...props }: React.ComponentProps<"div">) {
+  // -mr-6 pulls the bar into the default p-6. Caller padding replaces that p-6.
+  const inset =
+    React.useContext(DialogInsetContext) &&
+    !setsRightPadding(dialogTokens(className))
   return (
     <div
       data-slot="dialog-body"
       className={cn(
-        "flex min-h-0 w-full max-w-full min-w-0 flex-1 flex-col gap-6 overflow-x-hidden overflow-y-auto overscroll-contain",
+        "flex min-h-0 w-full max-w-full min-w-0 flex-1 [scrollbar-gutter:stable] flex-col gap-6 overflow-x-hidden overflow-y-auto overscroll-contain break-words *:min-w-0",
+        // Grow into the shell padding. max-w-full would clamp the negative margin back.
+        inset && "-mr-6 w-[calc(100%+1.5rem)] max-w-none pr-6",
         className
       )}
       {...props}

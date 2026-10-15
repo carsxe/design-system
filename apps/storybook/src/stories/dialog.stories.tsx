@@ -45,7 +45,7 @@ export const LongContent: Story = {
           <span>Total</span>
           <span className="whitespace-nowrap">$5.40 USD</span>
         </div>
-        <p className="max-w-none whitespace-nowrap">
+        <p>
           VIN-1HGCM82633A004352-plate-confirm-payment-should-not-widen-the-dialog
         </p>
         {Array.from({ length: 24 }, (_, index) => (
@@ -57,6 +57,99 @@ export const LongContent: Story = {
             Back
           </DialogClose>
           <Button>Confirm payment</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  ),
+}
+
+export const Receipt: Story = {
+  render: () => (
+    <Dialog defaultOpen>
+      <DialogTrigger render={<Button variant="outline" />} nativeButton={false}>
+        Open receipt
+      </DialogTrigger>
+      <DialogContent className="rounded-none sm:max-w-xl">
+        <DialogHeader>
+          <DialogTitle>Confirm payment</DialogTitle>
+          <DialogDescription>
+            Amounts stay whole. The reference wraps beside the scrollbar.
+          </DialogDescription>
+        </DialogHeader>
+        <table className="w-full text-left">
+          <thead>
+            <tr>
+              <th className="pr-4 font-medium">Item</th>
+              <th className="pr-4 font-medium">Qty</th>
+              <th className="font-medium">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="pr-4">Plate decoder</td>
+              <td className="pr-4">2</td>
+              <td>$2.50</td>
+            </tr>
+            <tr>
+              <td className="pr-4">Vehicle history</td>
+              <td className="pr-4">1</td>
+              <td>$2.50</td>
+            </tr>
+          </tbody>
+        </table>
+        <div className="flex justify-between gap-8 font-medium">
+          <span>Total</span>
+          <span>$5.40 USD</span>
+        </div>
+        <p>
+          VIN-1HGCM82633A004352-plate-confirm-payment-should-not-widen-the-dialog
+        </p>
+        {Array.from({ length: 8 }, (_, index) => (
+          <p key={index}>Line {index + 1} of the receipt detail.</p>
+        ))}
+        <DialogFooter>
+          <DialogClose render={<Button variant="ghost" />} nativeButton={false}>
+            Back
+          </DialogClose>
+          <Button>Confirm payment</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  ),
+}
+
+export const LongStatement: Story = {
+  render: () => (
+    <Dialog defaultOpen>
+      <DialogTrigger render={<Button variant="outline" />} nativeButton={false}>
+        Open statement
+      </DialogTrigger>
+      <DialogContent className="rounded-none sm:max-w-xl">
+        <DialogHeader>
+          <DialogTitle>Usage statement</DialogTitle>
+          <DialogDescription>
+            The full sentence stays visible beside the scrollbar.
+          </DialogDescription>
+        </DialogHeader>
+        <p>
+          This statement confirms that every word of a long line remains
+          readable next to the vertical scrollbar, including the unbroken
+          reference
+          VIN-1HGCM82633A004352-PLATE-DECODER-CAP-STATEMENT-SHOULD-WRAP-NOT-HIDE-UNDER-THE-BAR
+          and the closing words of this sentence.
+        </p>
+        {Array.from({ length: 12 }, (_, index) => (
+          <p key={index}>
+            Paragraph {index + 1}. The right edge of this sentence must stay
+            fully visible beside the scrollbar, with the same inset as the left
+            side of the dialog, all the way to the final word.
+          </p>
+        ))}
+        <DialogFooter>
+          <DialogClose render={<Button variant="ghost" />} nativeButton={false}>
+            Back
+          </DialogClose>
+          <Button>Acknowledge</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
@@ -77,6 +170,7 @@ export const Default: Story = {
             credentials will be permanently removed.
           </DialogDescription>
         </DialogHeader>
+        <p>Stored reports and API keys are removed with the workspace.</p>
         <DialogFooter>
           <DialogClose render={<Button variant="ghost" />} nativeButton={false}>
             Cancel
