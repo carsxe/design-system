@@ -351,6 +351,53 @@ describe("DialogContent scrollport", () => {
     ).toBe(document.querySelector("[data-slot='dialog-content']"))
   })
 
+  it("keeps the next input mounted when a footer appears between fields", async () => {
+    function Editor() {
+      const [value, setValue] = useState("")
+      return (
+        <Dialog open>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Title</DialogTitle>
+            </DialogHeader>
+            <input aria-label="First cap" defaultValue="" />
+            {value ? (
+              <DialogFooter>
+                <button type="button">Save</button>
+              </DialogFooter>
+            ) : null}
+            <input
+              aria-label="Second cap"
+              value={value}
+              onChange={(event) => setValue(event.target.value)}
+            />
+          </DialogContent>
+        </Dialog>
+      )
+    }
+
+    const user = userEvent.setup()
+    render(<Editor />)
+    const first = screen.getByRole("textbox", { name: "First cap" })
+    const second = screen.getByRole("textbox", { name: "Second cap" })
+
+    await user.type(second, "1")
+
+    expect(screen.getByRole("textbox", { name: "Second cap" })).toBe(second)
+    expect(second).toHaveFocus()
+    expect(second).toHaveValue("1")
+    expect(screen.getByRole("textbox", { name: "First cap" })).toBe(first)
+    const shell = document.querySelector("[data-slot='dialog-content']")
+    const footer = document.querySelector("[data-slot='dialog-footer']")
+    expect(footer?.parentElement).toBe(shell)
+    expect(
+      document.querySelector("[data-slot='dialog-body']")?.contains(footer)
+    ).toBe(false)
+    expect(
+      document.querySelector("[data-slot='dialog-body']")?.contains(second)
+    ).toBe(true)
+  })
+
   it("does not wrap the command palette in a second scrollport", () => {
     render(
       <CommandDialog open>

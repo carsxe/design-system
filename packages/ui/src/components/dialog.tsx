@@ -124,9 +124,15 @@ function partitionDialogChildren(children: React.ReactNode) {
   const body: React.ReactNode[] = []
 
   for (const child of dialogSlots(children)) {
-    if (isElementOf(child, DialogHeader)) header.push(child)
-    else if (isElementOf(child, DialogFooter)) footer.push(child)
-    else body.push(child)
+    // Leave a hole where the header or footer was. Dropping the slot shifts
+    // every input after a footer that appears while typing, and React remounts them.
+    if (isElementOf(child, DialogHeader)) {
+      header.push(child)
+      body.push(null)
+    } else if (isElementOf(child, DialogFooter)) {
+      footer.push(child)
+      body.push(null)
+    } else body.push(child)
   }
 
   return { header, footer, body }

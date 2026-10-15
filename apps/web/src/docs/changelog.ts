@@ -28,7 +28,7 @@ export const changelogEntries = [
       {
         type: "fixed",
         items: [
-          "DialogContent keeps each child in its own slot. Direct DialogHeader and DialogFooter stay pinned, and the rest is wrapped as one group, so a conditional line or a mapped warning keeps later fields mounted.",
+          "DialogContent keeps each child in its own slot. Direct DialogHeader and DialogFooter stay pinned, and the rest is wrapped as one group, so a conditional line, a mapped warning, or a header or footer that appears between fields keeps later inputs mounted.",
         ],
       },
     ],
