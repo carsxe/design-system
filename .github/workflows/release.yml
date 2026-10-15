@@ -1,0 +1,79 @@
+name: CI and npm release
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Check design system
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    outputs:
+      npm-tag: ${{ steps.release.outputs.npm-tag }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version-file: package.json
+      - run: bun install --frozen-lockfile
+      - name: Set package version from release tag
+        if: github.event_name == 'release'
+        id: release
+        env:
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+          RELEASE_PRERELEASE: ${{ github.event.release.prerelease }}
+        run: node .github/scripts/prepare-release.mjs
+      - run: bun run --cwd packages/ui typecheck
+      - run: bun run --cwd packages/ui test
+      - run: bun run --cwd packages/ui build
+      - run: bun run --cwd packages/ui verify:pack
+      - name: Pack release
+        if: github.event_name == 'release'
+        working-directory: packages/ui
+        run: npm pack --ignore-scripts --pack-destination "$RUNNER_TEMP"
+      - uses: actions/upload-artifact@v4
+        if: github.event_name == 'release'
+        with:
+          name: npm-package
+          path: ${{ runner.temp }}/carsxe-design-system-*.tgz
+          if-no-files-found: error
+          retention-days: 7
+
+  publish:
+    name: Publish to npm
+    if: github.event_name == 'release'
+    needs: check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    concurrency:
+      group: npm-publish
+      cancel-in-progress: false
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          package-manager-cache: false
+      - uses: actions/download-artifact@v4
+        with:
+          name: npm-package
+          path: release
+      - name: Publish verified package
+        env:
+          NPM_TAG: ${{ needs.check.outputs.npm-tag }}
+        run: npm publish ./release/*.tgz --access public --ignore-scripts --tag "$NPM_TAG"

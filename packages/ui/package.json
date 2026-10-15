@@ -3,6 +3,11 @@
   "version": "0.3.7",
   "description": "Carsxe design system ??? shadcn/ui components themed to the Carsxe brand.",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/carsxe/design-system.git",
+    "directory": "packages/ui"
+  },
   "type": "module",
   "sideEffects": [
     "**/*.css"
