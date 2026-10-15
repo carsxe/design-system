@@ -57,15 +57,19 @@ describe("DialogContent scrollport", () => {
     expect(body).toContain("overflow-y-auto")
     expect(body).toContain("overflow-x-hidden")
     expect(body).toContain("min-w-0")
-    expect(body).toContain("max-w-full")
-    expect(body).toContain("w-full")
+    expect(body).toContain("*:min-w-0")
+    expect(body).toContain("w-[calc(100%+1.5rem)]")
+    expect(body).toContain("max-w-none")
+    expect(body).not.toContain("max-w-full")
     expect(body).toContain("flex-1")
     expect(body).not.toContain("p-6")
     expect(body).toContain("min-h-0")
     expect(body).toContain("gap-6")
     expect(body).toContain("overscroll-contain")
     expect(body).toContain("[scrollbar-gutter:stable]")
-    expect(body).toContain("break-words")
+    expect(body).toContain("[overflow-wrap:anywhere]")
+    expect(body).not.toContain("break-words")
+    expect(body).toContain("-mr-6")
     expect(body).toContain("pr-6")
     expect(body).not.toContain("overflow-auto")
     expect(body).not.toContain("overflow-x-auto")
@@ -81,14 +85,96 @@ describe("DialogContent scrollport", () => {
 
     const body = classes("[data-slot='dialog-body']")
     expect(body).toContain("[scrollbar-gutter:stable]")
-    expect(body).toContain("break-words")
+    expect(body).toContain("[overflow-wrap:anywhere]")
+    expect(body).not.toContain("break-words")
     expect(body).toContain("min-w-0")
+    expect(body).toContain("*:min-w-0")
+    expect(body).toContain("-mr-6")
     expect(body).toContain("pr-6")
     expect(body).toContain("overflow-y-auto")
     expect(body).toContain("overflow-x-hidden")
     expect(body).not.toContain("overflow-x-auto")
     expect(classes("[data-slot='dialog-content']")).toContain("p-6")
     expect(classes("[data-slot='dialog-content']")).toContain("overflow-hidden")
+  })
+
+  it.each(["px-0", "pr-0", "p-4", "px-6"])(
+    "drops the scrollbar inset when the shell uses %s",
+    (padding) => {
+      renderDialog(padding, <p>Body copy</p>)
+
+      const body = classes("[data-slot='dialog-body']")
+      expect(body).not.toContain("-mr-6")
+      expect(body).not.toContain("pr-6")
+      expect(body).not.toContain("w-[calc(100%+1.5rem)]")
+      expect(body).toContain("w-full")
+      expect(body).toContain("max-w-full")
+      expect(body).toContain("[scrollbar-gutter:stable]")
+      expect(body).toContain("[overflow-wrap:anywhere]")
+      expect(body).toContain("*:min-w-0")
+      expect(body).toContain("min-w-0")
+      expect(classes("[data-slot='dialog-content']")).toContain(padding)
+      expect(classes("[data-slot='dialog-content']")).not.toContain("p-6")
+    }
+  )
+
+  it.each(["p-0", "px-0", "pr-0", "p-4", "px-6"])(
+    "drops the scrollbar inset when DialogBody uses %s",
+    (padding) => {
+      render(
+        <Dialog open>
+          <DialogContent>
+            <DialogBody className={padding}>
+              <p>Body copy</p>
+            </DialogBody>
+          </DialogContent>
+        </Dialog>
+      )
+
+      const body = classes("[data-slot='dialog-body']")
+      expect(body).not.toContain("-mr-6")
+      expect(body).not.toContain("pr-6")
+      expect(body).toContain(padding)
+      expect(body).toContain("[scrollbar-gutter:stable]")
+      expect(body).toContain("[overflow-wrap:anywhere]")
+      expect(body).not.toContain("break-words")
+      expect(body).toContain("*:min-w-0")
+    }
+  )
+
+  it("drops the scrollbar inset on an explicit body when the shell sets padding", () => {
+    render(
+      <Dialog open>
+        <DialogContent className="p-4">
+          <DialogBody>
+            <p>Body copy</p>
+          </DialogBody>
+        </DialogContent>
+      </Dialog>
+    )
+
+    const body = classes("[data-slot='dialog-body']")
+    expect(body).not.toContain("-mr-6")
+    expect(body).not.toContain("pr-6")
+    expect(body).toContain("w-full")
+    expect(body).toContain("[overflow-wrap:anywhere]")
+  })
+
+  it("keeps the scrollbar inset when only the left padding changes", () => {
+    render(
+      <Dialog open>
+        <DialogContent>
+          <DialogBody className="pl-4">
+            <p>Body copy</p>
+          </DialogBody>
+        </DialogContent>
+      </Dialog>
+    )
+
+    const body = classes("[data-slot='dialog-body']")
+    expect(body).toContain("-mr-6")
+    expect(body).toContain("pr-6")
+    expect(body).toContain("pl-4")
   })
 
   it("keeps a caller overflow-y-auto from scrolling the shell", () => {

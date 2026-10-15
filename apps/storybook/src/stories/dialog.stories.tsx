@@ -45,7 +45,7 @@ export const LongContent: Story = {
           <span>Total</span>
           <span className="whitespace-nowrap">$5.40 USD</span>
         </div>
-        <p className="max-w-none whitespace-nowrap">
+        <p>
           VIN-1HGCM82633A004352-plate-confirm-payment-should-not-widen-the-dialog
         </p>
         {Array.from({ length: 24 }, (_, index) => (
@@ -115,6 +115,7 @@ export const Default: Story = {
             credentials will be permanently removed.
           </DialogDescription>
         </DialogHeader>
+        <p>Stored reports and API keys are removed with the workspace.</p>
         <DialogFooter>
           <DialogClose render={<Button variant="ghost" />} nativeButton={false}>
             Cancel
