@@ -81,27 +81,39 @@ function isElementOf<T extends React.ElementType>(
   return React.isValidElement(child) && child.type === type
 }
 
-/** Direct children, with fragments opened so a wrapped header still pins. */
-function flattenDialogChildren(children: React.ReactNode): React.ReactNode[] {
-  const flat: React.ReactNode[] = []
-  React.Children.forEach(children, (child) => {
+/**
+ * Opens fragments so a header wrapped in <>...</> still pins.
+ * Leaves every other slot alone: nested arrays stay nested, and null or
+ * boolean holes stay put. React.Children.toArray and forEach flatten those
+ * slots and re-index what follows, so a warning line that appears while
+ * typing remounts the inputs after it.
+ */
+function dialogSlots(children: React.ReactNode): React.ReactNode[] {
+  const source = Array.isArray(children) ? children : [children]
+  const slots: React.ReactNode[] = []
+  for (const child of source) {
     if (
       React.isValidElement<{ children?: React.ReactNode }>(child) &&
       child.type === React.Fragment
     ) {
-      flat.push(...flattenDialogChildren(child.props.children))
-      return
+      slots.push(...dialogSlots(child.props.children))
+      continue
     }
-    flat.push(child)
-  })
-  return flat
+    slots.push(child)
+  }
+  return slots
+}
+
+function isPresentChild(child: React.ReactNode) {
+  return child != null && typeof child !== "boolean"
 }
 
 /**
  * DialogContent is a flex column capped at 90vh (`overflow-hidden`).
  * Direct `DialogHeader` and `DialogFooter` children stay pinned (`flex-none`).
- * Everything between them goes in `DialogBody` (`flex-1 min-h-0 overflow-y-auto
- * overflow-x-hidden`), which is created automatically when callers omit it.
+ * Everything else is wrapped as one group in `DialogBody` (`flex-1 min-h-0
+ * overflow-y-auto overflow-x-hidden`), created automatically when callers
+ * omit it. The group keeps the caller's element identity and keys.
  * `overflow-hidden` skips that split and keeps the default padding.
  * A viewport height or `p-0` also skips the split. `p-0` (or any padding
  * utility) replaces the default `p-6`.
@@ -111,7 +123,7 @@ function partitionDialogChildren(children: React.ReactNode) {
   const footer: React.ReactNode[] = []
   const body: React.ReactNode[] = []
 
-  for (const child of flattenDialogChildren(children)) {
+  for (const child of dialogSlots(children)) {
     if (isElementOf(child, DialogHeader)) header.push(child)
     else if (isElementOf(child, DialogFooter)) footer.push(child)
     else body.push(child)
@@ -141,8 +153,12 @@ function DialogContent({
     ? { header: [], footer: [], body: [] }
     : partitionDialogChildren(children)
   const gap0 = hasUtility(tokens, "gap-0")
+  // Ignore null and boolean holes so a conditional sibling does not change
+  // whether the caller already owns the scrollport.
+  const renderedBody = body.filter(isPresentChild)
   const explicitBody =
-    body.length > 0 && body.every((child) => isElementOf(child, DialogBody))
+    renderedBody.length > 0 &&
+    renderedBody.every((child) => isElementOf(child, DialogBody))
 
   return (
     <DialogPortal>
@@ -168,7 +184,7 @@ function DialogContent({
             {header}
             {explicitBody ? (
               body
-            ) : body.length > 0 ? (
+            ) : renderedBody.length > 0 ? (
               <DialogBody className={gap0 ? "gap-0" : undefined}>
                 {body}
               </DialogBody>

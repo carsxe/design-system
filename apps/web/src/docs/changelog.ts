@@ -21,6 +21,21 @@ export type ChangelogEntry = {
 export const changelogEntries = [
   {
     date: "2026-10-15",
+    title: "Dialog inputs stay mounted when a line appears",
+    summary:
+      "DialogContent still pins the header and footer and scrolls the middle. A warning line that shows up while typing leaves the focused input mounted.",
+    groups: [
+      {
+        type: "fixed",
+        items: [
+          "DialogContent keeps each child in its own slot. Direct DialogHeader and DialogFooter stay pinned, and the rest is wrapped as one group, so a conditional line or a mapped warning keeps later fields mounted.",
+        ],
+      },
+    ],
+    sources: [],
+  },
+  {
+    date: "2026-10-15",
     title: "FileUpload is restored to source",
     summary:
       "FileUpload shipped in 0.3.6 and was missing from the repository. The component, its exports, and the file-upload-dropzone styles are restored to source.",

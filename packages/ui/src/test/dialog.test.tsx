@@ -1,5 +1,6 @@
 import { cleanup, render, screen } from "@testing-library/react"
-import type { ReactNode } from "react"
+import userEvent from "@testing-library/user-event"
+import { useState, type ReactNode } from "react"
 import { afterEach, describe, expect, it } from "vitest"
 
 import { CommandDialog } from "../components/command"
@@ -286,6 +287,68 @@ describe("DialogContent scrollport", () => {
     expect(
       document.querySelector("[data-slot='dialog-footer']")?.parentElement
     ).toBe(shell)
+  })
+
+  it("keeps inputs mounted when a conditional sibling appears while typing", async () => {
+    function CapDialog() {
+      const [plate, setPlate] = useState("")
+      const blocked = plate.length > 0
+      return (
+        <Dialog open>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Enterprise usage cap</DialogTitle>
+            </DialogHeader>
+            <input aria-label="Notes" defaultValue="" />
+            {blocked ? <p>Requests above this cap may be blocked.</p> : null}
+            {(blocked ? ["plate_decoder"] : []).map((api) => (
+              <p key={api}>Plate Decoder has no enterprise overage price.</p>
+            ))}
+            <input
+              aria-label="Plate Decoder cap"
+              value={plate}
+              onChange={(event) => setPlate(event.target.value)}
+            />
+            <input aria-label="Monthly cap" defaultValue="" />
+            <DialogFooter>
+              <button type="button">Save</button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
+      )
+    }
+
+    const user = userEvent.setup()
+    render(<CapDialog />)
+
+    const notes = screen.getByRole("textbox", { name: "Notes" })
+    const plate = screen.getByRole("textbox", { name: "Plate Decoder cap" })
+    const monthly = screen.getByRole("textbox", { name: "Monthly cap" })
+
+    await user.type(plate, "12")
+
+    expect(screen.getByRole("textbox", { name: "Plate Decoder cap" })).toBe(
+      plate
+    )
+    expect(plate).toHaveFocus()
+    expect(plate).toHaveValue("12")
+    expect(screen.getByRole("textbox", { name: "Notes" })).toBe(notes)
+    expect(screen.getByRole("textbox", { name: "Monthly cap" })).toBe(monthly)
+    expect(
+      screen.getByText("Requests above this cap may be blocked.")
+    ).toBeTruthy()
+    expect(
+      screen.getByText("Plate Decoder has no enterprise overage price.")
+    ).toBeTruthy()
+    expect(
+      document.querySelector("[data-slot='dialog-body']")?.contains(plate)
+    ).toBe(true)
+    expect(
+      document.querySelector("[data-slot='dialog-header']")?.parentElement
+    ).toBe(document.querySelector("[data-slot='dialog-content']"))
+    expect(
+      document.querySelector("[data-slot='dialog-footer']")?.parentElement
+    ).toBe(document.querySelector("[data-slot='dialog-content']"))
   })
 
   it("does not wrap the command palette in a second scrollport", () => {
