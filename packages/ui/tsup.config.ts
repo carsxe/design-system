@@ -26,6 +26,7 @@ export default defineConfig((options) => ({
     "tailwind-merge",
     "input-otp",
     "react-day-picker",
+    "react-dropzone",
     "date-fns",
     "d3",
     "d3-sankey",
