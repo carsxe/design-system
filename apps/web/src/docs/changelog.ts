@@ -26,10 +26,18 @@ export const changelogEntries = [
       "DialogContent clips the shell. The header and footer stay put, and only the middle scrolls, so a wide row stays inside the max width. Galleries, image viewers, and other dialogs that already own their layout keep a single scrollbar.",
     groups: [
       {
+        type: "changed",
+        items: [
+          "DialogContent is capped at max-h-[90vh]. Pass a max-h utility to replace that cap. A viewport height (h-dvh, h-screen, h-full, inset-0, or h-[100…]) removes it.",
+          "The shell is a flex column. It was a grid.",
+          "Only a direct DialogHeader or DialogFooter stays pinned. A DialogTitle or a plain div used as a header scrolls with the middle, unless the dialog opts out with overflow-hidden, a viewport height, or p-0.",
+        ],
+      },
+      {
         type: "fixed",
         items: [
-          "DialogContent is a flex column with overflow-hidden and a max height. Direct DialogHeader and DialogFooter children are flex-none, so the title and actions stay visible. The middle is a DialogBody (created automatically when you omit it) with flex-1, min-h-0, overflow-y-auto, and overflow-x-hidden. Padding sits on the shell, inside the max width.",
-          "Passing overflow-hidden, a viewport height (h-dvh, h-screen, h-full, inset-0, h-[100…]), or p-0 still overrides the default through cn. Those dialogs are not wrapped in a second scrollport.",
+          "DialogContent clips wide content. The middle is a DialogBody (created automatically when you omit it) with flex-1, min-h-0, overflow-y-auto, and overflow-x-hidden. Default padding is p-6 on the shell, inside the max width.",
+          "overflow-hidden skips the automatic body and keeps p-6, unless the caller already passes a padding utility (p-0, px-4, and so on). p-0 and a viewport height skip the body as well, so a flush dialog or a fullscreen viewer is not wrapped in a second scrollport.",
         ],
       },
     ],

@@ -54,6 +54,13 @@ function hasUtility(tokens: string[], name: string) {
   return tokens.some((token) => bareUtility(token) === name)
 }
 
+/** p-0, px-4, pt-6, sm:p-8, p-0! — any padding utility the caller already set. */
+function hasOwnPadding(tokens: string[]) {
+  return tokens.some((token) =>
+    /^(?:p|px|py|pt|pr|pb|pl|ps|pe)-/.test(bareUtility(token))
+  )
+}
+
 function fillsViewport(tokens: string[]) {
   return tokens.some((token) => {
     const bare = bareUtility(token)
@@ -95,8 +102,9 @@ function flattenDialogChildren(children: React.ReactNode): React.ReactNode[] {
  * Direct `DialogHeader` and `DialogFooter` children stay pinned (`flex-none`).
  * Everything between them goes in `DialogBody` (`flex-1 min-h-0 overflow-y-auto
  * overflow-x-hidden`), which is created automatically when callers omit it.
- * `overflow-hidden` and viewport-filling classNames skip that split so a
- * gallery, drawer, or command palette keeps a single scrollport.
+ * `overflow-hidden` skips that split and keeps the default padding.
+ * A viewport height or `p-0` also skips the split. `p-0` (or any padding
+ * utility) replaces the default `p-6`.
  */
 function partitionDialogChildren(children: React.ReactNode) {
   const header: React.ReactNode[] = []
@@ -121,12 +129,15 @@ function DialogContent({
   showCloseButton?: boolean
 }) {
   const tokens = dialogTokens(className)
-  const flush = hasUtility(tokens, "p-0")
   const viewport = fillsViewport(tokens)
-  // overflow-hidden and viewport-filling dialogs own their flex children (pinned
-  // footer, fullscreen viewer). Wrapping those in a second scrollport double-scrolls.
-  const ownsLayout = hasUtility(tokens, "overflow-hidden") || viewport
-  const { header, footer, body } = ownsLayout
+  // overflow-hidden only skips the automatic body. Padding stays unless the
+  // caller set its own. p-0 and viewport-filling dialogs also skip the body
+  // so a flush dialog or fullscreen viewer is not wrapped in a second scrollport.
+  const skipWrap =
+    hasUtility(tokens, "overflow-hidden") ||
+    viewport ||
+    hasUtility(tokens, "p-0")
+  const { header, footer, body } = skipWrap
     ? { header: [], footer: [], body: [] }
     : partitionDialogChildren(children)
   const gap0 = hasUtility(tokens, "gap-0")
@@ -141,16 +152,16 @@ function DialogContent({
         className={cn(
           "fixed top-1/2 left-1/2 z-50 flex w-full max-w-[calc(100%-2rem)] min-w-0 -translate-x-1/2 -translate-y-1/2 flex-col gap-6 rounded-[min(var(--radius-4xl),24px)] bg-popover text-sm text-popover-foreground shadow-xl ring-1 ring-foreground/5 duration-100 outline-none sm:max-w-md dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
           viewport ? undefined : "max-h-[90vh]",
-          // Padding stays on the shell, inside the max width, so header, body,
-          // and footer share one inset. Callers override it through className.
-          ownsLayout || flush ? undefined : "p-6",
+          // Default padding stays inside the max width. A caller padding utility
+          // replaces it; overflow-hidden does not.
+          hasOwnPadding(tokens) ? undefined : "p-6",
           className,
           // After className so a caller overflow-y-auto cannot turn the shell into the scrollport.
           "overflow-hidden"
         )}
         {...props}
       >
-        {ownsLayout ? (
+        {skipWrap ? (
           children
         ) : (
           <>

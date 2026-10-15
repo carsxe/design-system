@@ -93,16 +93,41 @@ describe("DialogContent scrollport", () => {
     expect(shell).not.toContain("overflow-y-auto")
   })
 
-  it("keeps flush dialogs padded by their own children", () => {
+  it("does not wrap a flush p-0 dialog", () => {
     renderDialog("bg-background p-0")
 
     const shell = classes("[data-slot='dialog-content']")
-    const body = classes("[data-slot='dialog-body']")
     expect(shell).toContain("p-0")
     expect(shell).not.toContain("p-6")
-    expect(body).not.toContain("p-6")
-    expect(body).toContain("overflow-y-auto")
-    expect(body).toContain("overflow-x-hidden")
+    expect(document.querySelector("[data-slot='dialog-body']")).toBeNull()
+    expect(screen.getByText("Title").parentElement).toBe(
+      document.querySelector("[data-slot='dialog-content']")
+    )
+  })
+
+  it("keeps default padding when overflow-hidden only skips the body", () => {
+    render(
+      <Dialog open>
+        <DialogContent className="flex max-h-[90vh] flex-col overflow-hidden rounded-none sm:max-w-xl">
+          <DialogHeader>
+            <DialogTitle>Confirm payment</DialogTitle>
+          </DialogHeader>
+          <p>Totals</p>
+        </DialogContent>
+      </Dialog>
+    )
+
+    expect(document.querySelector("[data-slot='dialog-body']")).toBeNull()
+    const shell = classes("[data-slot='dialog-content']")
+    expect(shell).toContain("overflow-hidden")
+    expect(shell).toContain("p-6")
+    expect(shell).toContain("flex-col")
+    expect(screen.getByText("Totals").parentElement).toBe(
+      document.querySelector("[data-slot='dialog-content']")
+    )
+    expect(
+      document.querySelector("[data-slot='dialog-header']")?.parentElement
+    ).toBe(document.querySelector("[data-slot='dialog-content']"))
   })
 
   it("collapses body gap when the caller passes gap-0", () => {
