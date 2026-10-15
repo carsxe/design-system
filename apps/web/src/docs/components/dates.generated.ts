@@ -36,7 +36,7 @@ export const componentDates: Record<string, ComponentDates> = {
   "context-menu": { added: "2026-08-25", updated: "2026-08-25" },
   "d3-chart": { added: "2026-08-26", updated: "2026-09-11" },
   "date-input": { added: "2026-08-25", updated: "2026-09-17" },
-  dialog: { added: "2026-08-19", updated: "2026-10-14" },
+  dialog: { added: "2026-08-19", updated: "2026-10-15" },
   direction: { added: "2026-08-25", updated: "2026-08-25" },
   drawer: { added: "2026-08-25", updated: "2026-08-25" },
   "dropdown-menu": { added: "2026-08-19", updated: "2026-08-25" },

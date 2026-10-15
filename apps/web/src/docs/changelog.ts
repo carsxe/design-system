@@ -20,15 +20,15 @@ export type ChangelogEntry = {
 
 export const changelogEntries = [
   {
-    date: "2026-10-14",
+    date: "2026-10-15",
     title: "Dialogs scroll vertically without spilling sideways",
     summary:
-      "DialogContent clips the shell and scrolls a padded body, so a wide row stays inside the max width. Galleries, image viewers, and other dialogs that already own their layout keep a single scrollbar.",
+      "DialogContent clips the shell. The header and footer stay put, and only the middle scrolls, so a wide row stays inside the max width. Galleries, image viewers, and other dialogs that already own their layout keep a single scrollbar.",
     groups: [
       {
         type: "fixed",
         items: [
-          "DialogContent is overflow-hidden with a max height, and the content body is the only vertical scrollport (overflow-y-auto overflow-x-hidden). Padding sits inside that max width.",
+          "DialogContent is a flex column with overflow-hidden and a max height. Direct DialogHeader and DialogFooter children are flex-none, so the title and actions stay visible. The middle is a DialogBody (created automatically when you omit it) with flex-1, min-h-0, overflow-y-auto, and overflow-x-hidden. Padding sits on the shell, inside the max width.",
           "Passing overflow-hidden, a viewport height (h-dvh, h-screen, h-full, inset-0, h-[100…]), or p-0 still overrides the default through cn. Those dialogs are not wrapped in a second scrollport.",
         ],
       },

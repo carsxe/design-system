@@ -67,6 +67,51 @@ function fillsViewport(tokens: string[]) {
   })
 }
 
+function isElementOf<T extends React.ElementType>(
+  child: React.ReactNode,
+  type: T
+): child is React.ReactElement {
+  return React.isValidElement(child) && child.type === type
+}
+
+/** Direct children, with fragments opened so a wrapped header still pins. */
+function flattenDialogChildren(children: React.ReactNode): React.ReactNode[] {
+  const flat: React.ReactNode[] = []
+  React.Children.forEach(children, (child) => {
+    if (
+      React.isValidElement<{ children?: React.ReactNode }>(child) &&
+      child.type === React.Fragment
+    ) {
+      flat.push(...flattenDialogChildren(child.props.children))
+      return
+    }
+    flat.push(child)
+  })
+  return flat
+}
+
+/**
+ * DialogContent is a flex column capped at 90vh (`overflow-hidden`).
+ * Direct `DialogHeader` and `DialogFooter` children stay pinned (`flex-none`).
+ * Everything between them goes in `DialogBody` (`flex-1 min-h-0 overflow-y-auto
+ * overflow-x-hidden`), which is created automatically when callers omit it.
+ * `overflow-hidden` and viewport-filling classNames skip that split so a
+ * gallery, drawer, or command palette keeps a single scrollport.
+ */
+function partitionDialogChildren(children: React.ReactNode) {
+  const header: React.ReactNode[] = []
+  const footer: React.ReactNode[] = []
+  const body: React.ReactNode[] = []
+
+  for (const child of flattenDialogChildren(children)) {
+    if (isElementOf(child, DialogHeader)) header.push(child)
+    else if (isElementOf(child, DialogFooter)) footer.push(child)
+    else body.push(child)
+  }
+
+  return { header, footer, body }
+}
+
 function DialogContent({
   className,
   children,
@@ -81,6 +126,12 @@ function DialogContent({
   // overflow-hidden and viewport-filling dialogs own their flex children (pinned
   // footer, fullscreen viewer). Wrapping those in a second scrollport double-scrolls.
   const ownsLayout = hasUtility(tokens, "overflow-hidden") || viewport
+  const { header, footer, body } = ownsLayout
+    ? { header: [], footer: [], body: [] }
+    : partitionDialogChildren(children)
+  const gap0 = hasUtility(tokens, "gap-0")
+  const explicitBody =
+    body.length > 0 && body.every((child) => isElementOf(child, DialogBody))
 
   return (
     <DialogPortal>
@@ -90,6 +141,9 @@ function DialogContent({
         className={cn(
           "fixed top-1/2 left-1/2 z-50 flex w-full max-w-[calc(100%-2rem)] min-w-0 -translate-x-1/2 -translate-y-1/2 flex-col gap-6 rounded-[min(var(--radius-4xl),24px)] bg-popover text-sm text-popover-foreground shadow-xl ring-1 ring-foreground/5 duration-100 outline-none sm:max-w-md dark:ring-foreground/10 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
           viewport ? undefined : "max-h-[90vh]",
+          // Padding stays on the shell, inside the max width, so header, body,
+          // and footer share one inset. Callers override it through className.
+          ownsLayout || flush ? undefined : "p-6",
           className,
           // After className so a caller overflow-y-auto cannot turn the shell into the scrollport.
           "overflow-hidden"
@@ -99,16 +153,17 @@ function DialogContent({
         {ownsLayout ? (
           children
         ) : (
-          <div
-            data-slot="dialog-body"
-            className={cn(
-              "flex min-h-0 w-full max-w-full min-w-0 flex-col overflow-x-hidden overflow-y-auto overscroll-contain",
-              flush ? "p-0" : "p-6",
-              hasUtility(tokens, "gap-0") ? "gap-0" : "gap-6"
-            )}
-          >
-            {children}
-          </div>
+          <>
+            {header}
+            {explicitBody ? (
+              body
+            ) : body.length > 0 ? (
+              <DialogBody className={gap0 ? "gap-0" : undefined}>
+                {body}
+              </DialogBody>
+            ) : null}
+            {footer}
+          </>
         )}
         {showCloseButton && (
           <DialogPrimitive.Close
@@ -134,7 +189,20 @@ function DialogHeader({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="dialog-header"
-      className={cn("flex flex-col gap-1.5", className)}
+      className={cn("flex flex-none flex-col gap-1.5", className)}
+      {...props}
+    />
+  )
+}
+
+function DialogBody({ className, ...props }: React.ComponentProps<"div">) {
+  return (
+    <div
+      data-slot="dialog-body"
+      className={cn(
+        "flex min-h-0 w-full max-w-full min-w-0 flex-1 flex-col gap-6 overflow-x-hidden overflow-y-auto overscroll-contain",
+        className
+      )}
       {...props}
     />
   )
@@ -152,7 +220,7 @@ function DialogFooter({
     <div
       data-slot="dialog-footer"
       className={cn(
-        "flex flex-col-reverse gap-2 sm:flex-row sm:justify-end",
+        "flex flex-none flex-col-reverse gap-2 sm:flex-row sm:justify-end",
         className
       )}
       {...props}
@@ -198,6 +266,7 @@ function DialogDescription({
 
 export {
   Dialog,
+  DialogBody,
   DialogClose,
   DialogContent,
   DialogDescription,

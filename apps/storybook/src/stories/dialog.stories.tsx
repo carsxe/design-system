@@ -20,17 +20,17 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-export const WideContent: Story = {
+export const LongContent: Story = {
   render: () => (
     <Dialog defaultOpen>
       <DialogTrigger render={<Button variant="outline" />} nativeButton={false}>
-        Open wide dialog
+        Open long dialog
       </DialogTrigger>
       <DialogContent className="rounded-none sm:max-w-xl">
         <DialogHeader>
           <DialogTitle>Confirm payment</DialogTitle>
           <DialogDescription>
-            Amounts stay inside the dialog. Extra rows scroll vertically.
+            The title and actions stay put. Only the rows between them scroll.
           </DialogDescription>
         </DialogHeader>
         <div className="flex justify-between gap-8">
@@ -48,9 +48,10 @@ export const WideContent: Story = {
         <p className="max-w-none whitespace-nowrap">
           VIN-1HGCM82633A004352-plate-confirm-payment-should-not-widen-the-dialog
         </p>
-        {Array.from({ length: 12 }, (_, index) => (
+        {Array.from({ length: 24 }, (_, index) => (
           <p key={index}>Line {index + 1} of a tall confirmation.</p>
         ))}
+        <p>End of confirmation.</p>
         <DialogFooter>
           <DialogClose render={<Button variant="ghost" />} nativeButton={false}>
             Back

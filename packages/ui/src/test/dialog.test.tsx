@@ -3,7 +3,15 @@ import type { ReactNode } from "react"
 import { afterEach, describe, expect, it } from "vitest"
 
 import { CommandDialog } from "../components/command"
-import { Dialog, DialogContent, DialogTitle } from "../components/dialog"
+import {
+  Dialog,
+  DialogBody,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "../components/dialog"
 
 afterEach(cleanup)
 
@@ -25,7 +33,7 @@ function renderDialog(
 }
 
 describe("DialogContent scrollport", () => {
-  it("clips the shell and scrolls the padded body on the vertical axis only", () => {
+  it("clips the shell and scrolls the body on the vertical axis only", () => {
     renderDialog("rounded-none sm:max-w-xl")
 
     const shell = classes("[data-slot='dialog-content']")
@@ -42,7 +50,7 @@ describe("DialogContent scrollport", () => {
       )
     ).toBe(false)
     expect(shell).not.toContain("overflow-y-auto")
-    expect(shell).not.toContain("p-6")
+    expect(shell).toContain("p-6")
 
     const body = classes("[data-slot='dialog-body']")
     expect(body).toContain("overflow-y-auto")
@@ -50,7 +58,8 @@ describe("DialogContent scrollport", () => {
     expect(body).toContain("min-w-0")
     expect(body).toContain("max-w-full")
     expect(body).toContain("w-full")
-    expect(body).toContain("p-6")
+    expect(body).toContain("flex-1")
+    expect(body).not.toContain("p-6")
     expect(body).toContain("min-h-0")
     expect(body).toContain("gap-6")
     expect(body).toContain("overscroll-contain")
@@ -58,7 +67,7 @@ describe("DialogContent scrollport", () => {
     expect(body).not.toContain("overflow-x-auto")
     expect(
       document
-        .querySelector("[data-slot='dialog-content']")
+        .querySelector("[data-slot='dialog-body']")
         ?.contains(screen.getByText("Title"))
     ).toBe(true)
   })
@@ -87,8 +96,10 @@ describe("DialogContent scrollport", () => {
   it("keeps flush dialogs padded by their own children", () => {
     renderDialog("bg-background p-0")
 
+    const shell = classes("[data-slot='dialog-content']")
     const body = classes("[data-slot='dialog-body']")
-    expect(body).toContain("p-0")
+    expect(shell).toContain("p-0")
+    expect(shell).not.toContain("p-6")
     expect(body).not.toContain("p-6")
     expect(body).toContain("overflow-y-auto")
     expect(body).toContain("overflow-x-hidden")
@@ -146,6 +157,111 @@ describe("DialogContent scrollport", () => {
       expect(document.querySelector("[data-slot='dialog-body']")).toBeNull()
     }
   )
+
+  it("pins the header and footer outside the scrollport", () => {
+    render(
+      <Dialog open>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Title</DialogTitle>
+            <DialogDescription>Description</DialogDescription>
+          </DialogHeader>
+          <p>Body copy</p>
+          <DialogFooter>
+            <button type="button">Save</button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    )
+
+    const shell = document.querySelector("[data-slot='dialog-content']")
+    const body = document.querySelector("[data-slot='dialog-body']")
+    const header = document.querySelector("[data-slot='dialog-header']")
+    const footer = document.querySelector("[data-slot='dialog-footer']")
+
+    expect(header?.parentElement).toBe(shell)
+    expect(footer?.parentElement).toBe(shell)
+    expect(body?.parentElement).toBe(shell)
+    expect(body?.contains(screen.getByText("Body copy"))).toBe(true)
+    expect(body?.contains(screen.getByText("Title"))).toBe(false)
+    expect(body?.contains(screen.getByText("Description"))).toBe(false)
+    expect(body?.contains(screen.getByRole("button", { name: "Save" }))).toBe(
+      false
+    )
+    expect(classes("[data-slot='dialog-header']")).toContain("flex-none")
+    expect(classes("[data-slot='dialog-footer']")).toContain("flex-none")
+    expect(classes("[data-slot='dialog-body']")).toEqual(
+      expect.arrayContaining([
+        "flex-1",
+        "min-h-0",
+        "overflow-y-auto",
+        "overflow-x-hidden",
+      ])
+    )
+  })
+
+  it("pins a header and footer wrapped in a fragment", () => {
+    render(
+      <Dialog open>
+        <DialogContent>
+          <>
+            <DialogHeader>
+              <DialogTitle>Title</DialogTitle>
+            </DialogHeader>
+            <p>Body copy</p>
+            <DialogFooter>
+              <button type="button">Save</button>
+            </DialogFooter>
+          </>
+        </DialogContent>
+      </Dialog>
+    )
+
+    const shell = document.querySelector("[data-slot='dialog-content']")
+    expect(
+      document.querySelector("[data-slot='dialog-header']")?.parentElement
+    ).toBe(shell)
+    expect(
+      document.querySelector("[data-slot='dialog-footer']")?.parentElement
+    ).toBe(shell)
+    expect(
+      document
+        .querySelector("[data-slot='dialog-body']")
+        ?.contains(screen.getByText("Body copy"))
+    ).toBe(true)
+  })
+
+  it("uses an explicit DialogBody as the only scrollport", () => {
+    render(
+      <Dialog open>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Title</DialogTitle>
+          </DialogHeader>
+          <DialogBody>
+            <p>Body copy</p>
+          </DialogBody>
+          <DialogFooter>
+            <button type="button">Save</button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    )
+
+    expect(document.querySelectorAll("[data-slot='dialog-body']")).toHaveLength(
+      1
+    )
+    const shell = document.querySelector("[data-slot='dialog-content']")
+    const body = document.querySelector("[data-slot='dialog-body']")
+    expect(body?.parentElement).toBe(shell)
+    expect(body?.contains(screen.getByText("Body copy"))).toBe(true)
+    expect(
+      document.querySelector("[data-slot='dialog-header']")?.parentElement
+    ).toBe(shell)
+    expect(
+      document.querySelector("[data-slot='dialog-footer']")?.parentElement
+    ).toBe(shell)
+  })
 
   it("does not wrap the command palette in a second scrollport", () => {
     render(
