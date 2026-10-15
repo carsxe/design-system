@@ -123,7 +123,7 @@ function isPresentChild(child: React.ReactNode) {
  * overflow-y-auto overflow-x-hidden`, with a stable scrollbar gutter). The
  * body uses `-mr-6 pr-6` so that gutter sits in the shell's right padding and
  * text stays a `p-6` away from the bar. Caller padding (`p-0`, `px-0`, `pr-0`,
- * `p-4`, `px-6`) drops both. Long strings wrap (`overflow-wrap: anywhere`,
+ * `p-4`, `px-6`) drops both. Long strings wrap (`overflow-wrap: break-word`,
  * `min-w-0` on the body and its children). The group keeps the caller's
  * element identity and keys.
  * `overflow-hidden` skips that split and keeps the default padding.
@@ -251,7 +251,7 @@ function DialogBody({ className, ...props }: React.ComponentProps<"div">) {
     <div
       data-slot="dialog-body"
       className={cn(
-        "flex min-h-0 w-full max-w-full min-w-0 flex-1 [scrollbar-gutter:stable] flex-col gap-6 overflow-x-hidden overflow-y-auto overscroll-contain [overflow-wrap:anywhere] *:min-w-0",
+        "flex min-h-0 w-full max-w-full min-w-0 flex-1 [scrollbar-gutter:stable] flex-col gap-6 overflow-x-hidden overflow-y-auto overscroll-contain break-words *:min-w-0",
         // Grow into the shell padding. max-w-full would clamp the negative margin back.
         inset && "-mr-6 w-[calc(100%+1.5rem)] max-w-none pr-6",
         className

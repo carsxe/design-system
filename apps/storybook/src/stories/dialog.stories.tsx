@@ -63,6 +63,61 @@ export const LongContent: Story = {
   ),
 }
 
+export const Receipt: Story = {
+  render: () => (
+    <Dialog defaultOpen>
+      <DialogTrigger render={<Button variant="outline" />} nativeButton={false}>
+        Open receipt
+      </DialogTrigger>
+      <DialogContent className="rounded-none sm:max-w-xl">
+        <DialogHeader>
+          <DialogTitle>Confirm payment</DialogTitle>
+          <DialogDescription>
+            Amounts stay whole. The reference wraps beside the scrollbar.
+          </DialogDescription>
+        </DialogHeader>
+        <table className="w-full text-left">
+          <thead>
+            <tr>
+              <th className="pr-4 font-medium">Item</th>
+              <th className="pr-4 font-medium">Qty</th>
+              <th className="font-medium">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="pr-4">Plate decoder</td>
+              <td className="pr-4">2</td>
+              <td>$2.50</td>
+            </tr>
+            <tr>
+              <td className="pr-4">Vehicle history</td>
+              <td className="pr-4">1</td>
+              <td>$2.50</td>
+            </tr>
+          </tbody>
+        </table>
+        <div className="flex justify-between gap-8 font-medium">
+          <span>Total</span>
+          <span>$5.40 USD</span>
+        </div>
+        <p>
+          VIN-1HGCM82633A004352-plate-confirm-payment-should-not-widen-the-dialog
+        </p>
+        {Array.from({ length: 8 }, (_, index) => (
+          <p key={index}>Line {index + 1} of the receipt detail.</p>
+        ))}
+        <DialogFooter>
+          <DialogClose render={<Button variant="ghost" />} nativeButton={false}>
+            Back
+          </DialogClose>
+          <Button>Confirm payment</Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  ),
+}
+
 export const LongStatement: Story = {
   render: () => (
     <Dialog defaultOpen>

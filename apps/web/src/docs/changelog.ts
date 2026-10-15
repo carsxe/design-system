@@ -29,7 +29,7 @@ export const changelogEntries = [
         type: "fixed",
         items: [
           "DialogContent keeps each child in its own slot. Direct DialogHeader and DialogFooter stay pinned, and the rest is wrapped as one group, so a conditional line, a mapped warning, or a header or footer that appears between fields keeps later inputs mounted.",
-          "The scrolling body reserves a stable scrollbar gutter inside the shell's right padding, and long unbroken text wraps, so a line stays fully visible beside the bar and lines up with the header.",
+          "The scrolling body reserves a stable scrollbar gutter inside the shell's right padding. Long unbroken text wraps at overflow, and prices and table columns keep their width.",
         ],
       },
     ],
