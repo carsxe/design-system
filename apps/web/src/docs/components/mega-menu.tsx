@@ -29,6 +29,10 @@ import {
 
 import type { ComponentDoc } from "./types"
 
+// Demo rows link to live carsxe.com pages. Relative paths would resolve on
+// ui.carsxe.com, where they 404.
+const site = "https://carsxe.com"
+
 type MenuRow = {
   title: string
   description: string
@@ -40,19 +44,19 @@ const vehicleData: MenuRow[] = [
   {
     title: "VIN Decoder",
     description: "Decode any VIN to full specs.",
-    href: "/vin-decoder",
+    href: `${site}/vehicle-specifications`,
     icon: ScanLineIcon,
   },
   {
     title: "Plate Decoder",
     description: "Registration lookup in 40+ markets.",
-    href: "/plate-decoder",
+    href: `${site}/vehicle-plate-decoder`,
     icon: CarIcon,
   },
   {
     title: "Market Value",
     description: "Wholesale and retail valuations.",
-    href: "/market-value",
+    href: `${site}/vehicle-market-value`,
     icon: GaugeIcon,
   },
 ]
@@ -61,42 +65,42 @@ const history: MenuRow[] = [
   {
     title: "Vehicle History",
     description: "Title, odometer, and damage records.",
-    href: "/vehicle-history",
+    href: `${site}/vehicle-history`,
     icon: FileTextIcon,
   },
   {
     title: "Recalls",
     description: "Open safety recalls by VIN.",
-    href: "/recalls",
+    href: `${site}/vehicle-recalls`,
     icon: ShieldCheckIcon,
   },
   {
     title: "Vehicle Images",
     description: "Stock photography by year and trim.",
-    href: "/images",
+    href: `${site}/vehicle-images`,
     icon: ImageIcon,
   },
 ]
 
-const widgets: MenuRow[] = [
+const build: MenuRow[] = [
   {
-    title: "Lead Capture",
-    description: "Embeddable VIN lookup form.",
-    href: "/widgets/lead-capture",
+    title: "MCP Server",
+    description: "Vehicle data inside AI assistants.",
+    href: `${site}/mcp`,
     icon: WrenchIcon,
   },
   {
-    title: "Dealer Listing",
-    description: "Drop-in inventory cards.",
-    href: "/widgets/dealer-listing",
+    title: "Agents",
+    description: "Vehicle data for AI agents.",
+    href: `${site}/agents`,
     icon: BuildingIcon,
   },
 ]
 
 const browse = [
-  { label: "Documentation", href: "/docs" },
-  { label: "Pricing", href: "/pricing" },
-  { label: "Changelog", href: "/changelog" },
+  { label: "Documentation", href: "https://docs.carsxe.com/docs" },
+  { label: "Pricing", href: `${site}/pricing` },
+  { label: "Support", href: `${site}/support` },
   { label: "Status", href: "https://status.carsxe.com", external: true },
 ]
 
@@ -152,7 +156,7 @@ function MegaMenuZonesExample() {
           </MegaMenuColumn>
         </div>
         <div className="flex px-5">
-          <MegaMenuMore href="/all-products" className="mt-3">
+          <MegaMenuMore href={`${site}/all-products`} className="mt-3">
             All products
           </MegaMenuMore>
         </div>
@@ -160,9 +164,9 @@ function MegaMenuZonesExample() {
 
       <MegaMenuSeparator />
       <MegaMenuColumn className="w-[260px]">
-        <MegaMenuGroupLabel>Widgets</MegaMenuGroupLabel>
-        {rows(widgets)}
-        <MegaMenuMore href="/widgets">All widgets</MegaMenuMore>
+        <MegaMenuGroupLabel>Build</MegaMenuGroupLabel>
+        {rows(build)}
+        <MegaMenuMore href={`${site}/workflows`}>All workflows</MegaMenuMore>
       </MegaMenuColumn>
 
       <MegaMenuSeparator />
@@ -190,7 +194,9 @@ function MegaMenuPlainExample() {
       <MegaMenuColumn className="w-[280px]">
         <MegaMenuGroup>
           {rows(vehicleData)}
-          <MegaMenuMore href="/all-industries">All industries</MegaMenuMore>
+          <MegaMenuMore href={`${site}/all-industries`}>
+            All industries
+          </MegaMenuMore>
         </MegaMenuGroup>
       </MegaMenuColumn>
     </MegaMenu>
@@ -267,9 +273,11 @@ function MegaMenuTriggerExample() {
               <MegaMenu>
                 <MegaMenuColumn className="w-[260px]">
                   <MegaMenuGroup>
-                    <MegaMenuGroupLabel>Widgets</MegaMenuGroupLabel>
-                    {rows(widgets)}
-                    <MegaMenuMore href="/widgets">All widgets</MegaMenuMore>
+                    <MegaMenuGroupLabel>Build</MegaMenuGroupLabel>
+                    {rows(build)}
+                    <MegaMenuMore href={`${site}/workflows`}>
+                      All workflows
+                    </MegaMenuMore>
                   </MegaMenuGroup>
                 </MegaMenuColumn>
                 <MegaMenuColumn className="w-[196px]">
@@ -327,7 +335,7 @@ import {
             <MegaMenuGroup>
               <MegaMenuGroupLabel>Vehicle data</MegaMenuGroupLabel>
               <MegaMenuItem
-                href="/vin-decoder"
+                href="/vehicle-specifications"
                 title="VIN Decoder"
                 description="Decode any VIN to full specs."
                 icon={<ScanLineIcon />}
@@ -393,9 +401,9 @@ import {
 
   <MegaMenuSeparator />
   <MegaMenuColumn className="w-[260px]">
-    <MegaMenuGroupLabel>Widgets</MegaMenuGroupLabel>
-    {rows(widgets)}
-    <MegaMenuMore href="/widgets">All widgets</MegaMenuMore>
+    <MegaMenuGroupLabel>Build</MegaMenuGroupLabel>
+    {rows(build)}
+    <MegaMenuMore href="/workflows">All workflows</MegaMenuMore>
   </MegaMenuColumn>
 
   <MegaMenuSeparator />
@@ -422,7 +430,7 @@ import {
       title: "Your own link element",
       preview: <MegaMenuRenderExample />,
       code: `<MegaMenuItem
-  href="/vin-decoder"
+  href="/vehicle-specifications"
   title="VIN Decoder"
   description="Decode any VIN to full specs."
   icon={<ScanLineIcon />}
