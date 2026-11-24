@@ -1,0 +1,4 @@
+# storybook.carsxe.com is an internal component workbench: keep it out of search.
+# Do not block it in robots.txt, or crawlers never see this header.
+/*
+  X-Robots-Tag: noindex
